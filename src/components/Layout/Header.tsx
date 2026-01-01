@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import LanguageSwitcher from '../UI/LanguageSwitcher';
-import CustomButton from '../UI/CustomButton';
 import logo from '../../assets/images/logo.jpeg';
 import './Header.scss';
 
 const Header = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -74,13 +72,9 @@ const Header = () => {
 
         <div className="header__actions">
           <LanguageSwitcher />
-          <CustomButton
-            variant="primary"
-            size="sm"
-            onClick={() => navigate('/contact')}
-          >
-            {t('nav.contact')}
-          </CustomButton>
+          <Link to="/contact" className="custom-button custom-button--primary custom-button--sm">
+            <span className="custom-button__text">{t('nav.contact')}</span>
+          </Link>
         </div>
 
       {/* Mobile Actions (Visible on small screens) */}
@@ -132,16 +126,13 @@ const Header = () => {
         </nav>
 
         <div className="header__mobile-footer">
-           <CustomButton 
-            variant="primary" 
-            fullWidth
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              navigate('/contact');
-            }}
+          <Link 
+            to="/contact" 
+            className="custom-button custom-button--primary custom-button--full-width"
+            onClick={() => setIsMobileMenuOpen(false)}
           >
-            {t('nav.contact')}
-          </CustomButton>
+            <span className="custom-button__text">{t('nav.contact')}</span>
+          </Link>
         </div>
       </div>
     </header>
