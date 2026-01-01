@@ -1,13 +1,11 @@
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import SectionTitle from '../../../components/UI/SectionTitle';
-// Verify this path exists or use imported image if available in file
+import { SlTarget, SlEye } from 'react-icons/sl';
 import './AboutSection.scss';
 
 const AboutSection = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   return (
     <section className="about section" id="about">
@@ -56,10 +54,8 @@ const AboutSection = () => {
           <motion.div 
             className="about__card"
             whileHover={{ y: -5 }}
-            onClick={() => navigate('/about/mission')}
-            style={{ cursor: 'pointer' }}
           >
-            <div className="about__card-icon">🎯</div>
+            <div className="about__card-icon"><SlTarget /></div>
             <h4 className="about__card-title">{t('about.mission.title')}</h4>
             <p className="about__card-text">{t('about.mission.text')}</p>
           </motion.div>
@@ -67,10 +63,8 @@ const AboutSection = () => {
           <motion.div 
             className="about__card"
             whileHover={{ y: -5 }}
-            onClick={() => navigate('/about/vision')}
-            style={{ cursor: 'pointer' }}
           >
-            <div className="about__card-icon">👁️</div>
+            <div className="about__card-icon"><SlEye /></div>
             <h4 className="about__card-title">{t('about.vision.title')}</h4>
             <p className="about__card-text">{t('about.vision.text')}</p>
           </motion.div>

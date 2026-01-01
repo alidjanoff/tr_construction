@@ -1,24 +1,30 @@
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useHome } from '../Provider/HomeProvider';
 import SectionTitle from '../../../components/UI/SectionTitle';
 import './ServicesSection.scss';
 
-// Icon Map (keep existing)
-import { FaPencilRuler, FaPaintRoller, FaHardHat, FaTools } from 'react-icons/fa';
+// Using Simple Line Icons
+import { SlPencil, SlHome, SlWrench, SlSettings } from 'react-icons/sl';
 
 const iconMap: Record<string, any> = {
-  FaPencilRuler,
-  FaPaintRoller,
-  FaHardHat,
-  FaTools,
+  SlPencil,      // İnteryer dizayn
+  SlHome,        // Eksteryer  
+  SlWrench,      // Tikinti
+  SlSettings,    // Renovasiya
+};
+
+// Fallback mapping for old icon names
+const iconNameMap: Record<string, string> = {
+  FaPencilRuler: 'SlPencil',
+  FaPaintRoller: 'SlHome',
+  FaHardHat: 'SlWrench',
+  FaTools: 'SlSettings',
 };
 
 const ServicesSection = () => {
   const { t } = useTranslation();
   const { homeData } = useHome();
-  const navigate = useNavigate();
 
   return (
     <section className="services section" id="services">
@@ -35,7 +41,9 @@ const ServicesSection = () => {
           viewport={{ once: true, amount: 0, margin: '100px 0px' }}
         >
           {homeData?.services.map((service, index) => {
-            const IconComponent = iconMap[service.icon];
+            // Try to get icon, with fallback for old icon names
+            const mappedIconName = iconNameMap[service.icon] || service.icon;
+            const IconComponent = iconMap[mappedIconName] || iconMap[service.icon];
 
             return (
               <motion.div
@@ -45,8 +53,6 @@ const ServicesSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                onClick={() => navigate(`/services/${service.id}`)}
-                style={{ cursor: 'pointer' }}
               >
                 <div className="services__card-icon">
                   {IconComponent && <IconComponent />}

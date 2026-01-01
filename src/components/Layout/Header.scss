@@ -108,6 +108,14 @@
 
     @include lg {
       display: flex;
+      align-items: center;
+    }
+
+    // Make button same height as language switcher
+    .custom-button {
+      height: 45px;
+      padding: 0 $spacing-4;
+      font-size: $font-size-sm;
     }
   }
 

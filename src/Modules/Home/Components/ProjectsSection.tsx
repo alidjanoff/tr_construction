@@ -34,8 +34,9 @@ const ProjectsSection = () => {
             modules={[Pagination, Autoplay]}
             spaceBetween={24}
             slidesPerView={1}
+            loop={true}
             pagination={{ clickable: true }}
-            autoplay={{ delay: 4000, disableOnInteraction: false }}
+            autoplay={{ delay: 1500, disableOnInteraction: false }}
             breakpoints={{
               576: { slidesPerView: 1.5 },
               768: { slidesPerView: 2 },
