@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import LanguageSwitcher from '../UI/LanguageSwitcher';
@@ -10,6 +10,7 @@ import './Header.scss';
 const Header = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -76,7 +77,7 @@ const Header = () => {
           <CustomButton
             variant="primary"
             size="sm"
-            onClick={() => window.location.href = '/contact'}
+            onClick={() => navigate('/contact')}
           >
             {t('nav.contact')}
           </CustomButton>
@@ -136,7 +137,7 @@ const Header = () => {
             fullWidth
             onClick={() => {
               setIsMobileMenuOpen(false);
-              window.location.href = '/contact';
+              navigate('/contact');
             }}
           >
             {t('nav.contact')}
