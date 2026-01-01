@@ -1,0 +1,80 @@
+@use '../../../assets/scss/variables' as *;
+@use '../../../assets/scss/mixins' as *;
+
+.projects {
+  background: $white;
+  overflow: hidden;
+
+  &__slider {
+    margin: 0 (-$spacing-4);
+    padding: 0 $spacing-4;
+
+    @include md {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  &__swiper {
+    padding-bottom: $spacing-12;
+
+    .swiper-slide {
+      height: auto;
+    }
+
+    .swiper-pagination {
+      bottom: 0;
+
+      .swiper-pagination-bullet {
+        width: 10px;
+        height: 10px;
+        background: $medium-gray;
+        opacity: 1;
+        transition: all $transition-fast;
+
+        &-active {
+          width: 30px;
+          border-radius: $radius-full;
+          background: $primary-color;
+        }
+      }
+    }
+
+    .swiper-button-prev,
+    .swiper-button-next {
+      width: 50px;
+      height: 50px;
+      background: $white;
+      border-radius: 50%;
+      box-shadow: $shadow-md;
+      transition: all $transition-fast;
+
+      &::after {
+        font-size: $font-size-lg;
+        font-weight: bold;
+        color: $primary-color;
+      }
+
+      &:hover {
+        background: $primary-color;
+        box-shadow: $shadow-lg;
+
+        &::after {
+          color: $white;
+        }
+      }
+
+      @media (max-width: 767px) {
+        display: none;
+      }
+    }
+
+    .swiper-button-prev {
+      left: 10px;
+    }
+
+    .swiper-button-next {
+      right: 10px;
+    }
+  }
+}

@@ -1,0 +1,202 @@
+@use '../../../assets/scss/variables' as *;
+@use '../../../assets/scss/mixins' as *;
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  @include flex-center;
+  padding-top: 80px;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    $white 0%,
+    $off-white 50%,
+    rgba($primary-color, 0.03) 100%
+  );
+
+  &__container {
+    @include container;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-10;
+    align-items: center;
+    min-height: calc(100vh - 160px);
+
+    @include lg {
+      grid-template-columns: 1fr 1fr;
+      gap: $spacing-12;
+    }
+  }
+
+  &__text {
+    @include flex-column;
+    gap: $spacing-6;
+    text-align: center;
+    order: 2; // Below 3D on mobile
+
+    @include lg {
+      text-align: left;
+      order: 1; // Left on desktop
+    }
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: $spacing-2 $spacing-4;
+    background: rgba($primary-color, 0.1);
+    color: $primary-color;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    border-radius: $radius-full;
+    width: fit-content;
+    letter-spacing: 1px;
+    margin: 0 auto;
+
+    @include lg {
+      margin: 0;
+    }
+  }
+
+  &__title {
+    @include heading-1;
+    color: $text-primary;
+    
+    @include xl {
+      font-size: $font-size-7xl;
+    }
+  }
+
+  &__subtitle {
+    @include body-text;
+    max-width: 500px;
+    margin: 0 auto;
+
+    @include lg {
+      margin: 0;
+    }
+  }
+
+  &__buttons {
+    @include flex-center;
+    gap: $spacing-4;
+    flex-wrap: wrap;
+
+    @include lg {
+      justify-content: flex-start;
+    }
+  }
+
+  &__3d {
+    width: 100%;
+    height: 350px; // Increased from 300px
+    display: block;
+    margin-top: $spacing-4;
+    order: 1; // Top on mobile
+
+    @include md {
+      height: 450px;
+      margin-top: 0;
+    }
+
+    @include lg {
+      height: 500px;
+      order: 2; // Right on desktop
+    }
+
+    @include xl {
+      height: 550px;
+    }
+
+    // Children canvas styling handled by react-three-fiber defaults generally filling parent
+    div {
+        width: 100% !important;
+        height: 100% !important;
+    }
+  }
+
+  // Scroll indicator
+  &__scroll {
+    position: absolute;
+    bottom: $spacing-8;
+    left: 50%;
+    transform: translateX(-50%);
+    @include flex-column-center;
+    gap: $spacing-2;
+    color: $text-secondary;
+    font-size: $font-size-xs;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: bounce 2s infinite;
+    
+    // Hide on mobile (must be after mixin to override display: flex)
+    display: none; 
+
+    @include md {
+      display: flex; // Show on desktop
+    }
+  }
+
+  &__scroll-mouse {
+    width: 24px;
+    height: 40px;
+    border: 2px solid $dark-gray;
+    border-radius: 12px;
+    position: relative;
+  }
+
+  &__scroll-wheel {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 8px;
+    background: $primary-color;
+    border-radius: 2px;
+    animation: scroll-wheel 1.5s infinite;
+  }
+
+  // Background decoration
+  &__bg-decoration {
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 80%;
+    height: 150%;
+    background: radial-gradient(
+      circle at center,
+      rgba($primary-color, 0.05) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+    z-index: -1; 
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+@keyframes scroll-wheel {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+}

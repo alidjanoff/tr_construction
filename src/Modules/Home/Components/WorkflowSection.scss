@@ -1,0 +1,106 @@
+@use '../../../assets/scss/variables' as *;
+@use '../../../assets/scss/mixins' as *;
+
+.workflow {
+  background: $light-gray;
+
+  &__timeline {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-8;
+
+    @include md {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-10;
+    }
+
+    @include xl {
+      grid-template-columns: repeat(4, 1fr);
+      gap: $spacing-6;
+    }
+  }
+
+  &__step {
+    position: relative;
+    text-align: center;
+  }
+
+  &__step-number {
+    position: absolute;
+    top: -$spacing-3;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    @include flex-center;
+    background: $primary-gradient;
+    color: $white;
+    font-family: $font-heading;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: 0 4px 15px rgba($primary-color, 0.3);
+  }
+
+  &__step-content {
+    background: $white;
+    padding: $spacing-12 $spacing-6 $spacing-6;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-sm;
+    transition: all $transition-base;
+    height: 100%;
+
+    &:hover {
+      box-shadow: $shadow-lg;
+      transform: translateY(-4px);
+    }
+  }
+
+  &__step-icon {
+    font-size: 2.5rem;
+    margin-bottom: $spacing-4;
+  }
+
+  &__step-title {
+    font-family: $font-heading;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-2;
+  }
+
+  &__step-description {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    line-height: $line-height-relaxed;
+  }
+
+  &__step-connector {
+    display: none;
+
+    @include xl {
+      display: block;
+      position: absolute;
+      top: 50%;
+      right: -$spacing-3;
+      width: $spacing-6;
+      height: 2px;
+      background: linear-gradient(90deg, $primary-color, $primary-light);
+      transform: translateY(-50%); // Center exactly
+
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-left: 8px solid $primary-light;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+      }
+    }
+  }
+}

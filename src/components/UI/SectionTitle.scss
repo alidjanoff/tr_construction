@@ -1,0 +1,92 @@
+@use '../../assets/scss/variables' as *;
+@use '../../assets/scss/mixins' as *;
+
+.section-title {
+  margin-bottom: $spacing-10;
+
+  @include md {
+    margin-bottom: $spacing-12;
+  }
+
+  &--centered {
+    text-align: center;
+
+    .section-title__decoration {
+      justify-content: center;
+    }
+  }
+
+  &--light {
+    .section-title__title {
+      color: $white;
+    }
+
+    .section-title__subtitle {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .section-title__line {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .section-title__dot {
+      background: $white;
+    }
+  }
+
+  &__subtitle {
+    display: block;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $primary-color;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: $spacing-3;
+
+    @include md {
+      font-size: $font-size-base;
+    }
+  }
+
+  &__title {
+    @include heading-2;
+    color: $text-primary;
+    margin-bottom: $spacing-4;
+  }
+
+  &__content {
+    @include body-text;
+    max-width: 600px;
+    margin: 0 auto $spacing-4;
+  }
+
+  &__decoration {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    margin-top: $spacing-4;
+  }
+
+  &__line {
+    width: 50px;
+    height: 2px;
+    background: $primary-color;
+    border-radius: $radius-full;
+
+    @include md {
+      width: 80px;
+    }
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    background: $primary-color;
+    border-radius: 50%;
+    
+    @include md {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}

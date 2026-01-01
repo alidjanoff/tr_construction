@@ -1,0 +1,85 @@
+@use '../../assets/scss/variables' as *;
+@use '../../assets/scss/mixins' as *;
+
+.language-switcher {
+  position: relative;
+
+  &__trigger {
+    @include flex-center;
+    gap: $spacing-2;
+    padding: $spacing-2 $spacing-3;
+    background: transparent;
+    border: 1px solid rgba($anthracite, 0.1);
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $light-gray;
+      border-color: rgba($anthracite, 0.2);
+    }
+  }
+
+  &__flag {
+    font-size: $font-size-lg;
+  }
+
+  &__code {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $text-primary;
+  }
+
+  &__arrow {
+    transition: transform $transition-fast;
+
+    &--open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + $spacing-2);
+    right: 0;
+    min-width: 160px;
+    background: $white;
+    border-radius: $radius-md;
+    box-shadow: $shadow-lg;
+    overflow: hidden;
+    z-index: $z-dropdown;
+    list-style: none;
+    margin: 0;
+    padding: $spacing-1;
+  }
+
+  &__option {
+    @include flex-start;
+    gap: $spacing-3;
+    width: 100%;
+    padding: $spacing-3 $spacing-4;
+    background: transparent;
+    border: none;
+    border-radius: $radius-sm;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background: $light-gray;
+    }
+
+    &--active {
+      background: rgba($primary-color, 0.1);
+
+      .language-switcher__name {
+        color: $primary-color;
+        font-weight: $font-weight-medium;
+      }
+    }
+  }
+
+  &__name {
+    font-size: $font-size-sm;
+    color: $text-primary;
+  }
+}

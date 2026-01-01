@@ -1,0 +1,190 @@
+@use '../assets/scss/variables' as *;
+@use '../assets/scss/mixins' as *;
+
+.not-found {
+  min-height: 100vh;
+  @include flex-center;
+  background: $light-gray;
+  padding: $spacing-8;
+
+  &__container {
+    text-align: center;
+  }
+
+  &__content {
+    @include flex-column-center;
+    gap: $spacing-6;
+  }
+
+  // Construction scene
+  &__scene {
+    position: relative;
+    width: 300px;
+    height: 250px;
+    margin-bottom: $spacing-8;
+
+    @include md {
+      width: 400px;
+      height: 300px;
+    }
+  }
+
+  &__crane {
+    position: absolute;
+    left: 20%;
+    bottom: 40px;
+  }
+
+  &__crane-tower {
+    width: 8px;
+    height: 180px;
+    background: linear-gradient(to bottom, $primary-color, $primary-dark);
+    border-radius: 4px;
+
+    @include md {
+      height: 220px;
+    }
+  }
+
+  &__crane-arm {
+    position: absolute;
+    top: 0;
+    left: 4px;
+    width: 150px;
+    height: 6px;
+    background: $primary-color;
+    transform-origin: left center;
+    animation: crane-swing 4s ease-in-out infinite;
+
+    @include md {
+      width: 200px;
+    }
+  }
+
+  &__crane-cable {
+    position: absolute;
+    top: 6px;
+    left: 130px;
+    width: 2px;
+    height: 60px;
+    background: $dark-gray;
+    animation: cable-swing 4s ease-in-out infinite;
+
+    @include md {
+      left: 180px;
+      height: 80px;
+    }
+  }
+
+  &__crane-hook {
+    position: absolute;
+    top: 65px;
+    left: 115px;
+    animation: hook-swing 4s ease-in-out infinite;
+
+    @include md {
+      top: 85px;
+      left: 165px;
+    }
+  }
+
+  &__404 {
+    display: block;
+    font-family: $font-heading;
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-extrabold;
+    color: $primary-color;
+    background: $white;
+    padding: $spacing-2 $spacing-4;
+    border-radius: $radius-md;
+    box-shadow: $shadow-lg;
+
+    @include md {
+      font-size: $font-size-5xl;
+    }
+  }
+
+  &__building {
+    position: absolute;
+    right: 20%;
+    bottom: 40px;
+    @include flex-column;
+    gap: 4px;
+  }
+
+  &__building-floor {
+    width: 80px;
+    height: 30px;
+    background: $primary-light;
+    border-radius: $radius-sm;
+
+    @include md {
+      width: 100px;
+      height: 40px;
+    }
+
+    &--incomplete {
+      width: 60px;
+      background: $medium-gray;
+      border: 2px dashed $dark-gray;
+
+      @include md {
+        width: 70px;
+      }
+    }
+  }
+
+  &__ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, #8D6E63, #5D4037);
+    border-radius: $radius-md $radius-md 0 0;
+  }
+
+  // Text
+  &__title {
+    font-family: $font-heading;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+
+    @include md {
+      font-size: $font-size-3xl;
+    }
+  }
+
+  &__description {
+    @include body-text;
+    max-width: 400px;
+  }
+}
+
+@keyframes crane-swing {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes cable-swing {
+  0%, 100% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes hook-swing {
+  0%, 100% {
+    transform: translateX(-10px) rotate(-3deg);
+  }
+  50% {
+    transform: translateX(10px) rotate(3deg);
+  }
+}

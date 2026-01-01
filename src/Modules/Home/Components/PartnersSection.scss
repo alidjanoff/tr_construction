@@ -1,0 +1,58 @@
+@use '../../../assets/scss/variables' as *;
+@use '../../../assets/scss/mixins' as *;
+
+.partners {
+  background: $white;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-6;
+
+    @include md {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include lg {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  &__item {
+    @include flex-center;
+    padding: $spacing-6;
+    background: $light-gray;
+    border-radius: $radius-lg;
+    transition: all $transition-base;
+    filter: grayscale(100%);
+    opacity: 0.7;
+
+    &:hover {
+      filter: grayscale(0%);
+      opacity: 1;
+      background: $white;
+      box-shadow: $shadow-md;
+    }
+
+    img {
+      max-width: 120px;
+      max-height: 60px;
+      object-fit: contain;
+    }
+  }
+
+  &__placeholder {
+    @include flex-column-center;
+    gap: $spacing-2;
+  }
+
+  &__placeholder-icon {
+    font-size: 2.5rem;
+    opacity: 0.5;
+  }
+
+  &__placeholder-text {
+    font-size: $font-size-sm;
+    color: $text-muted;
+  }
+}

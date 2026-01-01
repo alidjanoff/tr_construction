@@ -1,0 +1,122 @@
+@use '../../../assets/scss/variables' as *;
+@use '../../../assets/scss/mixins' as *;
+
+.contact {
+  background: $white;
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-10;
+
+    @include lg {
+      grid-template-columns: 1fr 1fr;
+      gap: $spacing-12;
+    }
+  }
+
+  &__form {
+    @include flex-column;
+    gap: $spacing-2;
+  }
+
+  &__form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-4;
+
+    @include md {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  &__info {
+    @include flex-column;
+    gap: $spacing-6;
+  }
+
+  &__info-card {
+    background: $light-gray;
+    padding: $spacing-6;
+    border-radius: $radius-lg;
+    @include flex-column;
+    gap: $spacing-4;
+  }
+
+  &__info-item {
+    @include flex-start;
+    gap: $spacing-4;
+    padding: $spacing-4;
+    background: $white;
+    border-radius: $radius-md;
+    transition: all $transition-fast;
+
+    &:hover {
+      box-shadow: $shadow-md;
+      transform: translateX(5px);
+    }
+  }
+
+  &__info-icon {
+    font-size: 1.5rem;
+    min-width: 40px;
+    height: 40px;
+    @include flex-center;
+    background: rgba($primary-color, 0.1);
+    border-radius: $radius-md;
+  }
+
+  &__info-content {
+    @include flex-column;
+    gap: 2px;
+
+    h4 {
+      font-family: $font-heading;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      color: $text-primary;
+    }
+
+    p,
+    a {
+      font-size: $font-size-sm;
+      color: $text-secondary;
+    }
+
+    a {
+      transition: color $transition-fast;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+
+  &__map {
+    flex: 1;
+    min-height: 200px;
+    background: $light-gray;
+    border-radius: $radius-lg;
+    overflow: hidden;
+
+    @include lg {
+      min-height: 250px;
+    }
+  }
+
+  &__map-placeholder {
+    width: 100%;
+    height: 100%;
+    @include flex-column-center;
+    gap: $spacing-4;
+    color: $text-muted;
+
+    span {
+      font-size: 3rem;
+    }
+
+    p {
+      font-size: $font-size-sm;
+    }
+  }
+}

@@ -1,0 +1,79 @@
+@use '../../assets/scss/variables' as *;
+@use '../../assets/scss/mixins' as *;
+
+.custom-input {
+  position: relative;
+  width: 100%;
+  margin-bottom: $spacing-4;
+
+  &__label {
+    position: absolute;
+    left: $spacing-4;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: $font-size-base;
+    color: $text-muted;
+    pointer-events: none;
+    transition: all $transition-fast;
+    background: $white;
+    padding: 0 $spacing-1;
+  }
+
+  &__field {
+    @include input-base;
+    
+    &--textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+  }
+
+  // Focused state
+  &--focused &__label,
+  &--has-value &__label {
+    top: 0;
+    font-size: $font-size-sm;
+    color: $primary-color;
+  }
+
+  &--focused &__field {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.15);
+  }
+
+  // Error state
+  &--error &__field {
+    border-color: #e53935;
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.15);
+    }
+  }
+
+  &--error &__label {
+    color: #e53935;
+  }
+
+  &__error {
+    display: block;
+    margin-top: $spacing-1;
+    font-size: $font-size-sm;
+    color: #e53935;
+  }
+
+  // Textarea specific
+  &:has(.custom-input__field--textarea) {
+    .custom-input__label {
+      top: $spacing-4;
+      transform: none;
+    }
+
+    &.custom-input--focused,
+    &.custom-input--has-value {
+      .custom-input__label {
+        top: -$spacing-2;
+        transform: none;
+      }
+    }
+  }
+}

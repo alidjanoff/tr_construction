@@ -1,0 +1,150 @@
+// ===================================
+// TR Construction - Main Styles
+// ===================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'reset';
+
+// Google Fonts Import
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+// Base Styles
+body {
+  font-family: $font-primary;
+  font-size: $font-size-base;
+  color: $text-primary;
+  background-color: $white;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  @include flex-column;
+}
+
+// Main Content
+main {
+  flex: 1;
+}
+
+// Container Utility
+.container {
+  @include container;
+}
+
+// Section Utility
+.section {
+  @include section;
+}
+
+// Text Utilities
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: $primary-color;
+}
+
+.text-gradient {
+  @include gradient-text;
+}
+
+// Spacing Utilities
+.mt-auto {
+  margin-top: auto;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+// Animation Classes
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+// Scrollbar Styling
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $light-gray;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $primary-color;
+  border-radius: $radius-full;
+  
+  &:hover {
+    background: $primary-dark;
+  }
+}
+
+// Focus Styles
+:focus-visible {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}
+
+// Image Placeholder
+.img-placeholder {
+  background: linear-gradient(
+    90deg,
+    $light-gray 25%,
+    $medium-gray 50%,
+    $light-gray 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
