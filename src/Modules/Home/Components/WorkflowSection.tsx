@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import SectionTitle from '../../../components/UI/SectionTitle';
@@ -6,7 +5,6 @@ import './WorkflowSection.scss';
 
 const WorkflowSection = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
 
   const steps = [
     { id: 'planning', number: '01' },
@@ -32,8 +30,6 @@ const WorkflowSection = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0, margin: '100px 0px' }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
-              onClick={() => navigate(`/workflow/${step.id}`)}
-              style={{ cursor: 'pointer' }}
             >
               <div className="workflow__step-number">{step.number}</div>
               <div className="workflow__step-content">

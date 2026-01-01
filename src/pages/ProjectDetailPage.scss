@@ -3,98 +3,192 @@
 
 .project-detail {
   padding-top: 120px;
-  padding-bottom: $spacing-8;
+  padding-bottom: 80px;
 
   &__container {
-    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+    max-width: $container-lg; // Limit width for better readability
+    margin: 0 auto;
+  }
+
+  &__top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-4;
   }
 
   &__back-btn {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: $spacing-2;
+    gap: $spacing-3;
     color: $text-secondary;
     font-weight: $font-weight-medium;
-    margin-bottom: $spacing-6;
-    transition: color $transition-fast;
+    transition: color $transition-base;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: $font-size-base;
+    text-decoration: none;
 
     &:hover {
       color: $primary-color;
     }
   }
 
-  &__content {
-    background: white;
-    border-radius: $radius-lg;
-    box-shadow: $shadow-lg;
-    overflow: hidden;
+  &__back-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: $primary-color;
+    color: $white;
+    border-radius: $radius-sm;
+    font-size: 1.2rem;
+    transition: background-color $transition-base;
+
+    &:hover {
+      background-color: $primary-dark;
+    }
   }
 
+  // Header section with Title and Meta
+  &__header {
+    margin-bottom: $spacing-6;
+  }
+
+  &__title {
+    @include heading-2;
+    margin-bottom: $spacing-3;
+    color: $text-primary;
+  }
+
+  &__meta {
+    @include flex-start;
+    gap: $spacing-4;
+    flex-wrap: wrap;
+    color: $text-secondary;
+    font-size: $font-size-sm;
+
+    &-item {
+      display: inline-flex;
+      align-items: center;
+      gap: $spacing-2;
+      background: $light-gray;
+      padding: $spacing-2 $spacing-4;
+      border-radius: $radius-full;
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  // Main Image
   &__image-wrapper {
     width: 100%;
-    height: 300px;
-    @include md {
-      height: 450px;
-    }
-    
+    border-radius: $radius-lg;
+    overflow: hidden;
+    box-shadow: $shadow-md;
+    height: auto;
+    max-height: 600px;
+    margin-bottom: $spacing-8;
+
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
   }
 
-  &__info {
-    padding: $spacing-6;
-    @include md {
-      padding: $spacing-8;
-    }
-  }
-
-  &__header {
-    margin-bottom: $spacing-6;
-    border-bottom: 1px solid $light-gray;
-    padding-bottom: $spacing-4;
-  }
-
-  &__title {
-    font-family: $font-heading;
-    font-size: $font-size-3xl;
-    color: $text-primary;
-    margin-bottom: $spacing-2;
-  }
-
-  &__meta {
-    display: flex;
-    gap: $spacing-6;
-    color: $text-secondary;
-    font-size: $font-size-sm;
-  }
-
-  &__meta-item {
-    display: flex;
-    align-items: center;
-    gap: $spacing-2;
-  }
-
+  // Content Body
   &__body {
-    color: $text-secondary;
-    line-height: 1.8;
+    max-width: 100%;
 
     h3 {
-      color: $text-primary;
-      font-size: $font-size-xl;
-      margin: $spacing-6 0 $spacing-3;
+      @include heading-3;
+      margin-bottom: $spacing-4;
+      margin-top: $spacing-8;
+      
+      &:first-child {
+        margin-top: 0;
+      }
     }
-    
+
     p {
+      @include body-text;
+      color: $text-secondary;
       margin-bottom: $spacing-4;
+      font-size: $font-size-lg; // Slightly larger for readability
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: $spacing-6;
+      display: grid;
+      gap: $spacing-3;
+      
+      @include md {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      li {
+        @include body-text;
+        color: $text-secondary;
+        position: relative;
+        padding-left: $spacing-6;
+
+        &::before {
+          content: '•';
+          color: $primary-color;
+          font-weight: bold;
+          position: absolute;
+          left: 0;
+          top: 0;
+          font-size: 1.2em;
+        }
+      }
+    }
+  }
+
+  // Gallery
+  .project-detail__gallery-slider {
+    margin-top: $spacing-8;
+    padding-bottom: $spacing-12; // Space for pagination
+
+    h3 {
+      @include heading-3;
+      margin-bottom: $spacing-6;
+    }
+
+    .swiper {
+      overflow: visible;
+      padding-bottom: $spacing-10; // Add space inside swiper for pagination
+    }
+
+    .swiper-pagination {
+      bottom: 0; // Position at bottom of padding
+      
+      &-bullet-active {
+        background-color: $primary-color;
+      }
     }
     
-    ul {
-      list-style-type: disc;
-      padding-left: $spacing-5;
-      margin-bottom: $spacing-4;
+    // Hide default navigation buttons just in case or if they persist
+    .swiper-button-next,
+    .swiper-button-prev {
+      display: none !important;
+    }
+    
+    // Gallery images
+    .swiper-slide {
+      img {
+        border-radius: $radius-md;
+        box-shadow: $shadow-sm;
+      }
     }
   }
 }

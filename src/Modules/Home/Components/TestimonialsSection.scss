@@ -1,11 +1,17 @@
 @use '../../../assets/scss/variables' as *;
 @use '../../../assets/scss/mixins' as *;
 
+// .swiper{
+//   overflow: visible;
+// }
+
 .testimonials {
   background: $light-gray;
 
   &__swiper {
     padding-bottom: $spacing-12;
+    overflow: visible; // Fix: Allow hover effects to be visible outside container
+
 
     .swiper-pagination {
       bottom: 0;

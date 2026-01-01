@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
+import { BsGeoAlt, BsTelephone, BsEnvelope, BsClock } from 'react-icons/bs';
 import SectionTitle from '../../../components/UI/SectionTitle';
 import CustomInput from '../../../components/UI/CustomInput';
 import CustomButton from '../../../components/UI/CustomButton';
@@ -30,7 +31,6 @@ const ContactSection = () => {
   }, []);
 
   const validateForm = (): boolean => {
-    // ... code omitted for brevity but actually kept intact by the tool if I replace correctly
     const newErrors: Partial<ContactFormData> = {};
     if (!formData.name.trim()) newErrors.name = 'Ad daxil edin';
     if (!formData.email.trim()) {
@@ -161,21 +161,21 @@ const ContactSection = () => {
           >
             <div className="contact__info-card">
               <div className="contact__info-item">
-                <div className="contact__info-icon">📍</div>
+                <div className="contact__info-icon"><BsGeoAlt /></div>
                 <div className="contact__info-content">
                   <h4>{t('contact.info.address')}</h4>
                   <p>{t('contact.info.addressValue')}</p>
                 </div>
               </div>
               <div className="contact__info-item">
-                <div className="contact__info-icon">📞</div>
+                <div className="contact__info-icon"><BsTelephone /></div>
                 <div className="contact__info-content">
                   <h4>{t('contact.info.phone')}</h4>
                   <a href="tel:+994XXXXXXXX">{t('contact.info.phoneValue')}</a>
                 </div>
               </div>
               <div className="contact__info-item">
-                <div className="contact__info-icon">✉️</div>
+                <div className="contact__info-icon"><BsEnvelope /></div>
                 <div className="contact__info-content">
                   <h4>{t('contact.info.email')}</h4>
                   <a href="mailto:info@trconstruction.az">
@@ -184,7 +184,7 @@ const ContactSection = () => {
                 </div>
               </div>
               <div className="contact__info-item">
-                <div className="contact__info-icon">🕐</div>
+                <div className="contact__info-icon"><BsClock /></div>
                 <div className="contact__info-content">
                   <h4>{t('contact.info.workingHours')}</h4>
                   <p>{t('contact.info.workingHoursValue')}</p>

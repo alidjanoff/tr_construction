@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { SlSocialFacebook, SlSocialInstagram, SlSocialLinkedin, SlSocialYoutube, SlLocationPin, SlPhone, SlEnvolope, SlClock } from 'react-icons/sl';
 import logo from '../../assets/images/logo.jpeg';
 import './Footer.scss';
 
 const Footer = () => {
   const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
-
-
 
   const services = [
     { key: 'interior', label: t('services.items.interior.title') },
@@ -17,13 +16,11 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { name: 'Facebook', icon: '📘', url: '#' },
-    { name: 'Instagram', icon: '📷', url: '#' },
-    { name: 'LinkedIn', icon: '💼', url: '#' },
-    { name: 'YouTube', icon: '🎬', url: '#' },
+    { name: 'Facebook', icon: <SlSocialFacebook />, url: '#' },
+    { name: 'Instagram', icon: <SlSocialInstagram />, url: '#' },
+    { name: 'LinkedIn', icon: <SlSocialLinkedin />, url: '#' },
+    { name: 'YouTube', icon: <SlSocialYoutube />, url: '#' },
   ];
-
-
 
   return (
     <footer className="footer">
@@ -83,19 +80,19 @@ const Footer = () => {
             <h4 className="footer__title">{t('footer.contactInfo')}</h4>
             <ul className="footer__contact">
               <li>
-                <span className="footer__contact-icon">📍</span>
+                <span className="footer__contact-icon"><SlLocationPin /></span>
                 <span>{t('contact.info.addressValue')}</span>
               </li>
               <li>
-                <span className="footer__contact-icon">📞</span>
+                <span className="footer__contact-icon"><SlPhone /></span>
                 <a href="tel:+994XXXXXXXX">{t('contact.info.phoneValue')}</a>
               </li>
               <li>
-                <span className="footer__contact-icon">✉️</span>
+                <span className="footer__contact-icon"><SlEnvolope /></span>
                 <a href="mailto:info@trconstruction.az">{t('contact.info.emailValue')}</a>
               </li>
               <li>
-                <span className="footer__contact-icon">🕐</span>
+                <span className="footer__contact-icon"><SlClock /></span>
                 <span>{t('contact.info.workingHoursValue')}</span>
               </li>
             </ul>

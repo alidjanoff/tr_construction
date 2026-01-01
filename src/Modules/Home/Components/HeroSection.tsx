@@ -1,105 +1,69 @@
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import CustomButton from '../../../components/UI/CustomButton';
-import ConstructionSiteScene from './ConstructionSiteScene';
 import './HeroSection.scss';
+
+// Construction images
+const heroImage1 = 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop';
+const heroImage2 = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop';
 
 const HeroSection = () => {
   const { t } = useTranslation();
 
-  const handleScrollTo = (id: string) => {
-    const element = document.querySelector(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <section className="hero" id="hero">
       <div className="hero__container">
-        <div className="hero__content">
+        {/* Top Section: Title left, Info + Buttons right */}
+        <div className="hero__top">
           <motion.div
-            className="hero__text"
+            className="hero__title-wrapper"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <motion.span
-              className="hero__badge"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              TR Construction
-            </motion.span>
-            
-            <motion.h1
-              className="hero__title"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-            >
-              {t('hero.title')}
-            </motion.h1>
-            
-            <motion.p
-              className="hero__subtitle"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              {t('hero.subtitle')}
-            </motion.p>
-
-            <motion.div
-              className="hero__buttons"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-            >
-              <CustomButton
-                variant="primary"
-                size="lg"
-                onClick={() => handleScrollTo('#about')}
-              >
-                {t('hero.cta')}
-              </CustomButton>
-              <CustomButton
-                variant="outline"
-                size="lg"
-                onClick={() => handleScrollTo('#projects')}
-              >
-                {t('hero.ctaSecondary')}
-              </CustomButton>
-            </motion.div>
+            <h1 className="hero__title">{t('hero.title')}</h1>
           </motion.div>
 
           <motion.div
-            className="hero__3d"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            className="hero__info"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
           >
-            <ConstructionSiteScene />
+            <p className="hero__subtitle">{t('hero.subtitle')}</p>
+            
+            {/* Buttons under info text */}
+            <div className="hero__buttons">
+              <Link to="/contact" className="hero__button-link">
+                <CustomButton variant="primary" size="lg">
+                  {t('nav.contact')}
+                </CustomButton>
+              </Link>
+              <Link to="/about" className="hero__button-link">
+                <CustomButton variant="outline" size="lg">
+                  {t('nav.about')}
+                </CustomButton>
+              </Link>
+            </div>
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Images Section */}
         <motion.div
-          className="hero__scroll"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.5 }}
+          className="hero__images"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <div className="hero__scroll-mouse">
-            <div className="hero__scroll-wheel" />
+          <div className="hero__image-large">
+            <img src={heroImage1} alt="Construction site" />
           </div>
-          <span>Scroll</span>
+          <div className="hero__image-small">
+            <img src={heroImage2} alt="Modern building" />
+          </div>
         </motion.div>
       </div>
-
-      {/* Background decoration */}
-      <div className="hero__bg-decoration" />
     </section>
   );
 };

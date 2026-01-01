@@ -1,18 +1,24 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Autoplay } from 'swiper/modules';
 import { useHome } from '../Provider/HomeProvider';
 import SectionTitle from '../../../components/UI/SectionTitle';
-import Modal from '../../../components/UI/Modal';
+import { SlBriefcase, SlGlobe, SlBadge, SlLayers, SlDiamond } from 'react-icons/sl';
+import 'swiper/css';
+import 'swiper/css/pagination';
 import './PartnersSection.scss';
 
 const PartnersSection = () => {
   const { t } = useTranslation();
   const { homeData } = useHome();
-  const [selectedPartner, setSelectedPartner] = useState<any>(null);
+  const partners = homeData?.partners || [];
 
-  // Placeholder partner logos - in production these would be real logos
-  const partnerPlaceholders = ['🏢', '🏗️', '🏛️', '🏠', '🏭'];
+  // Partner icons using react-icons/sl
+  const partnerIcons = [SlBriefcase, SlGlobe, SlBadge, SlLayers, SlDiamond];
+
+  // AutoPlay configuration logic: Only autoplay if more than 5 items
+  const shouldAutoplay = partners.length > 5;
 
   return (
     <section className="partners section">
@@ -23,51 +29,50 @@ const PartnersSection = () => {
         />
 
         <motion.div
-          className="partners__grid"
+          className="partners__slider"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6 }}
         >
-          {homeData?.partners.map((partner, index) => (
-            <motion.div
-              key={partner.id}
-              className="partners__item"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-              style={{ cursor: 'pointer' }}
-              onClick={() => setSelectedPartner(partner)}
-            >
-              {partner.logo ? (
-                <img src={partner.logo} alt={partner.name} />
-              ) : (
-                <div className="partners__placeholder">
-                  <span className="partners__placeholder-icon">
-                    {partnerPlaceholders[index % partnerPlaceholders.length]}
-                  </span>
-                  <span className="partners__placeholder-text">
-                    Partner {index + 1}
-                  </span>
-                </div>
-              )}
-            </motion.div>
-          ))}
+          <Swiper
+            modules={[Pagination, Autoplay]}
+            spaceBetween={24}
+            slidesPerView={2}
+            loop={true}
+            pagination={{ clickable: true }}
+            autoplay={shouldAutoplay ? { delay: 3000, disableOnInteraction: false } : false}
+            breakpoints={{
+              576: { slidesPerView: 3 },
+              768: { slidesPerView: 4 },
+              992: { slidesPerView: 5 },
+            }}
+            className="partners__swiper"
+          >
+            {partners.map((partner, index) => {
+              const IconComponent = partnerIcons[index % partnerIcons.length];
+              return (
+                <SwiperSlide key={partner.id}>
+                  <div className="partners__item">
+                    {partner.logo ? (
+                      <img src={partner.logo} alt={partner.name} />
+                    ) : (
+                      <div className="partners__placeholder">
+                        <span className="partners__placeholder-icon">
+                          <IconComponent />
+                        </span>
+                        <span className="partners__placeholder-text">
+                          Partner {index + 1}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
         </motion.div>
       </div>
-
-      <Modal
-        isOpen={!!selectedPartner}
-        onClose={() => setSelectedPartner(null)}
-        title={selectedPartner?.name || 'Partner Details'}
-      >
-        <p>
-          We are proud to collaborate with {selectedPartner?.name || 'this partner'}. 
-          Together we have achieved significant milestones in the construction industry.
-        </p>
-        <p>
-           Reliable partnership is the key to our success.
-        </p>
-      </Modal>
     </section>
   );
 };

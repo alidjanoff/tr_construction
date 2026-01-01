@@ -4,8 +4,7 @@
 .hero {
   position: relative;
   min-height: 100vh;
-  @include flex-center;
-  padding-top: 80px;
+  padding: 100px 0 40px; // Reduced padding
   overflow: hidden;
   background: linear-gradient(
     135deg,
@@ -18,147 +17,163 @@
     @include container;
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6; // Reduced gap
+    height: 100%; // Ensure container takes height for auto margins
+    flex: 1;
   }
 
-  &__content {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: $spacing-10;
-    align-items: center;
-    min-height: calc(100vh - 160px);
+  // Top section: Title left, Info + Buttons right
+  &__top {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
 
     @include lg {
-      grid-template-columns: 1fr 1fr;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center; // Center alignment vertically
       gap: $spacing-12;
     }
   }
 
-  &__text {
-    @include flex-column;
-    gap: $spacing-6;
-    text-align: center;
-    order: 2; // Below 3D on mobile
+  &__title-wrapper {
+    flex: 1;
+    max-width: 100%;
 
     @include lg {
-      text-align: left;
-      order: 1; // Left on desktop
-    }
-  }
-
-  &__badge {
-    display: inline-block;
-    padding: $spacing-2 $spacing-4;
-    background: rgba($primary-color, 0.1);
-    color: $primary-color;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-medium;
-    border-radius: $radius-full;
-    width: fit-content;
-    letter-spacing: 1px;
-    margin: 0 auto;
-
-    @include lg {
-      margin: 0;
+      max-width: 55%;
     }
   }
 
   &__title {
     @include heading-1;
     color: $text-primary;
+    line-height: 1.1;
     
     @include xl {
-      font-size: $font-size-7xl;
+      font-size: $font-size-6xl;
+    }
+  }
+
+  &__info {
+    flex: 1;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+
+    @include lg {
+      max-width: 40%;
+      padding-top: $spacing-2;
     }
   }
 
   &__subtitle {
     @include body-text;
-    max-width: 500px;
-    margin: 0 auto;
-
-    @include lg {
-      margin: 0;
-    }
+    color: $text-secondary;
+    line-height: 1.7;
   }
 
+  // Buttons - uniform size
   &__buttons {
-    @include flex-center;
+    display: flex;
+    justify-content: center;
     gap: $spacing-4;
-    flex-wrap: wrap;
 
     @include lg {
       justify-content: flex-start;
     }
   }
 
-  &__3d {
+  &__button-link {
+    text-decoration: none;
+    flex: 1;
+    max-width: 160px;
+
+    @include sm {
+      flex: 0 0 auto;
+      max-width: none;
+    }
+
+    // Make buttons same size
+    .custom-button {
+      width: 100%;
+      min-width: 140px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @include sm {
+        min-width: 160px;
+      }
+    }
+  }
+
+  // Images section
+  &__images {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-6;
+    margin-top: auto; // Push to bottom
+
+    @include md {
+      flex-direction: row;
+      gap: $spacing-6;
+    }
+  }
+
+  &__image-large {
     width: 100%;
-    height: 350px; // Increased from 300px
-    display: block;
-    margin-top: $spacing-4;
-    order: 1; // Top on mobile
+    border-radius: $radius-xl;
+    overflow: hidden;
+    box-shadow: $shadow-lg;
 
     @include md {
-      height: 450px;
-      margin-top: 0;
+      width: 65%;
     }
 
-    @include lg {
-      height: 500px;
-      order: 2; // Right on desktop
-    }
+    img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
 
-    @include xl {
-      height: 550px;
-    }
+      @include md {
+        height: 400px;
+      }
 
-    // Children canvas styling handled by react-three-fiber defaults generally filling parent
-    div {
-        width: 100% !important;
-        height: 100% !important;
+      &:hover {
+        transform: scale(1.02);
+      }
     }
   }
 
-  // Scroll indicator
-  &__scroll {
-    position: absolute;
-    bottom: $spacing-8;
-    left: 50%;
-    transform: translateX(-50%);
-    @include flex-column-center;
-    gap: $spacing-2;
-    color: $text-secondary;
-    font-size: $font-size-xs;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    animation: bounce 2s infinite;
-    
-    // Hide on mobile (must be after mixin to override display: flex)
-    display: none; 
+  &__image-small {
+    display: none;
 
     @include md {
-      display: flex; // Show on desktop
+      display: block;
+      width: 35%;
+      border-radius: $radius-xl;
+      overflow: hidden;
+      box-shadow: $shadow-lg;
     }
-  }
 
-  &__scroll-mouse {
-    width: 24px;
-    height: 40px;
-    border: 2px solid $dark-gray;
-    border-radius: 12px;
-    position: relative;
-  }
+    img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
 
-  &__scroll-wheel {
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
-    height: 8px;
-    background: $primary-color;
-    border-radius: 2px;
-    animation: scroll-wheel 1.5s infinite;
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
   }
 
   // Background decoration
@@ -175,28 +190,5 @@
     );
     pointer-events: none;
     z-index: -1; 
-  }
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateX(-50%) translateY(0);
-  }
-  40% {
-    transform: translateX(-50%) translateY(-10px);
-  }
-  60% {
-    transform: translateX(-50%) translateY(-5px);
-  }
-}
-
-@keyframes scroll-wheel {
-  0% {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(10px);
   }
 }
