@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { BsArrowLeft } from 'react-icons/bs';
+import { BsArrowLeft, BsGeoAlt, BsTag } from 'react-icons/bs';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { useHome } from '../Modules/Home/Provider/HomeProvider';
@@ -18,7 +18,7 @@ const ProjectDetailPage = () => {
 
   // Find the project by ID
   const project = homeData?.projects.find((p) => String(p.id) === id);
-  
+
   // State for the main image (defaulting to project image)
   const [mainImage, setMainImage] = useState(project ? project.image : '');
 
@@ -52,16 +52,7 @@ const ProjectDetailPage = () => {
   return (
     <main className="project-detail">
       <div className="project-detail__container container">
-        <div className="project-detail__top-bar">
-          <button onClick={() => navigate(-1)} className="project-detail__back-btn">
-            <span className="project-detail__back-icon">
-              <BsArrowLeft />
-            </span>
-            {t('common.back') || 'Geri'}
-          </button>
-        </div>
-
-        <motion.div 
+        <motion.div
           className="project-detail__content-wrapper"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -69,14 +60,21 @@ const ProjectDetailPage = () => {
         >
           {/* Header */}
           <header className="project-detail__header">
-            <h1 className="project-detail__title">{project.title}</h1>
+            <div className="project-detail__title-row">
+              <button onClick={() => navigate(-1)} className="project-detail__back-btn">
+                <span className="project-detail__back-icon">
+                  <BsArrowLeft />
+                </span>
+              </button>
+              <h1 className="project-detail__title">{project.title}</h1>
+            </div>
             <div className="project-detail__meta">
               <span className="project-detail__meta-item">
-                📍 {project.location}
+                <BsGeoAlt /> {project.location}
               </span>
               {project.category && (
                 <span className="project-detail__meta-item">
-                  🏷️ {project.category}
+                  <BsTag /> {project.category}
                 </span>
               )}
             </div>
@@ -84,32 +82,26 @@ const ProjectDetailPage = () => {
 
           {/* Main Image */}
           <div className="project-detail__image-wrapper">
-             <motion.img 
-               key={mainImage} // Re-animate on change
-               src={mainImage} 
-               alt={project.title}
-               initial={{ opacity: 0 }}
-               animate={{ opacity: 1 }}
-               transition={{ duration: 0.3 }}
-             />
+            <motion.img
+              key={mainImage} // Re-animate on change
+              src={mainImage}
+              alt={project.title}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            />
           </div>
 
           {/* Body Content */}
           <div className="project-detail__body">
             <h3>Project Overview</h3>
             <p>
-              {t('projects.detailDescription') || 
-              `This prestigious project in ${project.location} represents our commitment to quality and innovation. 
+              {t('projects.detailDescription') ||
+                `This prestigious project in ${project.location} represents our commitment to quality and innovation. 
               Executed with precision planning and expert craftsmanship, it stands as a testament to modern engineering.`}
             </p>
-            
-            <h3>Key Features</h3>
-            <ul>
-              <li>High-grade materials ensuring longevity only.</li>
-              <li>Sustainable construction practices.</li>
-              <li>Completed on time and within budget.</li>
-              <li>Strict adherence to safety standards.</li>
-            </ul>
+
+
 
             {/* Gallery */}
             <div className="project-detail__gallery-slider">
@@ -127,11 +119,11 @@ const ProjectDetailPage = () => {
                 {galleryImages.map((imgUrl, i) => (
                   <SwiperSlide key={i} onClick={() => setMainImage(imgUrl)} style={{ cursor: 'pointer' }}>
                     <div style={{ height: '150px', background: '#eee', borderRadius: '8px', overflow: 'hidden', border: mainImage === imgUrl ? '3px solid #1B5E3A' : 'none' }}>
-                       <img 
-                         src={imgUrl} 
-                         alt={`Gallery ${i}`}
-                         style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                       />
+                      <img
+                        src={imgUrl}
+                        alt={`Gallery ${i}`}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
                     </div>
                   </SwiperSlide>
                 ))}

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { BsGeoAlt } from 'react-icons/bs';
 import './ProjectCard.scss';
 
 interface ProjectCardProps {
@@ -41,7 +42,7 @@ const ProjectCard = ({ image, title, location, category, onClick }: ProjectCardP
       <div className="project-card__content">
         <h3 className="project-card__title">{title}</h3>
         <p className="project-card__location">
-          <span className="project-card__location-icon">📍</span>
+          <BsGeoAlt className="project-card__location-icon" />
           {location}
         </p>
       </div>

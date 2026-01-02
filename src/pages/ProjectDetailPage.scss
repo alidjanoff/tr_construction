@@ -61,9 +61,15 @@
     margin-bottom: $spacing-6;
   }
 
+  &__title-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-4;
+    margin-bottom: $spacing-3;
+  }
+
   &__title {
     @include heading-2;
-    margin-bottom: $spacing-3;
     color: $text-primary;
   }
 
@@ -111,7 +117,7 @@
       @include heading-3;
       margin-bottom: $spacing-4;
       margin-top: $spacing-8;
-      
+
       &:first-child {
         margin-top: 0;
       }
@@ -130,7 +136,7 @@
       margin-bottom: $spacing-6;
       display: grid;
       gap: $spacing-3;
-      
+
       @include md {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -165,24 +171,24 @@
     }
 
     .swiper {
-      overflow: visible;
+      overflow: hidden;
       padding-bottom: $spacing-10; // Add space inside swiper for pagination
     }
 
     .swiper-pagination {
       bottom: 0; // Position at bottom of padding
-      
+
       &-bullet-active {
         background-color: $primary-color;
       }
     }
-    
+
     // Hide default navigation buttons just in case or if they persist
     .swiper-button-next,
     .swiper-button-prev {
       display: none !important;
     }
-    
+
     // Gallery images
     .swiper-slide {
       img {
