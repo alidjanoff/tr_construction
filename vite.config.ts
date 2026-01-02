@@ -1,18 +1,27 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+
   server: {
-    host: true, // Listen on all local IPs
+    host: true,
     port: 5173,
   },
+
+  preview: {
+    host: true,
+    port: 4173,
+    allowedHosts: [
+      'trmmc.az',
+      'www.trmmc.az'
+    ],
+  },
+
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          // Split vendor chunks
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'animation': ['framer-motion'],
           'swiper': ['swiper'],
