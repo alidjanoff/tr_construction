@@ -22,7 +22,15 @@
     }
 
     @include lg {
-      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      grid-template-columns: 1.5fr 1fr 1.5fr;
+    }
+
+    // Align last column (contact) to the right
+    > *:last-child {
+      @include lg {
+        text-align: right;
+        align-items: flex-end;
+      }
     }
   }
 
@@ -123,6 +131,10 @@
       gap: $spacing-3;
       font-size: $font-size-sm;
       color: rgba(255, 255, 255, 0.7);
+
+      @include lg {
+        justify-content: flex-end;
+      }
     }
 
     a {

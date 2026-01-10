@@ -66,25 +66,25 @@ class HomeService {
           services: [
             {
               id: '1',
-              icon: '🏠',
+              icon: 'SlPencil',
               titleKey: 'services.items.interior.title',
               descriptionKey: 'services.items.interior.description',
             },
             {
               id: '2',
-              icon: '🏢',
+              icon: 'SlHome',
               titleKey: 'services.items.exterior.title',
               descriptionKey: 'services.items.exterior.description',
             },
             {
               id: '3',
-              icon: '🏗️',
+              icon: 'SlWrench',
               titleKey: 'services.items.construction.title',
               descriptionKey: 'services.items.construction.description',
             },
             {
               id: '4',
-              icon: '🔧',
+              icon: 'SlSettings',
               titleKey: 'services.items.renovation.title',
               descriptionKey: 'services.items.renovation.description',
             },

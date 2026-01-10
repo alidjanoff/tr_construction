@@ -1,75 +1,57 @@
 @use '../../assets/scss/variables' as *;
 @use '../../assets/scss/mixins' as *;
 
-.loader {
-  @include flex-center;
-  padding: $spacing-4;
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $spacing-8;
+  width: 100%;
 
-  &--sm {
-    .loader__spinner {
-      width: 24px;
-      height: 24px;
-    }
+  &--full {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: $white;
+    z-index: 9999; // Ensure it's above header (z-sticky: 200) and everything else
+    padding: 0;
   }
+}
 
-  &--md {
-    .loader__spinner {
-      width: 40px;
-      height: 40px;
-    }
-  }
+.spinner {
+  position: relative;
+  
+  &--sm { width: 30px; height: 30px; }
+  &--md { width: 50px; height: 50px; }
+  &--lg { width: 80px; height: 80px; }
 
-  &--lg {
-    .loader__spinner {
-      width: 60px;
-      height: 60px;
-    }
-  }
-
-  &--light {
-    .loader__ring {
-      border-color: rgba(255, 255, 255, 0.2);
-      border-top-color: $white;
-    }
-  }
-
-  &__spinner {
-    position: relative;
-  }
-
-  &__ring {
+  &__circle {
+    box-sizing: border-box;
+    display: block;
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 3px solid rgba($primary-color, 0.2);
-    border-top-color: $primary-color;
+    border: 3px solid transparent;
     border-radius: 50%;
-    animation: spin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    animation: spinner-spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-top-color: $primary-color;
 
-    &:nth-child(1) {
-      animation-delay: -0.45s;
-    }
-
-    &:nth-child(2) {
-      animation-delay: -0.3s;
-      width: 75%;
-      height: 75%;
-      top: 12.5%;
-      left: 12.5%;
-    }
-
-    &:nth-child(3) {
-      animation-delay: -0.15s;
-      width: 50%;
-      height: 50%;
-      top: 25%;
-      left: 25%;
+    &::before {
+      content: "";
+      box-sizing: border-box;
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 3px solid rgba($primary-color, 0.1);
+      border-radius: 50%;
     }
   }
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes spinner-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

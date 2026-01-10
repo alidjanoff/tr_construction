@@ -23,7 +23,7 @@
     @include input-base;
     
     &--textarea {
-      resize: vertical;
+      resize: none;
       min-height: 120px;
     }
   }

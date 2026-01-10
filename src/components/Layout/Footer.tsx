@@ -8,16 +8,11 @@ const Footer = () => {
   const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
-  const services = [
-    { key: 'interior', label: t('services.items.interior.title') },
-    { key: 'exterior', label: t('services.items.exterior.title') },
-    { key: 'construction', label: t('services.items.construction.title') },
-    { key: 'renovation', label: t('services.items.renovation.title') },
-  ];
+
 
   const socialLinks = [
     { name: 'Facebook', icon: <SlSocialFacebook />, url: '#' },
-    { name: 'Instagram', icon: <SlSocialInstagram />, url: '#' },
+    { name: 'Instagram', icon: <SlSocialInstagram />, url: 'https://www.instagram.com/trmmc.az/' },
     { name: 'LinkedIn', icon: <SlSocialLinkedin />, url: '#' },
     { name: 'YouTube', icon: <SlSocialYoutube />, url: '#' },
   ];
@@ -61,19 +56,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Services */}
-          <div className="footer__column">
-            <h4 className="footer__title">{t('footer.services')}</h4>
-            <ul className="footer__links">
-              {services.map((service) => (
-                <li key={service.key}>
-                  <Link to="/services">
-                    {service.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+
 
           {/* Contact Info */}
           <div className="footer__column">

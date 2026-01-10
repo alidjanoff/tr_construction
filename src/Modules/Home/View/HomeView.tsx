@@ -1,4 +1,5 @@
-// import { HomeProvider } from '../Provider/HomeProvider';
+import { useHome } from '../Provider/HomeProvider';
+import Loader from '../../../components/UI/Loader';
 import HeroSection from '../Components/HeroSection';
 import AboutSection from '../Components/AboutSection';
 import ServicesSection from '../Components/ServicesSection';
@@ -10,6 +11,12 @@ import TestimonialsSection from '../Components/TestimonialsSection';
 import ContactSection from '../Components/ContactSection';
 
 const HomeView = () => {
+  const { isLoading } = useHome();
+
+  if (isLoading) {
+    return <Loader fullPage size="lg" />;
+  }
+
   return (
     <main>
       <HeroSection />

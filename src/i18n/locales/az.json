@@ -111,7 +111,8 @@
     "sectionTitle": "Əlaqə",
     "sectionSubtitle": "Bizimlə əlaqə saxlayın",
     "form": {
-      "name": "Ad Soyad",
+      "name": "Ad",
+      "surname": "Soyad",
       "email": "E-poçt",
       "phone": "Telefon",
       "subject": "Mövzu",
@@ -121,9 +122,12 @@
       "success": "Mesajınız uğurla göndərildi!",
       "error": "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.",
       "errorName": "Ad daxil edin",
+      "errorSurname": "Soyad daxil edin",
       "errorEmail": "E-poçt daxil edin",
       "errorEmailInvalid": "Düzgün e-poçt daxil edin",
-      "errorMessage": "Mesaj daxil edin"
+      "errorMessage": "Mesaj daxil edin",
+      "errorPhone": "Telefon nömrəsi daxil edin",
+      "errorPhoneInvalid": "Düzgün telefon nömrəsi daxil edin"
     },
     "info": {
       "address": "Ünvan",

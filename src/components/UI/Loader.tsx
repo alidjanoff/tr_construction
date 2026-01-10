@@ -2,24 +2,14 @@ import './Loader.scss';
 
 interface LoaderProps {
   size?: 'sm' | 'md' | 'lg';
-  light?: boolean;
+  fullPage?: boolean;
 }
 
-const Loader = ({ size = 'md', light = false }: LoaderProps) => {
-  const classes = [
-    'loader',
-    `loader--${size}`,
-    light && 'loader--light',
-  ]
-    .filter(Boolean)
-    .join(' ');
-
+const Loader = ({ size = 'md', fullPage = false }: LoaderProps) => {
   return (
-    <div className={classes}>
-      <div className="loader__spinner">
-        <div className="loader__ring" />
-        <div className="loader__ring" />
-        <div className="loader__ring" />
+    <div className={`loader-container ${fullPage ? 'loader-container--full' : ''}`}>
+      <div className={`spinner spinner--${size}`}>
+        <div className="spinner__circle"></div>
       </div>
     </div>
   );

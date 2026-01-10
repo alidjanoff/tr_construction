@@ -15,6 +15,26 @@ const ProjectsSection = () => {
   const { homeData } = useHome();
   const navigate = useNavigate();
 
+  // Helper function to create slug from title
+  const createSlug = (title: string) => {
+    // Transliterate Azerbaijani characters
+    const transliterated = title
+      .replace(/ə/gi, 'e')
+      .replace(/ı/gi, 'i')
+      .replace(/ş/gi, 'sh')
+      .replace(/ç/gi, 'ch')
+      .replace(/ö/gi, 'o')
+      .replace(/ü/gi, 'u')
+      .replace(/ğ/gi, 'g');
+    
+    return transliterated
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  };
+
   return (
     <section className="projects section" id="projects">
       <div className="projects__container container">
@@ -52,7 +72,7 @@ const ProjectsSection = () => {
                   title={project.title}
                   location={project.location}
                   category={project.category}
-                  onClick={() => navigate(`/projects/${project.id}`)}
+                  onClick={() => navigate(`/projects/${createSlug(project.title)}`)}
                 />
               </SwiperSlide>
             ))}

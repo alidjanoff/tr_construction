@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
-import IntroScreen from './components/UI/IntroScreen';
 import { HomeProvider } from './Modules/Home/Provider/HomeProvider';
 import HomeView from './Modules/Home/View/HomeView';
 import Loader from './components/UI/Loader';
@@ -18,27 +17,20 @@ const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage'));
-const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'));
-const WorkflowDetailPage = lazy(() => import('./pages/WorkflowDetailPage'));
-const AboutDetailPage = lazy(() => import('./pages/AboutDetailPage'));
 
 function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
       <HomeProvider>
-        <IntroScreen />
         <Header />
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<Loader fullPage size="lg" />}>
           <Routes>
             <Route path="/" element={<HomeView />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/about/:id" element={<AboutDetailPage />} />
             <Route path="/services" element={<ServicesPage />} />
-            <Route path="/services/:id" element={<ServiceDetailPage />} />
             <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/projects/:id" element={<ProjectDetailPage />} />
-            <Route path="/workflow/:id" element={<WorkflowDetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

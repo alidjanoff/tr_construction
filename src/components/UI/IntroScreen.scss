@@ -7,121 +7,39 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: $primary-gradient;
+  background: $anthracite; // Neutral, premium dark background
   z-index: $z-intro;
   @include flex-center;
   overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(
-      circle at 30% 40%,
-      rgba(255, 255, 255, 0.1) 0%,
-      transparent 50%
-    );
-    animation: rotate 20s linear infinite;
-  }
-
   &__content {
     @include flex-column-center;
-    gap: $spacing-8;
     z-index: 1;
   }
 
-  &__logo-wrapper {
-    position: relative;
-    @include flex-center;
-  }
-
-  &__logo-glow {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    background: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.4) 0%,
-      transparent 70%
-    );
-    border-radius: 50%;
-    filter: blur(20px);
-
-    @include md {
-      width: 220px;
-      height: 220px;
-    }
-  }
-
-  &__logo {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    border-radius: $radius-lg;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-
-    @include md {
-      width: 150px;
-      height: 150px;
-    }
-  }
-
-  &__text {
-    text-align: center;
-  }
-
-  &__title {
-    font-family: $font-heading;
-    font-size: $font-size-3xl;
-    font-weight: $font-weight-bold;
-    color: $white;
-    letter-spacing: 2px;
-    margin-bottom: $spacing-2;
-
-    @include md {
-      font-size: $font-size-4xl;
-      letter-spacing: 4px;
-    }
-  }
-
-  &__tagline {
-    font-family: $font-primary;
-    font-size: $font-size-base;
-    font-weight: $font-weight-light;
-    color: rgba(255, 255, 255, 0.8);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-
-    @include md {
-      font-size: $font-size-lg;
-      letter-spacing: 5px;
-    }
-  }
-
-  &__loader {
-    position: absolute;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 3px;
-    max-width: 200px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: $radius-full;
-
-    @include md {
-      max-width: 300px;
-    }
+  &__visual {
+    @include flex-column-center;
+    gap: $spacing-8;
   }
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
+.modern-loader {
+  display: flex;
+  gap: $spacing-4;
+  height: 40px;
+  align-items: center;
+
+  span {
+    width: 12px;
+    height: 12px;
+    background: $primary-color;
+    border-radius: $radius-sm;
+    box-shadow: 0 0 20px rgba($primary-color, 0.4);
   }
-  to {
-    transform: rotate(360deg);
+
+  &__line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $primary-color, transparent);
+    margin-top: $spacing-4;
   }
 }

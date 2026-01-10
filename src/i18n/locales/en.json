@@ -111,7 +111,8 @@
     "sectionTitle": "Contact",
     "sectionSubtitle": "Get in touch with us",
     "form": {
-      "name": "Full Name",
+      "name": "First Name",
+      "surname": "Last Name",
       "email": "Email",
       "phone": "Phone",
       "subject": "Subject",
@@ -121,9 +122,12 @@
       "success": "Your message has been sent successfully!",
       "error": "An error occurred. Please try again.",
       "errorName": "Please enter your name",
+      "errorSurname": "Please enter your surname",
       "errorEmail": "Please enter your email",
       "errorEmailInvalid": "Please enter a valid email",
-      "errorMessage": "Please enter your message"
+      "errorMessage": "Please enter your message",
+      "errorPhone": "Please enter your phone number",
+      "errorPhoneInvalid": "Please enter a valid phone number"
     },
     "info": {
       "address": "Address",

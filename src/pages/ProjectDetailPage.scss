@@ -3,7 +3,11 @@
 
 .project-detail {
   padding-top: 120px;
-  padding-bottom: 80px;
+  padding-bottom: 40px; // Mobile spacing
+
+  @include md {
+    padding-bottom: 80px; // Desktop spacing
+  }
 
   &__container {
     @include container; // Use standard container mixin
@@ -16,7 +20,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: $spacing-4;
+    margin-bottom: $spacing-2; // Reduced spacing
   }
 
   &__back-btn {
@@ -70,6 +74,7 @@
   &__title {
     @include heading-2;
     color: $text-primary;
+    margin-bottom: $spacing-5; // Added spacing below title
   }
 
   &__meta {
@@ -88,6 +93,11 @@
       border-radius: $radius-full;
       font-weight: $font-weight-medium;
     }
+
+    &-icon {
+      color: $primary-color;
+      font-size: 1.1rem;
+    }
   }
 
   // Main Image
@@ -96,15 +106,62 @@
     border-radius: $radius-lg;
     overflow: hidden;
     box-shadow: $shadow-md;
-    height: auto;
-    max-height: 600px;
-    margin-bottom: $spacing-8;
+    height: 300px; // Mobile fixed height
+    margin-bottom: $spacing-4;
+
+    @include md {
+      height: 500px; // Desktop fixed height
+    }
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+  }
+
+  // Gallery
+  &__gallery-slider {
+    margin-bottom: $spacing-8;
+    padding-bottom: $spacing-8; // Space for pagination
+
+    .swiper {
+      overflow: hidden;
+      padding-bottom: $spacing-10;
+    }
+
+    .swiper-pagination {
+      bottom: 0;
+
+      &-bullet-active {
+        background-color: $primary-color;
+      }
+    }
+
+    .swiper-slide {
+      height: auto; // Let Swiper control height
+      display: flex;
+    }
+
+    &__thumb {
+      height: 100px;
+      background: $light-gray;
+      border-radius: $radius-sm;
+      overflow: hidden;
+      transition: all $transition-fast;
+      box-sizing: border-box; // Crucial for fixed height with border
+
+      @include md {
+        height: 150px;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
     }
   }
 
@@ -155,44 +212,6 @@
           top: 0;
           font-size: 1.2em;
         }
-      }
-    }
-  }
-
-  // Gallery
-  .project-detail__gallery-slider {
-    margin-top: $spacing-8;
-    padding-bottom: $spacing-12; // Space for pagination
-
-    h3 {
-      @include heading-3;
-      margin-bottom: $spacing-6;
-    }
-
-    .swiper {
-      overflow: hidden;
-      padding-bottom: $spacing-10; // Add space inside swiper for pagination
-    }
-
-    .swiper-pagination {
-      bottom: 0; // Position at bottom of padding
-
-      &-bullet-active {
-        background-color: $primary-color;
-      }
-    }
-
-    // Hide default navigation buttons just in case or if they persist
-    .swiper-button-next,
-    .swiper-button-prev {
-      display: none !important;
-    }
-
-    // Gallery images
-    .swiper-slide {
-      img {
-        border-radius: $radius-md;
-        box-shadow: $shadow-sm;
       }
     }
   }

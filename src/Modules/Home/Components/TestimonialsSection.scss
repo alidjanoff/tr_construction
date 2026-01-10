@@ -9,13 +9,9 @@
   background: $light-gray;
 
   &__swiper {
+    padding-top: $spacing-3; // Room for hover lift
     padding-bottom: $spacing-8;
-    overflow: hidden; // Default to hidden for mobile to prevent horizontal scroll
-
-    @include md {
-      overflow: visible; // Allow hover effects on desktop
-    }
-
+    overflow: visible !important;
 
     .swiper-pagination {
       bottom: 0;

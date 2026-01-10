@@ -16,6 +16,7 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
+    surname: '',
     email: '',
     phone: '',
     message: '',
@@ -32,11 +33,19 @@ const ContactSection = () => {
   const validateForm = (): boolean => {
     const newErrors: Partial<ContactFormData> = {};
     if (!formData.name.trim()) newErrors.name = t('contact.form.errorName');
+    if (!formData.surname.trim()) newErrors.surname = t('contact.form.errorSurname');
     if (!formData.email.trim()) {
       newErrors.email = t('contact.form.errorEmail');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = t('contact.form.errorEmailInvalid');
     }
+    
+    if (!formData.phone.trim()) {
+      newErrors.phone = t('contact.form.errorPhone');
+    } else if (!/^\+?[\d\s-]{10,}$/.test(formData.phone.trim())) {
+      newErrors.phone = t('contact.form.errorPhoneInvalid');
+    }
+
     if (!formData.message.trim()) newErrors.message = t('contact.form.errorMessage');
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -58,7 +67,7 @@ const ContactSection = () => {
       const result = await HomeService.submitContactForm(formData);
       if (result.success) {
         toast.success(t('contact.form.success'));
-        setFormData({ name: '', email: '', phone: '', message: '' });
+        setFormData({ name: '', surname: '', email: '', phone: '', message: '' });
       }
     } catch {
       toast.error(t('contact.form.error'));
@@ -108,6 +117,15 @@ const ContactSection = () => {
                   error={errors.name}
                 />
                 <CustomInput
+                  label={t('contact.form.surname')}
+                  name="surname"
+                  value={formData.surname}
+                  onChange={handleChange}
+                  error={errors.surname}
+                />
+              </div>
+              <div className="contact__form-row">
+                <CustomInput
                   label={t('contact.form.email')}
                   type="email"
                   name="email"
@@ -115,8 +133,6 @@ const ContactSection = () => {
                   onChange={handleChange}
                   error={errors.email}
                 />
-              </div>
-              <div className="contact__form-row">
                 <CustomInput
                   label={t('contact.form.phone')}
                   type="tel"

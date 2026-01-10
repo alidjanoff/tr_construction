@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { BsArrowLeft } from 'react-icons/bs';
+import { BsArrowLeft, BsGeoAlt, BsTag } from 'react-icons/bs';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { useHome } from '../Modules/Home/Provider/HomeProvider';
+import Loader from '../components/UI/Loader';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './ProjectDetailPage.scss';
@@ -19,11 +20,31 @@ import b5 from '../assets/images/building5.avif';
 const ProjectDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
-  const { homeData } = useHome();
+  const { homeData, isLoading } = useHome();
   const navigate = useNavigate();
 
-  // Find the project by ID
-  const project = homeData?.projects.find((p) => String(p.id) === id);
+  // Helper function to create slug from title
+  const createSlug = (title: string) => {
+    // Transliterate Azerbaijani characters
+    const transliterated = title
+      .replace(/ə/gi, 'e')
+      .replace(/ı/gi, 'i')
+      .replace(/ş/gi, 'sh')
+      .replace(/ç/gi, 'ch')
+      .replace(/ö/gi, 'o')
+      .replace(/ü/gi, 'u')
+      .replace(/ğ/gi, 'g');
+    
+    return transliterated
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  };
+
+  // Find the project by slug (id parameter is actually the slug now)
+  const project = homeData?.projects.find((p) => createSlug(p.title) === id);
   
   // State for the main image (defaulting to project image)
   const [mainImage, setMainImage] = useState(project ? project.image : '');
@@ -35,15 +56,16 @@ const ProjectDetailPage = () => {
     }
   }, [project]);
 
-  if (!project) {
-    return (
-      <div className="container" style={{ paddingTop: '150px', textAlign: 'center' }}>
-        <h2>{t('common.notFound')}</h2>
-        <button onClick={() => navigate('/projects')} className="btn btn-primary" style={{ marginTop: '20px', display: 'inline-block' }}>
-          {t('projects.backToProjects')}
-        </button>
-      </div>
-    );
+  // Redirect to 404 if data loaded but project not found
+  useEffect(() => {
+    if (!isLoading && homeData && !project) {
+      navigate('/404', { replace: true });
+    }
+  }, [isLoading, homeData, project, navigate]);
+
+  // Show loader while data is loading or during redirect
+  if (isLoading || !homeData || !project) {
+    return <Loader fullPage size="lg" />;
   }
 
   // Generate gallery images (using local building images + main image for demo)
@@ -79,11 +101,11 @@ const ProjectDetailPage = () => {
             <h1 className="project-detail__title">{project.title}</h1>
             <div className="project-detail__meta">
               <span className="project-detail__meta-item">
-                📍 {project.location}
+                <BsGeoAlt className="project-detail__meta-icon" /> {project.location}
               </span>
               {project.category && (
                 <span className="project-detail__meta-item">
-                  🏷️ {project.category}
+                  <BsTag className="project-detail__meta-icon" /> {project.category}
                 </span>
               )}
             </div>
@@ -101,6 +123,34 @@ const ProjectDetailPage = () => {
              />
           </div>
 
+          {/* Gallery - Moved directly under main image */}
+          <div className="project-detail__gallery-slider">
+            <Swiper
+              modules={[Pagination]}
+              spaceBetween={10}
+              slidesPerView={3}
+              breakpoints={{
+                768: {
+                  slidesPerView: 5,
+                  spaceBetween: 12
+                }
+              }}
+              pagination={{ clickable: true }}
+            >
+              {galleryImages.map((imgUrl, i) => (
+                <SwiperSlide key={i} onClick={() => setMainImage(imgUrl)} style={{ cursor: 'pointer' }}>
+                  <div className="project-detail__gallery-thumb" style={{ border: mainImage === imgUrl ? '2px solid #1B5E3A' : 'none' }}>
+                     <img 
+                       src={imgUrl} 
+                       alt={`Gallery ${i}`}
+                       style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                     />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
           {/* Body Content */}
           <div className="project-detail__body">
             <h3>{t('projects.overview')}</h3>
@@ -115,33 +165,6 @@ const ProjectDetailPage = () => {
               <li>{t('projects.feature3')}</li>
               <li>{t('projects.feature4')}</li>
             </ul>
-
-            {/* Gallery */}
-            <div className="project-detail__gallery-slider">
-              <h3>{t('projects.gallery')}</h3>
-              <Swiper
-                modules={[Pagination]}
-                spaceBetween={16}
-                slidesPerView={3}
-                breakpoints={{
-                  320: { slidesPerView: 1.5 },
-                  768: { slidesPerView: 3 },
-                }}
-                pagination={{ clickable: true }}
-              >
-                {galleryImages.map((imgUrl, i) => (
-                  <SwiperSlide key={i} onClick={() => setMainImage(imgUrl)} style={{ cursor: 'pointer' }}>
-                    <div style={{ height: '150px', background: '#eee', borderRadius: '8px', overflow: 'hidden', border: mainImage === imgUrl ? '3px solid #1B5E3A' : 'none' }}>
-                       <img 
-                         src={imgUrl} 
-                         alt={`Gallery ${i}`}
-                         style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                       />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
           </div>
         </motion.div>
       </div>

@@ -20,6 +20,11 @@
 
     .swiper-slide {
       height: auto;
+      display: flex;
+      
+      & > * {
+        width: 100%; // Ensure card takes full width
+      }
     }
 
     .swiper-pagination {
