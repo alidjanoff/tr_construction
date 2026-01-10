@@ -31,8 +31,7 @@ const AboutDetailPage = () => {
             {text}
           </p>
           <p style={{ color: '#4b5563' }}>
-            Expanded content about {title}...
-            At TR Construction, we take our {id} seriously. It guides every decision we make and every project we undertake.
+            {t('about.detailedText', { type: title })}
           </p>
         </motion.div>
       </div>

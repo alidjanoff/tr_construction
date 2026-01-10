@@ -24,6 +24,12 @@
   }
 }
 
+@mixin md-down {
+  @media (max-width: ($breakpoint-md - 1px)) {
+    @content;
+  }
+}
+
 @mixin lg {
   @media (min-width: $breakpoint-lg) {
     @content;
@@ -280,14 +286,14 @@
 
 // Section
 @mixin section {
-  padding: $spacing-16 0;
+  padding: $spacing-6 0; // 24px
   
   @include md {
-    padding: $spacing-20 0;
+    padding: $spacing-10 0; // 40px
   }
   
   @include xl {
-    padding: $spacing-24 0;
+    padding: 64px 0; // 100px total gap
   }
 }
 

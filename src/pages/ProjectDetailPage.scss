@@ -6,11 +6,10 @@
   padding-bottom: 80px;
 
   &__container {
+    @include container; // Use standard container mixin
     display: flex;
     flex-direction: column;
     gap: $spacing-6;
-    max-width: $container-lg; // Limit width for better readability
-    margin: 0 auto;
   }
 
   &__top-bar {

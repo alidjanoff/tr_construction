@@ -7,10 +7,10 @@ const WorkflowSection = () => {
   const { t } = useTranslation();
 
   const steps = [
-    { id: 'planning', number: '01' },
-    { id: 'design', number: '02' },
-    { id: 'construction', number: '03' },
-    { id: 'delivery', number: '04' },
+    { id: 'planning', number: 'I' },
+    { id: 'design', number: 'II' },
+    {  id: 'construction', number: 'III' },
+    { id: 'delivery', number: 'IV' },
   ];
 
   return (

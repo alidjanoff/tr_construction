@@ -41,9 +41,7 @@ const ServiceDetailPage = () => {
           </p>
           
           <p style={{ color: '#4b5563' }}>
-             {/* Placeholder extra content since we don't have separate rich text for each service yet */}
-             {t('intro.tagline')} - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+             {t('intro.tagline')} - {description}
           </p>
           
           <div style={{ marginTop: '2rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>

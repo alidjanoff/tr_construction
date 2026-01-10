@@ -11,11 +11,50 @@
   transition: all $transition-base;
   overflow: visible; // Allow dropdowns to be visible
 
-  &--scrolled {
+  &--scrolled,
+  &--subpage {
     @include glassmorphism;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     padding: $spacing-3 0;
     box-shadow: $shadow-md;
+
+    .header__logo-text {
+      color: $primary-color;
+    }
+
+    .header__nav-link {
+      color: $text-primary;
+
+      &::after {
+        background: $primary-color;
+      }
+
+      &:hover,
+      &.active {
+        color: $primary-color;
+      }
+    }
+
+    .header__burger span {
+      background: $text-primary;
+    }
+
+    .header__actions {
+      .language-switcher__trigger,
+      .custom-button--primary {
+        background: rgba($primary-color, 0.1);
+        border: 1px solid rgba($primary-color, 0.2);
+        color: $primary-color;
+        
+        &:hover {
+          background: rgba($primary-color, 0.15);
+        }
+      }
+      
+      .language-switcher__code {
+        color: $primary-color;
+      }
+    }
   }
 
   &__container {
@@ -41,8 +80,9 @@
     font-family: $font-heading;
     font-size: $font-size-lg;
     font-weight: $font-weight-bold;
-    color: $primary-color;
+    color: $white;
     display: none;
+    transition: color $transition-base;
 
     @include md {
       display: block;
@@ -72,9 +112,9 @@
     padding: $spacing-2 $spacing-3;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
-    color: $text-primary;
+    color: rgba($white, 0.8);
     text-decoration: none;
-    transition: color $transition-fast;
+    transition: all $transition-fast;
 
     @include xl {
       font-size: $font-size-base;
@@ -87,14 +127,14 @@
       left: 50%;
       width: 0;
       height: 2px;
-      background: $primary-color;
+      background: $white;
       transform: translateX(-50%);
       transition: width $transition-fast;
     }
 
     &:hover,
     &.active {
-      color: $primary-color;
+      color: $white;
 
       &::after {
         width: 100%;
@@ -112,11 +152,31 @@
       align-items: center;
     }
 
+    // Language switcher and Contact button glass effect
+    .language-switcher__trigger,
+    .custom-button--primary {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: $white;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    // Scrolled/Subpage state overrides for actions are handled at the top level
+    // to maintain consistency with other header elements.
+
     // Make button same height as language switcher
     .custom-button {
-      height: 45px;
-      padding: 0 $spacing-4;
+      height: 42px;
+      padding: 0 $spacing-6;
       font-size: $font-size-sm;
+      box-shadow: none; // Remove default primary shadow for glass look
+      
+      &::before { display: none; } // Remove primary button shine
     }
   }
 
@@ -150,7 +210,7 @@
       display: block;
       width: 24px;
       height: 2px;
-      background: $text-primary;
+      background: $white;
       border-radius: $radius-full;
       transition: all $transition-fast;
     }

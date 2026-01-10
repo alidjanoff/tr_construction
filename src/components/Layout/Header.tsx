@@ -46,8 +46,10 @@ const Header = () => {
     return location.pathname.startsWith(path);
   };
 
+  const isHomePage = location.pathname === '/';
+
   return (
-    <header className={`header ${isScrolled ? 'header--scrolled' : ''}`}>
+    <header className={`header ${isScrolled ? 'header--scrolled' : ''} ${!isHomePage ? 'header--subpage' : ''}`}>
       <div className="header__container">
         <Link to="/" className="header__logo">
           <img src={logo} alt="TR Construction" />
@@ -108,7 +110,7 @@ const Header = () => {
         </div>
 
         <div className="header__mobile-lang-wrapper">
-          <span className="header__mobile-lang-label">Dil Seçimi:</span>
+          <span className="header__mobile-lang-label">{t('nav.lang')}:</span>
           <LanguageSwitcher />
         </div>
 

@@ -16,7 +16,7 @@
   }
 
   &__swiper {
-    padding-bottom: $spacing-12;
+    padding-bottom: 52px; // Increased distance between cards and pagination (+20px)
 
     .swiper-slide {
       height: auto;

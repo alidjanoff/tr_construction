@@ -5,11 +5,13 @@
     "services": "Xidmətlər",
     "projects": "Layihələr",
     "workflow": "İş Prosesi",
-    "contact": "Əlaqə"
+    "contact": "Əlaqə",
+    "lang": "Dil Seçimi"
   },
   "common": {
     "back": "Geri",
-    "notFound": "Tapılmadı"
+    "notFound": "Tapılmadı",
+    "scroll": "Keçid"
   },
   "hero": {
     "title": "Gələcəyi İnşa Edirik",
@@ -29,7 +31,8 @@
     "vision": {
       "title": "Vizyonumuz",
       "text": "Tikinti sektorunda lider olmaq və hər layihəmizdə mükəmməlliyə nail olmaq."
-    }
+    },
+    "detailedText": "TR Construction olaraq biz öz {{type}} mövzusuna çox ciddi yanaşırıq. Bu, qəbul etdiyimiz hər bir qərarda və həyata keçirdiyimiz hər bir layihədə bizə bələdçilik edir."
   },
   "services": {
     "sectionTitle": "Xidmətlərimiz",
@@ -63,7 +66,16 @@
     "sectionTitle": "Layihələrimiz",
     "sectionSubtitle": "Tamamlanmış işlərimizdən nümunələr",
     "viewAll": "Hamısına Bax",
-    "viewProject": "Layihəyə Bax"
+    "viewProject": "Layihəyə Bax",
+    "backToProjects": "Layihələrə Qayıt",
+    "overview": "Layihə Haqqında",
+    "features": "Əsas Özəlliklər",
+    "gallery": "Layihə Qalereyası",
+    "feature1": "Yüksək keyfiyyətli materiallar.",
+    "feature2": "Davamlı tikinti təcrübələri.",
+    "feature3": "Vaxtında və büdcə daxilində təhvil.",
+    "feature4": "Təhlükəsizlik standartlarına ciddi riayət.",
+    "detailDescription": "{{location}} ünvanındakı bu mötəbər layihə keyfiyyət və innovasiyaya olan sadiqliyimizi əks etdirir. Dəqiq planlaşdırma və peşəkar ustalıqla icra olunan bu iş müasir mühəndisliyin sübutudur."
   },
   "workflow": {
     "sectionTitle": "İş Prosesimiz",
@@ -107,7 +119,11 @@
       "submit": "Göndər",
       "sending": "Göndərilir...",
       "success": "Mesajınız uğurla göndərildi!",
-      "error": "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin."
+      "error": "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.",
+      "errorName": "Ad daxil edin",
+      "errorEmail": "E-poçt daxil edin",
+      "errorEmailInvalid": "Düzgün e-poçt daxil edin",
+      "errorMessage": "Mesaj daxil edin"
     },
     "info": {
       "address": "Ünvan",
