@@ -7,26 +7,14 @@
 
 .testimonials {
   background: $light-gray;
-  overflow-x: hidden; // Prevent horizontal scroll on mobile
-
-  &__container {
-    overflow: hidden; // Prevent card overflow from causing horizontal scroll
-  }
-
-  &__slider {
-    overflow: hidden; // Contain the swiper within bounds
-    margin: 0 -#{$spacing-2}; // Compensate for slide padding
-    padding: 0 $spacing-2;
-
-    @include md {
-      margin: 0;
-      padding: 0;
-    }
-  }
 
   &__swiper {
-    padding-bottom: $spacing-12;
-    overflow: hidden; // Changed from visible to hidden for mobile
+    padding-bottom: $spacing-8;
+    overflow: hidden; // Default to hidden for mobile to prevent horizontal scroll
+
+    @include md {
+      overflow: visible; // Allow hover effects on desktop
+    }
 
 
     .swiper-pagination {
@@ -50,25 +38,16 @@
 
   &__card {
     background: $white;
-    padding: $spacing-4; // Reduced padding for mobile
+    padding: $spacing-6;
     border-radius: $radius-lg;
     box-shadow: $shadow-sm;
     height: 100%;
-    min-height: 260px;
+    min-height: 280px;
     @include flex-column;
-    gap: $spacing-3;
+    gap: $spacing-4;
     transition: all $transition-base;
     cursor: pointer;
     border: 1px solid transparent;
-    box-sizing: border-box;
-    width: 100%; // Ensure card takes full width of slide
-    max-width: 100%; // Never exceed parent width
-
-    @include md {
-      padding: $spacing-6; // Original padding for larger screens
-      min-height: 280px;
-      gap: $spacing-4;
-    }
 
     &:hover {
       box-shadow: $shadow-lg;
@@ -97,7 +76,7 @@
     color: $text-secondary;
     line-height: $line-height-relaxed;
     font-style: italic;
-
+    
     // Truncate to 3 lines
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -231,7 +210,7 @@
 
   &__modal-rating {
     @extend .testimonials__card-rating;
-
+    
     .star {
       font-size: $font-size-xl;
     }

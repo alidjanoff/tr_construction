@@ -3,192 +3,256 @@
 
 .hero {
   position: relative;
-  
-  padding: 100px 0 40px; // Reduced padding
+  width: 100%;
+  height: 100vh;
   overflow: hidden;
-  background: linear-gradient(
-    135deg,
-    $white 0%,
-    $off-white 50%,
-    rgba($primary-color, 0.03) 100%
-  );
+  background-color: #000;
 
-  &__container {
-    @include container;
+  &__swiper {
+    width: 100%;
+    height: 100%;
+
+    .swiper-slide {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+  }
+
+  &__image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .swiper-slide-active & {
+      img {
+        transform: scale(1.1); // Dynamic zoom out/in effect during slide
+      }
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+    z-index: 2;
+  }
+
+  &__content {
     position: relative;
-    z-index: 1;
+    z-index: 3;
+    height: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: $spacing-6; // Reduced gap
-    height: 100%; // Ensure container takes height for auto margins
-    flex: 1;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: $white;
+    padding: 80px $spacing-6 0;
+    max-width: 1200px;
   }
 
-  // Top section: Title left, Info + Buttons right
-  &__top {
+  &__text-container {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: $spacing-6;
-
-    @include lg {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center; // Center alignment vertically
-      gap: $spacing-12;
-    }
-  }
-
-  &__title-wrapper {
-    flex: 1;
-    max-width: 100%;
-
-    @include lg {
-      max-width: 55%;
-    }
+    align-items: center;
   }
 
   &__title {
     @include heading-1;
-    color: $text-primary;
+    color: $white;
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
     line-height: 1.1;
-    
-    @include xl {
-      font-size: $font-size-6xl;
-    }
-  }
+    margin-bottom: $spacing-6;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: -1px;
+    white-space: nowrap;
 
-  &__info {
-    flex: 1;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-6;
-
-    @include lg {
-      max-width: 40%;
-      padding-top: $spacing-2;
+    @include md-down {
+      white-space: normal;
+      font-size: clamp(2rem, 10vw, 3rem);
+      letter-spacing: -0.5px;
     }
   }
 
   &__subtitle {
     @include body-text;
-    color: $text-secondary;
-    line-height: 1.7;
+    color: rgba($white, 0.9);
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    max-width: 700px;
+    margin-bottom: $spacing-10;
+    line-height: 1.6;
   }
 
-  // Buttons - uniform size
-  &__buttons {
+  &__actions {
     display: flex;
-    justify-content: center;
     gap: $spacing-4;
-
-    @include lg {
-      justify-content: flex-start;
+    justify-content: center;
+    width: 100%;
+    
+    @include md-down {
+      display: none; // Hide actions on mobile as requested
     }
   }
 
-  &__button-link {
+  &__btn {
     text-decoration: none;
-    flex: 1;
-    max-width: 160px;
-
-    @include sm {
-      flex: 0 0 auto;
-      max-width: none;
-    }
-
-    // Make buttons same size
-    .custom-button {
-      width: 100%;
-      min-width: 140px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      @include sm {
-        min-width: 160px;
+    
+    &--desktop-only {
+      display: none;
+      
+      @include lg {
+        display: block;
       }
     }
+    
+    button {
+      min-width: 180px;
+    }
   }
 
-  // Images section
-  &__images {
+  // Scroll indicator
+  &__scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
     display: flex;
     flex-direction: column;
-    gap: $spacing-6;
-    margin-top: auto; // Push to bottom
+    align-items: center;
+    gap: 12px;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
 
-    @include md {
-      flex-direction: row;
-      gap: $spacing-6;
-    }
-  }
-
-  &__image-large {
-    width: 100%;
-    border-radius: $radius-xl;
-    overflow: hidden;
-    box-shadow: $shadow-lg;
-
-    @include md {
-      width: 65%;
+    @include md-down {
+      bottom: 80px; // Higher on mobile to make room for dots below
     }
 
-    img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
-
-      @include md {
-        height: 400px;
-      }
-
-      &:hover {
-        transform: scale(1.02);
-      }
-    }
-  }
-
-  &__image-small {
-    display: none;
-
-    @include md {
-      display: block;
-      width: 35%;
-      border-radius: $radius-xl;
-      overflow: hidden;
-      box-shadow: $shadow-lg;
+    &:hover {
+      opacity: 1;
     }
 
-    img {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
+    span {
+      color: $white;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 500;
+    }
 
-      &:hover {
-        transform: scale(1.02);
+    .mouse {
+      width: 24px;
+      height: 40px;
+      border: 2px solid $white;
+      border-radius: 12px;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 8px;
+        background-color: $white;
+        border-radius: 2px;
+        animation: scrollWheel 2s infinite;
       }
     }
   }
 
-  // Background decoration
-  &__bg-decoration {
-    position: absolute;
-    top: -50%;
-    right: -20%;
-    width: 80%;
-    height: 150%;
-    background: radial-gradient(
-      circle at center,
-      rgba($primary-color, 0.05) 0%,
-      transparent 60%
-    );
-    pointer-events: none;
-    z-index: -1; 
+  // Swiper Pagination Customization
+  .swiper-pagination {
+    bottom: 30px !important; // Lowered on mobile to be below scroll indicator
+    left: auto !important;
+    right: 50% !important;
+    transform: translateX(50%) !important;
+    width: auto !important;
+
+    @include lg {
+      right: 40px !important;
+      top: 50% !important;
+      bottom: auto !important;
+      transform: translateY(-50%) !important;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+
+  .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: $white !important;
+    opacity: 0.5 !important;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    margin: 0 6px !important; // Add some horizontal margin for mobile
+
+    &-active {
+      background: $primary-color !important;
+      width: 30px; // Horizontal for mobile by default
+      height: 10px;
+      opacity: 1 !important;
+    }
+  }
+
+  @include lg {
+    .swiper-pagination-bullet {
+      margin: 0 !important;
+      
+      &-active {
+        height: 30px; 
+        width: 10px; 
+      }
+    }
+  }
+
+  @keyframes scrollWheel {
+    0% {
+      opacity: 0;
+      top: 8px;
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      top: 24px;
+    }
+  }
+}
+
+// Mobile Adjustments
+@include md-down {
+  .hero {
+    &__content {
+      align-items: center;
+      text-align: center;
+    }
   }
 }

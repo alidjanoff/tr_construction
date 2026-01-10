@@ -5,11 +5,13 @@
     "services": "Services",
     "projects": "Projects",
     "workflow": "Workflow",
-    "contact": "Contact"
+    "contact": "Contact",
+    "lang": "Language Selection"
   },
   "common": {
     "back": "Back",
-    "notFound": "Not Found"
+    "notFound": "Not Found",
+    "scroll": "Scroll"
   },
   "hero": {
     "title": "Building the Future",
@@ -29,7 +31,8 @@
     "vision": {
       "title": "Our Vision",
       "text": "To be a leader in the construction sector and achieve excellence in every project."
-    }
+    },
+    "detailedText": "At TR Construction, we take our {{type}} seriously. It guides every decision we make and every project we undertake."
   },
   "services": {
     "sectionTitle": "Our Services",
@@ -63,7 +66,16 @@
     "sectionTitle": "Our Projects",
     "sectionSubtitle": "Examples from our completed work",
     "viewAll": "View All",
-    "viewProject": "View Project"
+    "viewProject": "View Project",
+    "backToProjects": "Back to Projects",
+     "overview": "Project Overview",
+     "features": "Key Features",
+     "gallery": "Project Gallery",
+     "feature1": "High-grade materials ensuring longevity.",
+     "feature2": "Sustainable construction practices.",
+     "feature3": "Completed on time and within budget.",
+     "feature4": "Strict adherence to safety standards.",
+     "detailDescription": "This prestigious project in {{location}} represents our commitment to quality and innovation. Executed with precision planning and expert craftsmanship, it stands as a testament to modern engineering."
   },
   "workflow": {
     "sectionTitle": "Our Workflow",
@@ -107,7 +119,11 @@
       "submit": "Send",
       "sending": "Sending...",
       "success": "Your message has been sent successfully!",
-      "error": "An error occurred. Please try again."
+      "error": "An error occurred. Please try again.",
+      "errorName": "Please enter your name",
+      "errorEmail": "Please enter your email",
+      "errorEmailInvalid": "Please enter a valid email",
+      "errorMessage": "Please enter your message"
     },
     "info": {
       "address": "Address",

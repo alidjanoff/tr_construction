@@ -13,10 +13,10 @@ const HomeView = () => {
   return (
     <main>
       <HeroSection />
+      <ProjectsSection />
       <AboutSection />
       <ServicesSection />
       <StatsSection />
-      <ProjectsSection />
       <WorkflowSection />
       <PartnersSection />
       <TestimonialsSection />
