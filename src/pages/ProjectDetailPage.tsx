@@ -10,6 +10,12 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import './ProjectDetailPage.scss';
 
+import b1 from '../assets/images/building1.avif';
+import b2 from '../assets/images/building2.jpg';
+import b3 from '../assets/images/building3.avif';
+import b4 from '../assets/images/building4.avif';
+import b5 from '../assets/images/building5.avif';
+
 const ProjectDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
@@ -40,13 +46,14 @@ const ProjectDetailPage = () => {
     );
   }
 
-  // Generate gallery images (using placeholders + main image for demo)
+  // Generate gallery images (using local building images + main image for demo)
   const galleryImages = [
     project.image,
-    `https://source.unsplash.com/random/800x600?construction,building&sig=101`,
-    `https://source.unsplash.com/random/800x600?construction,building&sig=102`,
-    `https://source.unsplash.com/random/800x600?construction,building&sig=103`,
-    `https://source.unsplash.com/random/800x600?construction,building&sig=104`,
+    b1,
+    b2,
+    b3,
+    b4,
+    b5,
   ];
 
   return (

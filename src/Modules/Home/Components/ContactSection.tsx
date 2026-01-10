@@ -18,7 +18,6 @@ const ContactSection = () => {
     name: '',
     email: '',
     phone: '',
-    subject: '',
     message: '',
   });
   const [errors, setErrors] = useState<Partial<ContactFormData>>({});
@@ -59,7 +58,7 @@ const ContactSection = () => {
       const result = await HomeService.submitContactForm(formData);
       if (result.success) {
         toast.success(t('contact.form.success'));
-        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', message: '' });
       }
     } catch {
       toast.error(t('contact.form.error'));
@@ -125,13 +124,6 @@ const ContactSection = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   error={errors.phone}
-                />
-                <CustomInput
-                  label={t('contact.form.subject')}
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  error={errors.subject}
                 />
               </div>
               <CustomInput
