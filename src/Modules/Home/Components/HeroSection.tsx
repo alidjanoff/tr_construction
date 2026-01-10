@@ -14,7 +14,7 @@ import './HeroSection.scss';
 
 // Import images
 import swiper1 from '../../../assets/images/swiper1.webp';
-import swiper2 from '../../../assets/images/swiper2.avif';
+import swiper2 from '../../../assets/images/swiper2.jpg';
 import swiper3 from '../../../assets/images/swiper3.avif';
 import swiper4 from '../../../assets/images/swiper.avif';
 
