@@ -14,7 +14,7 @@ const PartnersSection = () => {
   const { homeData } = useHome();
   const partners = homeData?.partners || [];
 
-  // Partner icons using react-icons/sl
+  // Partner icons using react-icons/sl (fallback icons if no image is present)
   const partnerIcons = [SlBriefcase, SlGlobe, SlBadge, SlLayers, SlDiamond];
 
   // AutoPlay configuration logic: Only autoplay if more than 5 items
@@ -39,7 +39,7 @@ const PartnersSection = () => {
             modules={[Pagination, Autoplay]}
             spaceBetween={24}
             slidesPerView={2}
-            loop={true}
+            loop={partners.length > 5}
             pagination={{ clickable: true }}
             autoplay={shouldAutoplay ? { delay: 3000, disableOnInteraction: false } : false}
             breakpoints={{
@@ -54,15 +54,15 @@ const PartnersSection = () => {
               return (
                 <SwiperSlide key={partner.id}>
                   <div className="partners__item">
-                    {partner.logo ? (
-                      <img src={partner.logo} alt={partner.name} />
+                    {partner.image ? (
+                      <img src={partner.image} alt={partner.title} />
                     ) : (
                       <div className="partners__placeholder">
                         <span className="partners__placeholder-icon">
                           <IconComponent />
                         </span>
                         <span className="partners__placeholder-text">
-                          Partner {index + 1}
+                          {partner.title}
                         </span>
                       </div>
                     )}

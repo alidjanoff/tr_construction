@@ -15,14 +15,6 @@ const TestimonialsSection = () => {
   const { homeData } = useHome();
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
 
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <span key={i} className={`star ${i < rating ? 'star--filled' : ''}`}>
-        ★
-      </span>
-    ));
-  };
-
   return (
     <section className="testimonials section">
       <div className="testimonials__container container">
@@ -52,30 +44,23 @@ const TestimonialsSection = () => {
           >
             {homeData?.testimonials.map((testimonial) => (
               <SwiperSlide key={testimonial.id}>
-                <article 
-                  className="testimonials__card" 
+                <article
+                  className="testimonials__card"
                   onClick={() => setSelectedTestimonial(testimonial)}
                 >
-                  <div className="testimonials__card-rating">
-                    {renderStars(testimonial.rating)}
-                  </div>
                   <p className="testimonials__card-content">
-                    "{testimonial.content}"
+                    "{testimonial.customer_review}"
                   </p>
                   <div className="testimonials__card-author">
                     <div className="testimonials__card-avatar">
-                      {testimonial.avatar ? (
-                        <img src={testimonial.avatar} alt={testimonial.name} />
-                      ) : (
-                        <span>{testimonial.name.charAt(0)}</span>
-                      )}
+                      <span>{testimonial.customer_full_name.charAt(0)}</span>
                     </div>
                     <div className="testimonials__card-info">
                       <h4 className="testimonials__card-name">
-                        {testimonial.name}
+                        {testimonial.customer_full_name}
                       </h4>
                       <span className="testimonials__card-role">
-                        {testimonial.role}
+                        {testimonial.customer_type}
                       </span>
                     </div>
                   </div>
@@ -103,39 +88,32 @@ const TestimonialsSection = () => {
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <button 
+              <button
                 className="testimonials__modal-close"
                 onClick={() => setSelectedTestimonial(null)}
               >
                 ✕
               </button>
-              
+
               <div className="testimonials__modal-content">
                 <div className="testimonials__modal-header">
-                  <div className="testimonials__modal-rating">
-                    {renderStars(selectedTestimonial.rating)}
-                  </div>
                   <div className="testimonials__modal-author">
                     <div className="testimonials__modal-avatar">
-                      {selectedTestimonial.avatar ? (
-                        <img src={selectedTestimonial.avatar} alt={selectedTestimonial.name} />
-                      ) : (
-                        <span>{selectedTestimonial.name.charAt(0)}</span>
-                      )}
+                      <span>{selectedTestimonial.customer_full_name.charAt(0)}</span>
                     </div>
                     <div>
                       <h4 className="testimonials__modal-name">
-                        {selectedTestimonial.name}
+                        {selectedTestimonial.customer_full_name}
                       </h4>
                       <span className="testimonials__modal-role">
-                        {selectedTestimonial.role}
+                        {selectedTestimonial.customer_type}
                       </span>
                     </div>
                   </div>
                 </div>
-                
+
                 <p className="testimonials__modal-text">
-                  "{selectedTestimonial.content}"
+                  "{selectedTestimonial.customer_review}"
                 </p>
               </div>
             </motion.div>

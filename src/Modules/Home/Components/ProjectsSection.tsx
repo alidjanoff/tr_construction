@@ -26,7 +26,7 @@ const ProjectsSection = () => {
       .replace(/ö/gi, 'o')
       .replace(/ü/gi, 'u')
       .replace(/ğ/gi, 'g');
-    
+
     return transliterated
       .toLowerCase()
       .replace(/[^a-z0-9\s-]/g, '')
@@ -54,9 +54,9 @@ const ProjectsSection = () => {
             modules={[Pagination, Autoplay]}
             spaceBetween={24}
             slidesPerView={1}
-            loop={true}
+            loop={homeData?.projects && homeData.projects.length > 3}
             pagination={{ clickable: true }}
-            autoplay={{ delay: 1500, disableOnInteraction: false }}
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
             breakpoints={{
               576: { slidesPerView: 1.5 },
               768: { slidesPerView: 2 },
@@ -68,10 +68,10 @@ const ProjectsSection = () => {
             {homeData?.projects.map((project) => (
               <SwiperSlide key={project.id}>
                 <ProjectCard
-                  image={project.image}
+                  image={project.cover_image}
                   title={project.title}
-                  location={project.location}
-                  category={project.category}
+                  location={project.address}
+                  category={project.badge}
                   onClick={() => navigate(`/projects/${createSlug(project.title)}`)}
                 />
               </SwiperSlide>

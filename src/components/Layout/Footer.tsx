@@ -1,50 +1,67 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { SlSocialFacebook, SlSocialInstagram, SlSocialLinkedin, SlSocialYoutube, SlLocationPin, SlPhone, SlEnvolope, SlClock } from 'react-icons/sl';
-import logo from '../../assets/images/logo.jpeg';
+import {
+  BsFacebook,
+  BsInstagram,
+  BsLinkedin,
+  BsGeoAlt,
+  BsTelephone,
+  BsEnvelope
+} from 'react-icons/bs';
+import { useHome } from '../../Modules/Home/Provider/HomeProvider';
+import type { ContactInfo, SocialLink } from '../../Modules/Home/Models/HomeModels';
 import './Footer.scss';
 
 const Footer = () => {
   const { t } = useTranslation();
-  const currentYear = new Date().getFullYear();
+  const { homeData } = useHome();
 
+  const getContactIcon = (type: string) => {
+    const lowerType = type.toLowerCase();
+    if (lowerType.includes('address')) return <BsGeoAlt />;
+    if (lowerType.includes('phone')) return <BsTelephone />;
+    if (lowerType.includes('email')) return <BsEnvelope />;
+    return null;
+  };
 
-
-  const socialLinks = [
-    { name: 'Facebook', icon: <SlSocialFacebook />, url: '#' },
-    { name: 'Instagram', icon: <SlSocialInstagram />, url: 'https://www.instagram.com/trmmc.az/' },
-    { name: 'LinkedIn', icon: <SlSocialLinkedin />, url: '#' },
-    { name: 'YouTube', icon: <SlSocialYoutube />, url: '#' },
-  ];
+  const getSocialIcon = (type: string) => {
+    switch (type.toLowerCase()) {
+      case 'facebook': return <BsFacebook />;
+      case 'instagram': return <BsInstagram />;
+      case 'linkedin': return <BsLinkedin />;
+      default: return null;
+    }
+  };
 
   return (
     <footer className="footer">
-      <div className="footer__container">
+      <div className="footer__container container">
         <div className="footer__grid">
-          {/* Brand Column */}
-          <div className="footer__brand">
+          <div className="footer__about">
             <Link to="/" className="footer__logo">
-              <img src={logo} alt="TR Construction" />
-              <span>TR Construction</span>
+              TR CONSTRUCTION
             </Link>
-            <p className="footer__description">{t('footer.description')}</p>
-            <div className="footer__social">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  className="footer__social-link"
-                  aria-label={social.name}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {social.icon}
-                </a>
-              ))}
+            <p className="footer__description">
+              {t('footer.description')}
+            </p>
+            <div className="footer__socials">
+              {homeData?.socials.map((social: SocialLink) => {
+                const Icon = getSocialIcon(social.type);
+                return (
+                  <a
+                    key={social.id}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.type}
+                  >
+                    {Icon}
+                  </a>
+                );
+              })}
             </div>
           </div>
 
-          {/* Quick Links */}
           <div className="footer__column">
             <h4 className="footer__title">{t('footer.quickLinks')}</h4>
             <ul className="footer__links">
@@ -56,34 +73,32 @@ const Footer = () => {
             </ul>
           </div>
 
-
-
-          {/* Contact Info */}
           <div className="footer__column">
             <h4 className="footer__title">{t('footer.contactInfo')}</h4>
             <ul className="footer__contact">
-              <li>
-                <span className="footer__contact-icon"><SlLocationPin /></span>
-                <span>{t('contact.info.addressValue')}</span>
-              </li>
-              <li>
-                <span className="footer__contact-icon"><SlPhone /></span>
-                <a href="tel:+994XXXXXXXX">{t('contact.info.phoneValue')}</a>
-              </li>
-              <li>
-                <span className="footer__contact-icon"><SlEnvolope /></span>
-                <a href="mailto:info@trconstruction.az">{t('contact.info.emailValue')}</a>
-              </li>
-              <li>
-                <span className="footer__contact-icon"><SlClock /></span>
-                <span>{t('contact.info.workingHoursValue')}</span>
-              </li>
+              {homeData?.contactInfo
+                .filter((info: ContactInfo) => {
+                  const lowerType = info.contact_type.toLowerCase();
+                  return ['address', 'phone', 'email'].includes(lowerType);
+                })
+                .map((info: ContactInfo) => (
+                  <li key={info.id}>
+                    <span className="footer__contact-icon">{getContactIcon(info.contact_type)}</span>
+                    {info.contact_type.toLowerCase() === 'phone' ? (
+                      <a href={`tel:${info.detail}`}>{info.detail}</a>
+                    ) : info.contact_type.toLowerCase() === 'email' ? (
+                      <a href={`mailto:${info.detail}`}>{info.detail}</a>
+                    ) : (
+                      <span>{info.detail}</span>
+                    )}
+                  </li>
+                ))}
             </ul>
           </div>
         </div>
 
         <div className="footer__bottom">
-          <p>{t('footer.copyright').replace('2024', String(currentYear))}</p>
+          <p>© {new Date().getFullYear()} TR CONSTRUCTION. {t('footer.allRightsReserved')}</p>
         </div>
       </div>
     </footer>

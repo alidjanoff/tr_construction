@@ -1,17 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { useHome } from '../Provider/HomeProvider';
 import SectionTitle from '../../../components/UI/SectionTitle';
 import './WorkflowSection.scss';
 
 const WorkflowSection = () => {
   const { t } = useTranslation();
-
-  const steps = [
-    { id: 'planning', number: 'I' },
-    { id: 'design', number: 'II' },
-    {  id: 'construction', number: 'III' },
-    { id: 'delivery', number: 'IV' },
-  ];
+  const { homeData } = useHome();
 
   return (
     <section className="workflow section" id="workflow">
@@ -22,7 +17,7 @@ const WorkflowSection = () => {
         />
 
         <div className="workflow__timeline">
-          {steps.map((step, index) => (
+          {homeData?.workflow.map((step, index) => (
             <motion.div
               key={step.id}
               className="workflow__step"
@@ -31,16 +26,14 @@ const WorkflowSection = () => {
               viewport={{ once: true, amount: 0, margin: '100px 0px' }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
             >
-              <div className="workflow__step-number">{step.number}</div>
+              <div className="workflow__step-number">{index + 1}</div>
               <div className="workflow__step-content">
-                <div className="workflow__step-icon">{/* Icon could go here if available */}</div>
-                <h3 className="workflow__step-title">{t(`workflow.steps.${step.id}.title`)}</h3>
+                <h3 className="workflow__step-title">{step.title}</h3>
                 <p className="workflow__step-description">
-                  {t(`workflow.steps.${step.id}.description`)}
+                  {step.details}
                 </p>
               </div>
-              {/* Connector line from SCSS */}
-              {index < steps.length - 1 && (
+              {index < homeData.workflow.length - 1 && (
                 <div className="workflow__step-connector" />
               )}
             </motion.div>

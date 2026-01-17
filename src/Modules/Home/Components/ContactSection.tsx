@@ -3,20 +3,21 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { BsGeoAlt, BsTelephone, BsEnvelope, BsClock } from 'react-icons/bs';
+import { useHome } from '../Provider/HomeProvider';
 import SectionTitle from '../../../components/UI/SectionTitle';
 import CustomInput from '../../../components/UI/CustomInput';
 import CustomButton from '../../../components/UI/CustomButton';
 import HomeService from '../Service/HomeService';
-import type { ContactFormData } from '../Models/HomeModels';
+import type { ContactFormData, ContactInfo } from '../Models/HomeModels';
 import './ContactSection.scss';
 
 const ContactSection = () => {
   const { t } = useTranslation();
+  const { homeData } = useHome();
   const [isMobile, setIsMobile] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    surname: '',
+    full_name: '',
     email: '',
     phone: '',
     message: '',
@@ -32,21 +33,20 @@ const ContactSection = () => {
 
   const validateForm = (): boolean => {
     const newErrors: Partial<ContactFormData> = {};
-    if (!formData.name.trim()) newErrors.name = t('contact.form.errorName');
-    if (!formData.surname.trim()) newErrors.surname = t('contact.form.errorSurname');
-    if (!formData.email.trim()) {
+    if (!formData.full_name?.trim()) newErrors.full_name = t('contact.form.errorName');
+    if (!formData.email?.trim()) {
       newErrors.email = t('contact.form.errorEmail');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = t('contact.form.errorEmailInvalid');
     }
-    
-    if (!formData.phone.trim()) {
+
+    if (!formData.phone?.trim()) {
       newErrors.phone = t('contact.form.errorPhone');
     } else if (!/^\+?[\d\s-]{10,}$/.test(formData.phone.trim())) {
       newErrors.phone = t('contact.form.errorPhoneInvalid');
     }
 
-    if (!formData.message.trim()) newErrors.message = t('contact.form.errorMessage');
+    if (!formData.message?.trim()) newErrors.message = t('contact.form.errorMessage');
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -67,7 +67,7 @@ const ContactSection = () => {
       const result = await HomeService.submitContactForm(formData);
       if (result.success) {
         toast.success(t('contact.form.success'));
-        setFormData({ name: '', surname: '', email: '', phone: '', message: '' });
+        setFormData({ full_name: '', email: '', phone: '', message: '' });
       }
     } catch {
       toast.error(t('contact.form.error'));
@@ -76,23 +76,40 @@ const ContactSection = () => {
     }
   };
 
-  const formAnimation = isMobile 
+  const formAnimation = isMobile
     ? { initial: { opacity: 1, x: 0 }, animate: { opacity: 1, x: 0 } }
     : {
-        initial: { opacity: 0, x: -30 },
-        whileInView: { opacity: 1, x: 0 },
-        viewport: { once: true, amount: 0, margin: '100px 0px' },
-        transition: { duration: 0.5 }
-      };
+      initial: { opacity: 0, x: -30 },
+      whileInView: { opacity: 1, x: 0 },
+      viewport: { once: true, amount: 0, margin: '100px 0px' },
+      transition: { duration: 0.5 }
+    };
 
-  const infoAnimation = isMobile 
+  const infoAnimation = isMobile
     ? { initial: { opacity: 1, x: 0 }, animate: { opacity: 1, x: 0 } }
     : {
-        initial: { opacity: 0, x: 30 },
-        whileInView: { opacity: 1, x: 0 },
-        viewport: { once: true, amount: 0, margin: '100px 0px' },
-        transition: { duration: 0.5 }
-      };
+      initial: { opacity: 0, x: 30 },
+      whileInView: { opacity: 1, x: 0 },
+      viewport: { once: true, amount: 0, margin: '100px 0px' },
+      transition: { duration: 0.5 }
+    };
+
+  const getIcon = (type: string) => {
+    const lowerType = type.toLowerCase();
+    if (lowerType.includes('address')) return <BsGeoAlt />;
+    if (lowerType.includes('phone')) return <BsTelephone />;
+    if (lowerType.includes('email')) return <BsEnvelope />;
+    if (lowerType.includes('hours')) return <BsClock />;
+    return <BsGeoAlt />;
+  };
+
+  // Generate Google Maps URL from coords or fallback to default
+  const getMapUrl = () => {
+    if (homeData?.mapUrl?.lat && homeData?.mapUrl?.long) {
+      return `https://maps.google.com/maps?q=${homeData.mapUrl.lat},${homeData.mapUrl.long}&z=15&output=embed`;
+    }
+    return "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d194472.76853036437!2d49.83353457193374!3d40.39473700779781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d6bd6211cf9%3A0x343f6b5e7ae56c6b!2sBaku!5e0!3m2!1sen!2saz!4v1709292020202!5m2!1sen!2saz";
+  };
 
   return (
     <section className="contact section" id="contact">
@@ -111,17 +128,10 @@ const ContactSection = () => {
               <div className="contact__form-row">
                 <CustomInput
                   label={t('contact.form.name')}
-                  name="name"
-                  value={formData.name}
+                  name="full_name"
+                  value={formData.full_name}
                   onChange={handleChange}
-                  error={errors.name}
-                />
-                <CustomInput
-                  label={t('contact.form.surname')}
-                  name="surname"
-                  value={formData.surname}
-                  onChange={handleChange}
-                  error={errors.surname}
+                  error={errors.full_name}
                 />
               </div>
               <div className="contact__form-row">
@@ -168,48 +178,33 @@ const ContactSection = () => {
             {...infoAnimation}
           >
             <div className="contact__info-card">
-              <div className="contact__info-item">
-                <div className="contact__info-icon"><BsGeoAlt /></div>
-                <div className="contact__info-content">
-                  <h4>{t('contact.info.address')}</h4>
-                  <p>{t('contact.info.addressValue')}</p>
+              {homeData?.contactInfo.map((info: ContactInfo) => (
+                <div key={info.id} className="contact__info-item">
+                  <div className="contact__info-icon">{getIcon(info.contact_type)}</div>
+                  <div className="contact__info-content">
+                    <h4>{info.title}</h4>
+                    {info.contact_type.toLowerCase() === 'phone' ? (
+                      <a href={`tel:${info.detail}`}>{info.detail}</a>
+                    ) : info.contact_type.toLowerCase() === 'email' ? (
+                      <a href={`mailto:${info.detail}`}>{info.detail}</a>
+                    ) : (
+                      <p>{info.detail}</p>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="contact__info-item">
-                <div className="contact__info-icon"><BsTelephone /></div>
-                <div className="contact__info-content">
-                  <h4>{t('contact.info.phone')}</h4>
-                  <a href="tel:+994XXXXXXXX">{t('contact.info.phoneValue')}</a>
-                </div>
-              </div>
-              <div className="contact__info-item">
-                <div className="contact__info-icon"><BsEnvelope /></div>
-                <div className="contact__info-content">
-                  <h4>{t('contact.info.email')}</h4>
-                  <a href="mailto:info@trconstruction.az">
-                    {t('contact.info.emailValue')}
-                  </a>
-                </div>
-              </div>
-              <div className="contact__info-item">
-                <div className="contact__info-icon"><BsClock /></div>
-                <div className="contact__info-content">
-                  <h4>{t('contact.info.workingHours')}</h4>
-                  <p>{t('contact.info.workingHoursValue')}</p>
-                </div>
-              </div>
+              ))}
             </div>
 
             <div className="contact__map">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d194472.76853036437!2d49.83353457193374!3d40.39473700779781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d6bd6211cf9%3A0x343f6b5e7ae56c6b!2sBaku!5e0!3m2!1sen!2saz!4v1709292020202!5m2!1sen!2saz" 
-                width="100%" 
-                height="100%" 
-                style={{ border: 0 }} 
-                allowFullScreen={true} 
-                loading="lazy" 
+              <iframe
+                src={getMapUrl()}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Baku, Azerbaijan Map"
+                title="Location Map"
               />
             </div>
           </motion.div>
