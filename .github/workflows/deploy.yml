@@ -15,8 +15,6 @@ jobs:
           script: |
             cd /var/www/tr_construction
             git pull origin main
-            docker stop tr_construction_app || true
-            docker rm tr_construction_app || true
-            docker build -t tr-frontend-image .
-            docker run -d --name tr_construction_app -p 80:4173 tr-frontend-image
+            cd /var/www
+            docker-compose up -d --build frontend
             docker image prune -f
