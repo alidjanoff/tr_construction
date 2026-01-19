@@ -1,4 +1,4 @@
-import { useHome } from '../Modules/Home/Provider/HomeProvider';
+import { useHome } from '../Modules/Home/Provider/HomeContext';
 import Loader from '../components/UI/Loader';
 import ServicesSection from '../Modules/Home/Components/ServicesSection';
 import WorkflowSection from '../Modules/Home/Components/WorkflowSection';

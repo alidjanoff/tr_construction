@@ -1,18 +1,49 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import PageHero from '../components/UI/PageHero';
-import { useHome } from '../Modules/Home/Provider/HomeProvider';
+import { servicesAPI } from '../services/api';
+import { getTranslation } from '../utils/translations';
+import type { Service } from '../types';
+import Loader from '../components/UI/Loader';
 
 const ServiceDetailPage = () => {
   const { id } = useParams<{ id: string }>();
-  const { t } = useTranslation();
-  const { homeData } = useHome();
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language || 'az';
 
-  const service = homeData?.services?.find((s) => s.id === id);
+  const [service, setService] = useState<Service | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const title = service ? service.title : t(`services.items.${id}.title`);
-  const description = service ? service.info : t(`services.items.${id}.description`);
+  useEffect(() => {
+    const fetchService = async () => {
+      if (!id) {
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(true);
+      const data = await servicesAPI.getOne(id);
+      setService(data);
+      setIsLoading(false);
+    };
+
+    fetchService();
+  }, [id]);
+
+  // Show loader while data is loading
+  if (isLoading) {
+    return <Loader fullPage size="lg" />;
+  }
+
+  // Get translated values - use API data if available, fallback to i18n
+  const title = service
+    ? getTranslation(service.title, currentLang)
+    : t(`services.items.${id}.title`);
+  const description = service
+    ? getTranslation(service.info, currentLang)
+    : t(`services.items.${id}.description`);
 
   return (
     <div className="service-detail-page">
@@ -39,6 +70,7 @@ const ServiceDetailPage = () => {
           </p>
 
           <div style={{ marginTop: '2rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+            {/* Placeholders for images or features */}
             <div style={{ height: '12rem', backgroundColor: '#e5e7eb', borderRadius: '0.25rem' }}></div>
             <div style={{ height: '12rem', backgroundColor: '#e5e7eb', borderRadius: '0.25rem' }}></div>
           </div>

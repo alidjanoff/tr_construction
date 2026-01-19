@@ -3,15 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import './IntroScreen.scss';
 
 const IntroScreen = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(() => !sessionStorage.getItem('introShown'));
 
   useEffect(() => {
-    const introShown = sessionStorage.getItem('introShown');
-    
-    if (introShown) {
-      setIsVisible(false);
-      return;
-    }
+    if (!isVisible) return;
 
     const timer = setTimeout(() => {
       setIsVisible(false);
@@ -19,7 +14,7 @@ const IntroScreen = () => {
     }, 3500);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [isVisible]);
 
   return (
     <AnimatePresence>
@@ -35,10 +30,10 @@ const IntroScreen = () => {
               {/* Geometric Minimalist Loader */}
               <div className="modern-loader">
                 {[0, 1, 2].map((i) => (
-                  <motion.span 
+                  <motion.span
                     key={i}
                     initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ 
+                    animate={{
                       opacity: [0.2, 1, 0.2],
                       scale: [1, 1.2, 1],
                       rotate: [0, 180, 360]
@@ -52,7 +47,7 @@ const IntroScreen = () => {
                   />
                 ))}
               </div>
-              <motion.div 
+              <motion.div
                 className="modern-loader__line"
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: 120, opacity: 1 }}

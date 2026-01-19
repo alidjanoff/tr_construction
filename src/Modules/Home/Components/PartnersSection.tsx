@@ -2,7 +2,8 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
-import { useHome } from '../Provider/HomeProvider';
+import { useHome } from '../Provider/HomeContext';
+import { getTranslation } from '../../../utils/translations';
 import SectionTitle from '../../../components/UI/SectionTitle';
 import { SlBriefcase, SlGlobe, SlBadge, SlLayers, SlDiamond } from 'react-icons/sl';
 import 'swiper/css';
@@ -11,10 +12,10 @@ import './PartnersSection.scss';
 
 const PartnersSection = () => {
   const { t } = useTranslation();
-  const { homeData } = useHome();
+  const { homeData, currentLang } = useHome();
   const partners = homeData?.partners || [];
 
-  // Partner icons using react-icons/sl (fallback icons if no image is present)
+  // Partner icons using react-icons/sl
   const partnerIcons = [SlBriefcase, SlGlobe, SlBadge, SlLayers, SlDiamond];
 
   // AutoPlay configuration logic: Only autoplay if more than 5 items
@@ -39,7 +40,7 @@ const PartnersSection = () => {
             modules={[Pagination, Autoplay]}
             spaceBetween={24}
             slidesPerView={2}
-            loop={partners.length > 5}
+            loop={true}
             pagination={{ clickable: true }}
             autoplay={shouldAutoplay ? { delay: 3000, disableOnInteraction: false } : false}
             breakpoints={{
@@ -51,18 +52,20 @@ const PartnersSection = () => {
           >
             {partners.map((partner, index) => {
               const IconComponent = partnerIcons[index % partnerIcons.length];
+              const partnerName = getTranslation(partner.title, currentLang);
+
               return (
-                <SwiperSlide key={partner.id}>
+                <SwiperSlide key={partner.id || index}>
                   <div className="partners__item">
                     {partner.image ? (
-                      <img src={partner.image} alt={partner.title} />
+                      <img src={partner.image} alt={partnerName} />
                     ) : (
                       <div className="partners__placeholder">
                         <span className="partners__placeholder-icon">
                           <IconComponent />
                         </span>
                         <span className="partners__placeholder-text">
-                          {partner.title}
+                          {partnerName || `Partner ${index + 1}`}
                         </span>
                       </div>
                     )}

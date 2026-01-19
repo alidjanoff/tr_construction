@@ -5,60 +5,71 @@ import { motion } from 'framer-motion';
 import { BsArrowLeft, BsGeoAlt, BsTag } from 'react-icons/bs';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
-import { useHome } from '../Modules/Home/Provider/HomeProvider';
+import { projectsAPI } from '../services/api';
+import { getTranslation } from '../utils/translations';
+import type { Project } from '../types';
 import Loader from '../components/UI/Loader';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './ProjectDetailPage.scss';
 
+// Fallback gallery images
+import b1 from '../assets/images/building1.avif';
+import b2 from '../assets/images/building2.jpg';
+import b3 from '../assets/images/building3.avif';
+import b4 from '../assets/images/building4.avif';
+import b5 from '../assets/images/building5.avif';
+
+const fallbackGalleryImages = [b1, b2, b3, b4, b5];
+
 const ProjectDetailPage = () => {
   const { id } = useParams<{ id: string }>();
-  const { t } = useTranslation();
-  const { homeData, isLoading } = useHome();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const currentLang = i18n.language || 'az';
 
-  // Helper function to create slug from title
-  const createSlug = (title: string) => {
-    const transliterated = title
-      .replace(/ə/gi, 'e')
-      .replace(/ı/gi, 'i')
-      .replace(/ş/gi, 'sh')
-      .replace(/ç/gi, 'ch')
-      .replace(/ö/gi, 'o')
-      .replace(/ü/gi, 'u')
-      .replace(/ğ/gi, 'g');
-
-    return transliterated
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .trim();
-  };
-
-  const project = homeData?.projects.find((p) => createSlug(p.title) === id);
-  const [mainImage, setMainImage] = useState(project ? project.cover_image : '');
+  const [project, setProject] = useState<Project | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [mainImage, setMainImage] = useState('');
 
   useEffect(() => {
-    if (project) {
-      setMainImage(project.cover_image);
-    }
-  }, [project]);
+    const fetchProject = async () => {
+      if (!id) {
+        navigate('/404', { replace: true });
+        return;
+      }
 
-  useEffect(() => {
-    if (!isLoading && homeData && !project) {
-      navigate('/404', { replace: true });
-    }
-  }, [isLoading, homeData, project, navigate]);
+      setIsLoading(true);
+      const data = await projectsAPI.getOne(id);
 
-  if (isLoading || !homeData || !project) {
+      if (data) {
+        setProject(data);
+        setMainImage(data.cover_image || '');
+      } else {
+        navigate('/404', { replace: true });
+      }
+
+      setIsLoading(false);
+    };
+
+    fetchProject();
+  }, [id, navigate]);
+
+  // Show loader while data is loading
+  if (isLoading || !project) {
     return <Loader fullPage size="lg" />;
   }
 
-  // Use backend gallery if available, otherwise just the cover image
+  // Get translated values
+  const title = getTranslation(project.title, currentLang);
+  const address = getTranslation(project.address, currentLang);
+  const badge = getTranslation(project.badge, currentLang);
+  const details = getTranslation(project.details, currentLang);
+
+  // Generate gallery images from API or use fallbacks
   const galleryImages = project.image_gallery?.length
-    ? project.image_gallery.map(img => img.image_url)
-    : [project.cover_image];
+    ? [project.cover_image, ...project.image_gallery.map(img => img.image_url)]
+    : [project.cover_image, ...fallbackGalleryImages];
 
   return (
     <main className="project-detail">
@@ -78,65 +89,75 @@ const ProjectDetailPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+          {/* Header */}
           <header className="project-detail__header">
-            <h1 className="project-detail__title">{project.title}</h1>
+            <h1 className="project-detail__title">{title}</h1>
             <div className="project-detail__meta">
               <span className="project-detail__meta-item">
-                <BsGeoAlt className="project-detail__meta-icon" /> {project.address}
+                <BsGeoAlt className="project-detail__meta-icon" /> {address}
               </span>
-              <span className="project-detail__meta-item">
-                <BsTag className="project-detail__meta-icon" /> {project.badge}
-              </span>
+              {badge && (
+                <span className="project-detail__meta-item">
+                  <BsTag className="project-detail__meta-icon" /> {badge}
+                </span>
+              )}
             </div>
           </header>
 
+          {/* Main Image */}
           <div className="project-detail__image-wrapper">
             <motion.img
               key={mainImage}
               src={mainImage}
-              alt={project.title}
+              alt={title}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             />
           </div>
 
-          {galleryImages.length > 1 && (
-            <div className="project-detail__gallery-slider">
-              <Swiper
-                modules={[Pagination]}
-                spaceBetween={10}
-                slidesPerView={3}
-                breakpoints={{
-                  768: {
-                    slidesPerView: 5,
-                    spaceBetween: 12
-                  }
-                }}
-                pagination={{ clickable: true }}
-              >
-                {galleryImages.map((imgUrl, i) => (
-                  <SwiperSlide key={i} onClick={() => setMainImage(imgUrl)} style={{ cursor: 'pointer' }}>
-                    <div className="project-detail__gallery-thumb" style={{ border: mainImage === imgUrl ? '2px solid #1B5E3A' : 'none' }}>
-                      <img
-                        src={imgUrl}
-                        alt={`Gallery ${i}`}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </div>
-          )}
+          {/* Gallery - Moved directly under main image */}
+          <div className="project-detail__gallery-slider">
+            <Swiper
+              modules={[Pagination]}
+              spaceBetween={10}
+              slidesPerView={3}
+              breakpoints={{
+                768: {
+                  slidesPerView: 5,
+                  spaceBetween: 12
+                }
+              }}
+              pagination={{ clickable: true }}
+            >
+              {galleryImages.map((imgUrl, i) => (
+                <SwiperSlide key={i} onClick={() => setMainImage(imgUrl)} style={{ cursor: 'pointer' }}>
+                  <div className="project-detail__gallery-thumb" style={{ border: mainImage === imgUrl ? '2px solid #1B5E3A' : 'none' }}>
+                    <img
+                      src={imgUrl}
+                      alt={`Gallery ${i}`}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
 
+          {/* Body Content */}
           <div className="project-detail__body">
             <h3>{t('projects.overview')}</h3>
             <p>
-              {project.details || t('projects.detailDescription', { location: project.address })}
+              {details || t('projects.detailDescription', { location: address })}
             </p>
 
-            {/* Features can be static or come from backend if added later */}
+            <h3>{t('projects.features')}</h3>
+            <ul>
+              <li>{t('projects.feature1')}</li>
+              <li>{t('projects.feature2')}</li>
+              <li>{t('projects.feature3')}</li>
+              <li>{t('projects.feature4')}</li>
+            </ul>
           </div>
         </motion.div>
       </div>

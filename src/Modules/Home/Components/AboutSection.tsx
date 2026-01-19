@@ -1,76 +1,85 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { SlTarget, SlRocket } from 'react-icons/sl';
-import { useHome } from '../Provider/HomeProvider';
+import SectionTitle from '../../../components/UI/SectionTitle';
+import { SlTarget, SlEye } from 'react-icons/sl';
+import { useHome } from '../Provider/HomeContext';
+import { getTranslation } from '../../../utils/translations';
 import './AboutSection.scss';
 
 const AboutSection = () => {
   const { t } = useTranslation();
-  const { homeData, isLoading } = useHome();
+  const { homeData, currentLang } = useHome();
 
-  if (isLoading || !homeData?.about) {
-    return <div className="section-skeleton"></div>;
-  }
-
-  const { about } = homeData;
-
-  const highlights = [
-    {
-      icon: <SlTarget />,
-      title: t('about.mission'),
-      description: about.our_mission,
-    },
-    {
-      icon: <SlRocket />,
-      title: t('about.vision'),
-      description: about.our_vision,
-    },
-  ];
+  // Get about data from API or use fallback translations
+  const about = homeData?.about;
+  const aboutTitle = about ? getTranslation(about.title, currentLang) : t('about.title');
+  const aboutDescription = about ? getTranslation(about.description, currentLang) : t('about.description');
+  const missionTitle = t('about.mission.title'); // Keep section titles from i18n
+  const missionText = about ? getTranslation(about.our_mission, currentLang) : t('about.mission.text');
+  const visionTitle = t('about.vision.title'); // Keep section titles from i18n
+  const visionText = about ? getTranslation(about.our_vision, currentLang) : t('about.vision.text');
+  const aboutImage = about?.image || 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1000&auto=format&fit=crop';
 
   return (
     <section className="about section" id="about">
       <div className="about__container container">
-        <div className="about__grid">
+        <div className="about__top">
+          <div className="about__content-text">
+            <SectionTitle
+              title={t('about.sectionTitle')}
+              subtitle={t('about.sectionSubtitle')}
+            />
+
+            <motion.h3
+              className="about__heading"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0, margin: '100px 0px' }}
+            >
+              {aboutTitle}
+            </motion.h3>
+
+            <motion.p
+              className="about__description"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0, margin: '100px 0px' }}
+              transition={{ delay: 0.1 }}
+            >
+              {aboutDescription}
+            </motion.p>
+          </div>
+
           <motion.div
-            className="about__image-container"
-            initial={{ opacity: 0, x: -50 }}
+            className="about__image"
+            initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8 }}
+            viewport={{ once: true, amount: 0, margin: '100px 0px' }}
+            transition={{ duration: 0.6 }}
           >
             <div className="about__image-wrapper">
-              <img src={about.image} alt="TR Construction" />
-              <div className="about__experience">
-                <span className="about__experience-number">10+</span>
-                <span className="about__experience-text">{t('about.yearsExperience')}</span>
-              </div>
+              <img src={aboutImage} alt="About TR Construction" />
             </div>
+          </motion.div>
+        </div>
+
+        <div className="about__cards">
+          <motion.div
+            className="about__card"
+            whileHover={{ y: -5 }}
+          >
+            <div className="about__card-icon"><SlTarget /></div>
+            <h4 className="about__card-title">{missionTitle}</h4>
+            <p className="about__card-text">{missionText}</p>
           </motion.div>
 
           <motion.div
-            className="about__content"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.8 }}
+            className="about__card"
+            whileHover={{ y: -5 }}
           >
-            <span className="about__subtitle">{about.info}</span>
-            <h2 className="about__title">{about.title}</h2>
-            <p className="about__description">
-              {about.description}
-            </p>
-
-            <div className="about__highlights">
-              {highlights.map((item, index) => (
-                <div key={index} className="about__highlight-item">
-                  <div className="about__highlight-icon">{item.icon}</div>
-                  <div className="about__highlight-text">
-                    <h4>{item.title}</h4>
-                    <p>{item.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <div className="about__card-icon"><SlEye /></div>
+            <h4 className="about__card-title">{visionTitle}</h4>
+            <p className="about__card-text">{visionText}</p>
           </motion.div>
         </div>
       </div>
