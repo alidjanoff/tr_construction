@@ -16,4 +16,5 @@ jobs:
             cd /var/www/tr_construction
             git pull
             npm i 
+            npm run build
             pm2 restart 3
