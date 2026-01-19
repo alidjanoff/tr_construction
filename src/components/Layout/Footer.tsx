@@ -1,21 +1,48 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SlSocialFacebook, SlSocialInstagram, SlSocialLinkedin, SlSocialYoutube, SlLocationPin, SlPhone, SlEnvolope, SlClock } from 'react-icons/sl';
+import { useHome } from '../../Modules/Home/Provider/HomeContext';
+import { getTranslation } from '../../utils/translations';
 import logo from '../../assets/images/logo.jpeg';
 import './Footer.scss';
 
+// Social type to icon mapping
+const socialTypeIcons: Record<string, React.ReactElement> = {
+  facebook: <SlSocialFacebook />,
+  instagram: <SlSocialInstagram />,
+  linkedin: <SlSocialLinkedin />,
+  youtube: <SlSocialYoutube />,
+};
+
+// Contact type to icon mapping
+const contactTypeIcons: Record<string, React.ReactElement> = {
+  address: <SlLocationPin />,
+  phone: <SlPhone />,
+  email: <SlEnvolope />,
+  working_hours: <SlClock />,
+};
+
 const Footer = () => {
   const { t } = useTranslation();
+  const { homeData, currentLang } = useHome();
   const currentYear = new Date().getFullYear();
 
+  const socials = homeData?.socials || [];
+  const contactInfo = homeData?.contactInfo || [];
 
-
-  const socialLinks = [
-    { name: 'Facebook', icon: <SlSocialFacebook />, url: '#' },
-    { name: 'Instagram', icon: <SlSocialInstagram />, url: 'https://www.instagram.com/trmmc.az/' },
-    { name: 'LinkedIn', icon: <SlSocialLinkedin />, url: '#' },
-    { name: 'YouTube', icon: <SlSocialYoutube />, url: '#' },
-  ];
+  // Build social links from API or use fallback
+  const socialLinks = socials.length > 0
+    ? socials.map((social) => ({
+      name: social.type,
+      icon: socialTypeIcons[social.type.toLowerCase()] || <SlSocialFacebook />,
+      url: social.url,
+    }))
+    : [
+      { name: 'Facebook', icon: <SlSocialFacebook />, url: '#' },
+      { name: 'Instagram', icon: <SlSocialInstagram />, url: 'https://www.instagram.com/trmmc.az/' },
+      { name: 'LinkedIn', icon: <SlSocialLinkedin />, url: '#' },
+      { name: 'YouTube', icon: <SlSocialYoutube />, url: '#' },
+    ];
 
   return (
     <footer className="footer">
@@ -62,22 +89,42 @@ const Footer = () => {
           <div className="footer__column">
             <h4 className="footer__title">{t('footer.contactInfo')}</h4>
             <ul className="footer__contact">
-              <li>
-                <span className="footer__contact-icon"><SlLocationPin /></span>
-                <span>{t('contact.info.addressValue')}</span>
-              </li>
-              <li>
-                <span className="footer__contact-icon"><SlPhone /></span>
-                <a href="tel:+994XXXXXXXX">{t('contact.info.phoneValue')}</a>
-              </li>
-              <li>
-                <span className="footer__contact-icon"><SlEnvolope /></span>
-                <a href="mailto:info@trconstruction.az">{t('contact.info.emailValue')}</a>
-              </li>
-              <li>
-                <span className="footer__contact-icon"><SlClock /></span>
-                <span>{t('contact.info.workingHoursValue')}</span>
-              </li>
+              {contactInfo.length > 0 ? (
+                contactInfo.map((info, index) => {
+                  const icon = contactTypeIcons[info.contact_type] || <SlLocationPin />;
+                  const detail = getTranslation(info.detail, currentLang);
+
+                  return (
+                    <li key={info.id || index}>
+                      <span className="footer__contact-icon">{icon}</span>
+                      {info.url ? (
+                        <a href={info.url}>{detail}</a>
+                      ) : (
+                        <span>{detail}</span>
+                      )}
+                    </li>
+                  );
+                })
+              ) : (
+                <>
+                  <li>
+                    <span className="footer__contact-icon"><SlLocationPin /></span>
+                    <span>{t('contact.info.addressValue')}</span>
+                  </li>
+                  <li>
+                    <span className="footer__contact-icon"><SlPhone /></span>
+                    <a href="tel:+994XXXXXXXX">{t('contact.info.phoneValue')}</a>
+                  </li>
+                  <li>
+                    <span className="footer__contact-icon"><SlEnvolope /></span>
+                    <a href="mailto:info@trconstruction.az">{t('contact.info.emailValue')}</a>
+                  </li>
+                  <li>
+                    <span className="footer__contact-icon"><SlClock /></span>
+                    <span>{t('contact.info.workingHoursValue')}</span>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

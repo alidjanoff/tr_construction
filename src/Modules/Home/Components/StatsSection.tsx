@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { motion, useInView } from 'framer-motion';
-import { useHome } from '../Provider/HomeProvider';
+import { useHome } from '../Provider/HomeContext';
+import { getTranslation, parseCountValue } from '../../../utils/translations';
 import './StatsSection.scss';
 
 interface CounterProps {
@@ -24,7 +24,7 @@ const Counter = ({ end, suffix = '', duration = 2 }: CounterProps) => {
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
-      
+
       // Easing function for smooth animation
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
       setCount(Math.floor(easeOutQuart * end));
@@ -47,28 +47,34 @@ const Counter = ({ end, suffix = '', duration = 2 }: CounterProps) => {
 };
 
 const StatsSection = () => {
-  const { t } = useTranslation();
-  const { homeData } = useHome();
+  const { homeData, currentLang } = useHome();
+  const stats = homeData?.stats || [];
 
   return (
     <section className="stats">
       <div className="stats__container container">
         <div className="stats__grid">
-          {homeData?.stats.map((stat, index) => (
-            <motion.div
-              key={stat.id}
-              className="stats__item"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <div className="stats__value">
-                <Counter end={stat.value} suffix={stat.suffix} />
-              </div>
-              <div className="stats__label">{t(stat.labelKey)}</div>
-            </motion.div>
-          ))}
+          {stats.map((stat, index) => {
+            // Parse count value - it might be like "150+" or just "150"
+            const { value, suffix } = parseCountValue(stat.count, currentLang);
+            const label = getTranslation(stat.detail, currentLang);
+
+            return (
+              <motion.div
+                key={stat.id || index}
+                className="stats__item"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div className="stats__value">
+                  <Counter end={value} suffix={suffix} />
+                </div>
+                <div className="stats__label">{label}</div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

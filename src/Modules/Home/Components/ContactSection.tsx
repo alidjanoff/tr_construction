@@ -7,11 +7,22 @@ import SectionTitle from '../../../components/UI/SectionTitle';
 import CustomInput from '../../../components/UI/CustomInput';
 import CustomButton from '../../../components/UI/CustomButton';
 import HomeService from '../Service/HomeService';
+import { useHome } from '../Provider/HomeContext';
+import { getTranslation } from '../../../utils/translations';
 import type { ContactFormData } from '../Models/HomeModels';
 import './ContactSection.scss';
 
+// Contact type to icon mapping
+const contactTypeIcons: Record<string, React.ComponentType> = {
+  address: BsGeoAlt,
+  phone: BsTelephone,
+  email: BsEnvelope,
+  working_hours: BsClock,
+};
+
 const ContactSection = () => {
   const { t } = useTranslation();
+  const { homeData, currentLang } = useHome();
   const [isMobile, setIsMobile] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<ContactFormData>({
@@ -22,6 +33,9 @@ const ContactSection = () => {
     message: '',
   });
   const [errors, setErrors] = useState<Partial<ContactFormData>>({});
+
+  const contactInfo = homeData?.contactInfo || [];
+  const mapUrl = homeData?.mapUrl;
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -39,7 +53,7 @@ const ContactSection = () => {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = t('contact.form.errorEmailInvalid');
     }
-    
+
     if (!formData.phone.trim()) {
       newErrors.phone = t('contact.form.errorPhone');
     } else if (!/^\+?[\d\s-]{10,}$/.test(formData.phone.trim())) {
@@ -68,6 +82,8 @@ const ContactSection = () => {
       if (result.success) {
         toast.success(t('contact.form.success'));
         setFormData({ name: '', surname: '', email: '', phone: '', message: '' });
+      } else {
+        toast.error(result.message || t('contact.form.error'));
       }
     } catch {
       toast.error(t('contact.form.error'));
@@ -76,23 +92,32 @@ const ContactSection = () => {
     }
   };
 
-  const formAnimation = isMobile 
+  const formAnimation = isMobile
     ? { initial: { opacity: 1, x: 0 }, animate: { opacity: 1, x: 0 } }
     : {
-        initial: { opacity: 0, x: -30 },
-        whileInView: { opacity: 1, x: 0 },
-        viewport: { once: true, amount: 0, margin: '100px 0px' },
-        transition: { duration: 0.5 }
-      };
+      initial: { opacity: 0, x: -30 },
+      whileInView: { opacity: 1, x: 0 },
+      viewport: { once: true, amount: 0, margin: '100px 0px' },
+      transition: { duration: 0.5 }
+    };
 
-  const infoAnimation = isMobile 
+  const infoAnimation = isMobile
     ? { initial: { opacity: 1, x: 0 }, animate: { opacity: 1, x: 0 } }
     : {
-        initial: { opacity: 0, x: 30 },
-        whileInView: { opacity: 1, x: 0 },
-        viewport: { once: true, amount: 0, margin: '100px 0px' },
-        transition: { duration: 0.5 }
-      };
+      initial: { opacity: 0, x: 30 },
+      whileInView: { opacity: 1, x: 0 },
+      viewport: { once: true, amount: 0, margin: '100px 0px' },
+      transition: { duration: 0.5 }
+    };
+
+  // Generate Google Maps embed URL from lat/long
+  const getMapEmbedUrl = () => {
+    if (mapUrl?.lat && mapUrl?.long) {
+      return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d${mapUrl.long}!3d${mapUrl.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zLocation!5e0!3m2!1sen!2saz!4v1709292020202!5m2!1sen!2saz`;
+    }
+    // Fallback to default Baku map
+    return 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d194472.76853036437!2d49.83353457193374!3d40.39473700779781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d6bd6211cf9%3A0x343f6b5e7ae56c6b!2sBaku!5e0!3m2!1sen!2saz!4v1709292020202!5m2!1sen!2saz';
+  };
 
   return (
     <section className="contact section" id="contact">
@@ -168,48 +193,73 @@ const ContactSection = () => {
             {...infoAnimation}
           >
             <div className="contact__info-card">
-              <div className="contact__info-item">
-                <div className="contact__info-icon"><BsGeoAlt /></div>
-                <div className="contact__info-content">
-                  <h4>{t('contact.info.address')}</h4>
-                  <p>{t('contact.info.addressValue')}</p>
-                </div>
-              </div>
-              <div className="contact__info-item">
-                <div className="contact__info-icon"><BsTelephone /></div>
-                <div className="contact__info-content">
-                  <h4>{t('contact.info.phone')}</h4>
-                  <a href="tel:+994XXXXXXXX">{t('contact.info.phoneValue')}</a>
-                </div>
-              </div>
-              <div className="contact__info-item">
-                <div className="contact__info-icon"><BsEnvelope /></div>
-                <div className="contact__info-content">
-                  <h4>{t('contact.info.email')}</h4>
-                  <a href="mailto:info@trconstruction.az">
-                    {t('contact.info.emailValue')}
-                  </a>
-                </div>
-              </div>
-              <div className="contact__info-item">
-                <div className="contact__info-icon"><BsClock /></div>
-                <div className="contact__info-content">
-                  <h4>{t('contact.info.workingHours')}</h4>
-                  <p>{t('contact.info.workingHoursValue')}</p>
-                </div>
-              </div>
+              {contactInfo.map((info, index) => {
+                const IconComponent = contactTypeIcons[info.contact_type] || BsGeoAlt;
+                const title = getTranslation(info.title, currentLang);
+                const detail = getTranslation(info.detail, currentLang);
+
+                return (
+                  <div key={info.id || index} className="contact__info-item">
+                    <div className="contact__info-icon"><IconComponent /></div>
+                    <div className="contact__info-content">
+                      <h4>{title}</h4>
+                      {info.url ? (
+                        <a href={info.url}>{detail}</a>
+                      ) : (
+                        <p>{detail}</p>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+
+              {/* Fallback if no contact info from API */}
+              {contactInfo.length === 0 && (
+                <>
+                  <div className="contact__info-item">
+                    <div className="contact__info-icon"><BsGeoAlt /></div>
+                    <div className="contact__info-content">
+                      <h4>{t('contact.info.address')}</h4>
+                      <p>{t('contact.info.addressValue')}</p>
+                    </div>
+                  </div>
+                  <div className="contact__info-item">
+                    <div className="contact__info-icon"><BsTelephone /></div>
+                    <div className="contact__info-content">
+                      <h4>{t('contact.info.phone')}</h4>
+                      <a href="tel:+994XXXXXXXX">{t('contact.info.phoneValue')}</a>
+                    </div>
+                  </div>
+                  <div className="contact__info-item">
+                    <div className="contact__info-icon"><BsEnvelope /></div>
+                    <div className="contact__info-content">
+                      <h4>{t('contact.info.email')}</h4>
+                      <a href="mailto:info@trconstruction.az">
+                        {t('contact.info.emailValue')}
+                      </a>
+                    </div>
+                  </div>
+                  <div className="contact__info-item">
+                    <div className="contact__info-icon"><BsClock /></div>
+                    <div className="contact__info-content">
+                      <h4>{t('contact.info.workingHours')}</h4>
+                      <p>{t('contact.info.workingHoursValue')}</p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="contact__map">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d194472.76853036437!2d49.83353457193374!3d40.39473700779781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d6bd6211cf9%3A0x343f6b5e7ae56c6b!2sBaku!5e0!3m2!1sen!2saz!4v1709292020202!5m2!1sen!2saz" 
-                width="100%" 
-                height="100%" 
-                style={{ border: 0 }} 
-                allowFullScreen={true} 
-                loading="lazy" 
+              <iframe
+                src={getMapEmbedUrl()}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Baku, Azerbaijan Map"
+                title="Location Map"
               />
             </div>
           </motion.div>

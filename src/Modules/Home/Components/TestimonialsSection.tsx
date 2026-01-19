@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
-import { useHome } from '../Provider/HomeProvider';
+import { useHome } from '../Provider/HomeContext';
+import { getTranslation } from '../../../utils/translations';
 import SectionTitle from '../../../components/UI/SectionTitle';
 import type { Testimonial } from '../Models/HomeModels';
 import 'swiper/css';
@@ -12,16 +13,10 @@ import './TestimonialsSection.scss';
 
 const TestimonialsSection = () => {
   const { t } = useTranslation();
-  const { homeData } = useHome();
+  const { homeData, currentLang } = useHome();
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
 
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <span key={i} className={`star ${i < rating ? 'star--filled' : ''}`}>
-        ★
-      </span>
-    ));
-  };
+  const testimonials = homeData?.testimonials || [];
 
   return (
     <section className="testimonials section">
@@ -50,38 +45,36 @@ const TestimonialsSection = () => {
             }}
             className="testimonials__swiper"
           >
-            {homeData?.testimonials.map((testimonial) => (
-              <SwiperSlide key={testimonial.id}>
-                <article 
-                  className="testimonials__card" 
-                  onClick={() => setSelectedTestimonial(testimonial)}
-                >
-                  <div className="testimonials__card-rating">
-                    {renderStars(testimonial.rating)}
-                  </div>
-                  <p className="testimonials__card-content">
-                    "{testimonial.content}"
-                  </p>
-                  <div className="testimonials__card-author">
-                    <div className="testimonials__card-avatar">
-                      {testimonial.avatar ? (
-                        <img src={testimonial.avatar} alt={testimonial.name} />
-                      ) : (
-                        <span>{testimonial.name.charAt(0)}</span>
-                      )}
+            {testimonials.map((testimonial, index) => {
+              const customerType = getTranslation(testimonial.customer_type, currentLang);
+              const customerReview = getTranslation(testimonial.customer_review, currentLang);
+
+              return (
+                <SwiperSlide key={testimonial.id || index}>
+                  <article
+                    className="testimonials__card"
+                    onClick={() => setSelectedTestimonial(testimonial)}
+                  >
+                    <p className="testimonials__card-content">
+                      "{customerReview}"
+                    </p>
+                    <div className="testimonials__card-author">
+                      <div className="testimonials__card-avatar">
+                        <span>{testimonial.customer_full_name.charAt(0)}</span>
+                      </div>
+                      <div className="testimonials__card-info">
+                        <h4 className="testimonials__card-name">
+                          {testimonial.customer_full_name}
+                        </h4>
+                        <span className="testimonials__card-role">
+                          {customerType}
+                        </span>
+                      </div>
                     </div>
-                    <div className="testimonials__card-info">
-                      <h4 className="testimonials__card-name">
-                        {testimonial.name}
-                      </h4>
-                      <span className="testimonials__card-role">
-                        {testimonial.role}
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </SwiperSlide>
-            ))}
+                  </article>
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </motion.div>
       </div>
@@ -103,39 +96,32 @@ const TestimonialsSection = () => {
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <button 
+              <button
                 className="testimonials__modal-close"
                 onClick={() => setSelectedTestimonial(null)}
               >
                 ✕
               </button>
-              
+
               <div className="testimonials__modal-content">
                 <div className="testimonials__modal-header">
-                  <div className="testimonials__modal-rating">
-                    {renderStars(selectedTestimonial.rating)}
-                  </div>
                   <div className="testimonials__modal-author">
                     <div className="testimonials__modal-avatar">
-                      {selectedTestimonial.avatar ? (
-                        <img src={selectedTestimonial.avatar} alt={selectedTestimonial.name} />
-                      ) : (
-                        <span>{selectedTestimonial.name.charAt(0)}</span>
-                      )}
+                      <span>{selectedTestimonial.customer_full_name.charAt(0)}</span>
                     </div>
                     <div>
                       <h4 className="testimonials__modal-name">
-                        {selectedTestimonial.name}
+                        {selectedTestimonial.customer_full_name}
                       </h4>
                       <span className="testimonials__modal-role">
-                        {selectedTestimonial.role}
+                        {getTranslation(selectedTestimonial.customer_type, currentLang)}
                       </span>
                     </div>
                   </div>
                 </div>
-                
+
                 <p className="testimonials__modal-text">
-                  "{selectedTestimonial.content}"
+                  "{getTranslation(selectedTestimonial.customer_review, currentLang)}"
                 </p>
               </div>
             </motion.div>

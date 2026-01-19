@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
-import { useHome } from '../Provider/HomeProvider';
+import { useHome } from '../Provider/HomeContext';
+import { getTranslation } from '../../../utils/translations';
 import SectionTitle from '../../../components/UI/SectionTitle';
 import ProjectCard from '../../../components/Cards/ProjectCard';
 import 'swiper/css';
@@ -12,28 +13,10 @@ import './ProjectsSection.scss';
 
 const ProjectsSection = () => {
   const { t } = useTranslation();
-  const { homeData } = useHome();
+  const { homeData, currentLang } = useHome();
   const navigate = useNavigate();
 
-  // Helper function to create slug from title
-  const createSlug = (title: string) => {
-    // Transliterate Azerbaijani characters
-    const transliterated = title
-      .replace(/ə/gi, 'e')
-      .replace(/ı/gi, 'i')
-      .replace(/ş/gi, 'sh')
-      .replace(/ç/gi, 'ch')
-      .replace(/ö/gi, 'o')
-      .replace(/ü/gi, 'u')
-      .replace(/ğ/gi, 'g');
-    
-    return transliterated
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .trim();
-  };
+  const projects = homeData?.projects || [];
 
   return (
     <section className="projects section" id="projects">
@@ -65,17 +48,23 @@ const ProjectsSection = () => {
             }}
             className="projects__swiper"
           >
-            {homeData?.projects.map((project) => (
-              <SwiperSlide key={project.id}>
-                <ProjectCard
-                  image={project.image}
-                  title={project.title}
-                  location={project.location}
-                  category={project.category}
-                  onClick={() => navigate(`/projects/${createSlug(project.title)}`)}
-                />
-              </SwiperSlide>
-            ))}
+            {projects.map((project, index) => {
+              const title = getTranslation(project.title, currentLang);
+              const address = getTranslation(project.address, currentLang);
+              const badge = getTranslation(project.badge, currentLang);
+
+              return (
+                <SwiperSlide key={project.id || index}>
+                  <ProjectCard
+                    image={project.cover_image}
+                    title={title}
+                    location={address}
+                    category={badge}
+                    onClick={() => navigate(`/projects/${project.id}`)}
+                  />
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </motion.div>
       </div>

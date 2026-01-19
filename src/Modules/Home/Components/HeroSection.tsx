@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Mousewheel, Pagination, Autoplay, Navigation } from 'swiper/modules';
 import CustomButton from '../../../components/UI/CustomButton';
+import { useHome } from '../Provider/HomeContext';
+import { getTranslation } from '../../../utils/translations';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -12,21 +14,29 @@ import 'swiper/css/navigation';
 
 import './HeroSection.scss';
 
-// Import images
+// Fallback images for when API data is not available
 import swiper1 from '../../../assets/images/swiper1.webp';
 import swiper2 from '../../../assets/images/swiper2.jpg';
 import swiper3 from '../../../assets/images/swiper3.avif';
 import swiper4 from '../../../assets/images/swiper.avif';
 
+const fallbackImages = [swiper1, swiper2, swiper3, swiper4];
+
 const HeroSection = () => {
   const { t } = useTranslation();
+  const { homeData, currentLang } = useHome();
 
-  const slides = [
-    { image: swiper1, title: t('hero.title'), subtitle: t('hero.subtitle') },
-    { image: swiper2, title: t('hero.title'), subtitle: t('hero.subtitle') },
-    { image: swiper3, title: t('hero.title'), subtitle: t('hero.subtitle') },
-    { image: swiper4, title: t('hero.title'), subtitle: t('hero.subtitle') },
-  ];
+  // Get hero data from API or use fallback
+  const hero = homeData?.hero;
+  const heroImages = hero?.images?.length ? hero.images : fallbackImages;
+  const heroTitle = hero ? getTranslation(hero.title, currentLang) : t('hero.title');
+  const heroSubtitle = hero ? getTranslation(hero.info, currentLang) : t('hero.subtitle');
+
+  const slides = heroImages.map((image) => ({
+    image,
+    title: heroTitle,
+    subtitle: heroSubtitle,
+  }));
 
   return (
     <section className="hero" id="hero">
@@ -53,7 +63,7 @@ const HeroSection = () => {
               <img src={slide.image} alt={`Construction ${index + 1}`} />
               <div className="hero__overlay"></div>
             </div>
-            
+
             <div className="hero__content">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
@@ -63,7 +73,7 @@ const HeroSection = () => {
               >
                 <h1 className="hero__title">{slide.title}</h1>
                 <p className="hero__subtitle">{slide.subtitle}</p>
-                
+
                 <div className="hero__actions">
                   <Link to="/about" className="hero__btn hero__btn--desktop-only">
                     <CustomButton variant="primary" size="lg">
@@ -75,7 +85,7 @@ const HeroSection = () => {
             </div>
           </SwiperSlide>
         ))}
-        
+
         <div className="hero__scroll-indicator">
           <span>{t('common.scroll')}</span>
           <div className="mouse"></div>

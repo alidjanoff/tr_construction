@@ -1,4 +1,4 @@
-import { useHome } from '../Modules/Home/Provider/HomeProvider';
+import { useHome } from '../Modules/Home/Provider/HomeContext';
 import Loader from '../components/UI/Loader';
 import AboutSection from '../Modules/Home/Components/AboutSection';
 import StatsSection from '../Modules/Home/Components/StatsSection';

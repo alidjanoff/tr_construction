@@ -1,62 +1,27 @@
-// Home Module TypeScript Models
+// Re-export types from central types module
+export type {
+  Hero,
+  About,
+  Service,
+  Stat,
+  Project,
+  Workflow,
+  Partner,
+  Testimonial,
+  ContactInfo,
+  Social,
+  MapUrl,
+  Language,
+  HomeData,
+  TranslatedString,
+  ProjectImage,
+} from '../../../types';
 
-export interface Project {
-  id: string;
-  title: string;
-  location: string;
-  image: string;
-  category: string;
-}
-
-export interface Service {
-  id: string;
-  icon: string;
-  titleKey: string;
-  descriptionKey: string;
-}
-
-export interface Stat {
-  id: string;
-  value: number;
-  suffix?: string;
-  labelKey: string;
-}
-
-export interface WorkflowStep {
-  id: string;
-  icon: string;
-  titleKey: string;
-  descriptionKey: string;
-}
-
-export interface Partner {
-  id: string;
-  name: string;
-  logo: string;
-}
-
-export interface Testimonial {
-  id: string;
-  name: string;
-  role: string;
-  content: string;
-  avatar: string;
-  rating: number;
-}
-
+// Contact Form Data for UI
 export interface ContactFormData {
   name: string;
   surname: string;
   email: string;
   phone: string;
   message: string;
-}
-
-export interface HomeData {
-  projects: Project[];
-  services: Service[];
-  stats: Stat[];
-  workflowSteps: WorkflowStep[];
-  partners: Partner[];
-  testimonials: Testimonial[];
 }

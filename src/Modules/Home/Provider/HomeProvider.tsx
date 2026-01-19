@@ -1,24 +1,20 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { type HomeData } from '../Models/HomeModels';
+import { useState, useEffect, type ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { HomeData } from '../Models/HomeModels';
 import HomeService from '../Service/HomeService';
-
-interface HomeContextType {
-  homeData: HomeData | null;
-  isLoading: boolean;
-  error: string | null;
-  refreshData: () => Promise<void>;
-}
-
-const HomeContext = createContext<HomeContextType | undefined>(undefined);
+import { HomeContext } from './HomeContext';
 
 interface HomeProviderProps {
   children: ReactNode;
 }
 
 export const HomeProvider = ({ children }: HomeProviderProps) => {
+  const { i18n } = useTranslation();
   const [homeData, setHomeData] = useState<HomeData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const currentLang = i18n.language || 'az';
 
   const fetchData = async () => {
     try {
@@ -43,18 +39,8 @@ export const HomeProvider = ({ children }: HomeProviderProps) => {
   };
 
   return (
-    <HomeContext.Provider value={{ homeData, isLoading, error, refreshData }}>
+    <HomeContext.Provider value={{ homeData, isLoading, error, currentLang, refreshData }}>
       {children}
     </HomeContext.Provider>
   );
 };
-
-export const useHome = (): HomeContextType => {
-  const context = useContext(HomeContext);
-  if (context === undefined) {
-    throw new Error('useHome must be used within a HomeProvider');
-  }
-  return context;
-};
-
-export default HomeContext;

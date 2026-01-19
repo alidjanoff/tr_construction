@@ -1,4 +1,4 @@
-import { useHome } from '../Provider/HomeProvider';
+import { useHome } from '../Provider/HomeContext';
 import Loader from '../../../components/UI/Loader';
 import HeroSection from '../Components/HeroSection';
 import AboutSection from '../Components/AboutSection';
