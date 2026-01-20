@@ -1,5 +1,6 @@
 // Generic translation type for translatable fields
-export type TranslatedString = Record<string, string>;
+// Can be a translation map {az: "...", en: "..."} or a plain string
+export type TranslatedString = Record<string, string> | string;
 
 // Language Types
 export interface Language {
@@ -9,9 +10,12 @@ export interface Language {
 
 // Hero Types
 export interface Hero {
+    id: string;
     title: TranslatedString;
     info: TranslatedString;
-    images: string[];
+    image_url: string;
+    button_text?: TranslatedString;
+    button_url?: string;
 }
 
 // About Types
@@ -46,6 +50,7 @@ export interface ProjectImage {
 
 export interface Project {
     id: string;
+    slug: string;
     title: TranslatedString;
     details: TranslatedString;
     badge: TranslatedString;
@@ -114,7 +119,7 @@ export interface ApiResponse<T> {
 
 // Home Data aggregate type
 export interface HomeData {
-    hero: Hero | null;
+    hero: Hero[];
     about: About | null;
     projects: Project[];
     services: Service[];

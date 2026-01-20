@@ -100,7 +100,7 @@
     color: rgba($white, 0.9);
     font-size: clamp(1rem, 1.5vw, 1.25rem);
     max-width: 700px;
-    margin-bottom: $spacing-10;
+    margin-bottom: $spacing-6; // Reduced from $spacing-10
     line-height: 1.6;
   }
 
@@ -114,16 +114,13 @@
   &__btn {
     text-decoration: none;
 
-    &--desktop-only {
-      display: none;
-
-      @include lg {
-        display: block;
-      }
-    }
-
     button {
       min-width: 180px;
+
+      @include md-down {
+        min-width: 140px;
+        font-size: $font-size-sm;
+      }
     }
   }
 

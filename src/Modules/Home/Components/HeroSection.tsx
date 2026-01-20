@@ -14,29 +14,13 @@ import 'swiper/css/navigation';
 
 import './HeroSection.scss';
 
-// Fallback images for when API data is not available
-import swiper1 from '../../../assets/images/swiper1.webp';
-import swiper2 from '../../../assets/images/swiper2.jpg';
-import swiper3 from '../../../assets/images/swiper3.avif';
-import swiper4 from '../../../assets/images/swiper.avif';
-
-const fallbackImages = [swiper1, swiper2, swiper3, swiper4];
-
 const HeroSection = () => {
   const { t } = useTranslation();
   const { homeData, currentLang } = useHome();
 
-  // Get hero data from API or use fallback
-  const hero = homeData?.hero;
-  const heroImages = hero?.images?.length ? hero.images : fallbackImages;
-  const heroTitle = hero ? getTranslation(hero.title, currentLang) : t('hero.title');
-  const heroSubtitle = hero ? getTranslation(hero.info, currentLang) : t('hero.subtitle');
+  const slides = homeData?.hero || [];
 
-  const slides = heroImages.map((image) => ({
-    image,
-    title: heroTitle,
-    subtitle: heroSubtitle,
-  }));
+  if (slides.length === 0) return null;
 
   return (
     <section className="hero" id="hero">
@@ -55,12 +39,13 @@ const HeroSection = () => {
           delay: 5000,
           disableOnInteraction: false,
         }}
+        navigation={true}
         className="hero__swiper"
       >
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
+        {slides.map((slide) => (
+          <SwiperSlide key={slide.id}>
             <div className="hero__image-wrapper">
-              <img src={slide.image} alt={`Construction ${index + 1}`} />
+              <img src={slide.image_url} alt={getTranslation(slide.title, currentLang)} />
               <div className="hero__overlay"></div>
             </div>
 
@@ -71,16 +56,18 @@ const HeroSection = () => {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="hero__text-container"
               >
-                <h1 className="hero__title">{slide.title}</h1>
-                <p className="hero__subtitle">{slide.subtitle}</p>
+                {slide.title && <h1 className="hero__title">{getTranslation(slide.title, currentLang)}</h1>}
+                {slide.info && <p className="hero__subtitle">{getTranslation(slide.info, currentLang)}</p>}
 
-                <div className="hero__actions">
-                  <Link to="/about" className="hero__btn hero__btn--desktop-only">
-                    <CustomButton variant="primary" size="lg">
-                      {t('nav.about')}
-                    </CustomButton>
-                  </Link>
-                </div>
+                {slide.button_url && (
+                  <div className="hero__actions">
+                    <Link to={slide.button_url} className="hero__btn">
+                      <CustomButton variant="primary" size="lg">
+                        {slide.button_text ? getTranslation(slide.button_text, currentLang) : t('nav.about')}
+                      </CustomButton>
+                    </Link>
+                  </div>
+                )}
               </motion.div>
             </div>
           </SwiperSlide>

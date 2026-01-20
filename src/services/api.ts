@@ -25,15 +25,23 @@ const api: AxiosInstance = axios.create({
     },
 });
 
+// Add request interceptor to include Accept-Language header
+api.interceptors.request.use((config) => {
+    const lang = localStorage.getItem('language') || 'az';
+    config.headers['Accept-Language'] = lang;
+    return config;
+});
+
 // Hero API
 export const heroAPI = {
-    get: async (): Promise<Hero | null> => {
+    get: async (): Promise<Hero[]> => {
         try {
             const response = await api.get('/hero');
-            return response.data?.data || response.data || null;
+            const data = response.data?.data || response.data;
+            return Array.isArray(data) ? data : [];
         } catch (error) {
             console.error('Error fetching hero:', error);
-            return null;
+            return [];
         }
     },
 };
