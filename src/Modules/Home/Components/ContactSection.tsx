@@ -198,13 +198,27 @@ const ContactSection = () => {
                 const title = getTranslation(info.title, currentLang);
                 const detail = getTranslation(info.detail, currentLang);
 
+                // Determine the correct href and whether it should be a link
+                let href = info.url;
+                const isLink = !!href || info.contact_type === 'phone' || info.contact_type === 'email';
+
+                if (!href) {
+                  if (info.contact_type === 'phone') {
+                    href = `tel:${detail.replace(/[\s-()]/g, '')}`;
+                  } else if (info.contact_type === 'email') {
+                    href = `mailto:${detail}`;
+                  } else {
+                    href = detail;
+                  }
+                }
+
                 return (
                   <div key={info.id || index} className="contact__info-item">
                     <div className="contact__info-icon"><IconComponent /></div>
                     <div className="contact__info-content">
                       <h4>{title}</h4>
-                      {info.url ? (
-                        <a href={info.url}>{detail}</a>
+                      {isLink ? (
+                        <a href={href}>{detail}</a>
                       ) : (
                         <p>{detail}</p>
                       )}

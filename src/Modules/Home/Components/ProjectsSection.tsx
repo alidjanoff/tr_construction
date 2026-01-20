@@ -60,7 +60,7 @@ const ProjectsSection = () => {
                     title={title}
                     location={address}
                     category={badge}
-                    onClick={() => navigate(`/projects/${project.id}`)}
+                    onClick={() => navigate(`/projects/${project.slug || project.id}`)}
                   />
                 </SwiperSlide>
               );

@@ -23,7 +23,7 @@ import b5 from '../assets/images/building5.avif';
 const fallbackGalleryImages = [b1, b2, b3, b4, b5];
 
 const ProjectDetailPage = () => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const currentLang = i18n.language || 'az';
@@ -34,13 +34,13 @@ const ProjectDetailPage = () => {
 
   useEffect(() => {
     const fetchProject = async () => {
-      if (!id) {
+      if (!slug) {
         navigate('/404', { replace: true });
         return;
       }
 
       setIsLoading(true);
-      const data = await projectsAPI.getOne(id);
+      const data = await projectsAPI.getOne(slug);
 
       if (data) {
         setProject(data);
@@ -53,7 +53,7 @@ const ProjectDetailPage = () => {
     };
 
     fetchProject();
-  }, [id, navigate]);
+  }, [slug, navigate]);
 
   // Show loader while data is loading
   if (isLoading || !project) {
@@ -75,12 +75,24 @@ const ProjectDetailPage = () => {
     <main className="project-detail">
       <div className="project-detail__container container">
         <div className="project-detail__top-bar">
-          <button onClick={() => navigate(-1)} className="project-detail__back-btn">
-            <span className="project-detail__back-icon">
-              <BsArrowLeft />
+          <div className="project-detail__header-row">
+            <button onClick={() => navigate(-1)} className="project-detail__back-btn">
+              <span className="project-detail__back-icon">
+                <BsArrowLeft />
+              </span>
+            </button>
+            <h1 className="project-detail__title">{title}</h1>
+          </div>
+          <div className="project-detail__meta">
+            <span className="project-detail__meta-item">
+              <BsGeoAlt className="project-detail__meta-icon" /> {address}
             </span>
-            {t('common.back')}
-          </button>
+            {badge && (
+              <span className="project-detail__meta-item">
+                <BsTag className="project-detail__meta-icon" /> {badge}
+              </span>
+            )}
+          </div>
         </div>
 
         <motion.div
@@ -89,20 +101,6 @@ const ProjectDetailPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Header */}
-          <header className="project-detail__header">
-            <h1 className="project-detail__title">{title}</h1>
-            <div className="project-detail__meta">
-              <span className="project-detail__meta-item">
-                <BsGeoAlt className="project-detail__meta-icon" /> {address}
-              </span>
-              {badge && (
-                <span className="project-detail__meta-item">
-                  <BsTag className="project-detail__meta-icon" /> {badge}
-                </span>
-              )}
-            </div>
-          </header>
 
           {/* Main Image */}
           <div className="project-detail__image-wrapper">
@@ -151,13 +149,7 @@ const ProjectDetailPage = () => {
               {details || t('projects.detailDescription', { location: address })}
             </p>
 
-            <h3>{t('projects.features')}</h3>
-            <ul>
-              <li>{t('projects.feature1')}</li>
-              <li>{t('projects.feature2')}</li>
-              <li>{t('projects.feature3')}</li>
-              <li>{t('projects.feature4')}</li>
-            </ul>
+
           </div>
         </motion.div>
       </div>

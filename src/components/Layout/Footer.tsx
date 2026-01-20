@@ -94,11 +94,23 @@ const Footer = () => {
                   const icon = contactTypeIcons[info.contact_type] || <SlLocationPin />;
                   const detail = getTranslation(info.detail, currentLang);
 
+                  // Determine the correct href and whether it should be a link
+                  let href = info.url;
+                  const isLink = !!href || info.contact_type === 'phone' || info.contact_type === 'email';
+
+                  if (!href) {
+                    if (info.contact_type === 'phone') {
+                      href = `tel:${detail.replace(/[\s-()]/g, '')}`;
+                    } else if (info.contact_type === 'email') {
+                      href = `mailto:${detail}`;
+                    }
+                  }
+
                   return (
                     <li key={info.id || index}>
                       <span className="footer__contact-icon">{icon}</span>
-                      {info.url ? (
-                        <a href={info.url}>{detail}</a>
+                      {isLink ? (
+                        <a href={href}>{detail}</a>
                       ) : (
                         <span>{detail}</span>
                       )}
