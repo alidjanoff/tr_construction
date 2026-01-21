@@ -52,7 +52,7 @@ const Header = () => {
     <header className={`header ${isScrolled ? 'header--scrolled' : ''} ${!isHomePage ? 'header--subpage' : ''}`}>
       <div className="header__container">
         <Link to="/" className="header__logo">
-          <img src={logo} alt={t('common.brandName')} />
+          <img src={logo} alt={t('common.brandName')} />fsdklfjlskd
           <span className="header__logo-text">{t('common.brandName')}</span>
         </Link>
 
@@ -98,7 +98,7 @@ const Header = () => {
         <div className="header__mobile-menu-header">
           <Link to="/" className="header__logo" onClick={() => setIsMobileMenuOpen(false)}>
             <img src={logo} alt={t('common.brandName')} />
-            <span className="header__logo-text">{t('common.brandName')}dsdsds</span>
+            <span className="header__logo-text">{t('common.brandName')}</span>
           </Link>
 
           <button
