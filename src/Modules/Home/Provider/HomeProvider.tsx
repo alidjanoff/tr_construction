@@ -9,7 +9,7 @@ interface HomeProviderProps {
 }
 
 export const HomeProvider = ({ children }: HomeProviderProps) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [homeData, setHomeData] = useState<HomeData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -33,6 +33,15 @@ export const HomeProvider = ({ children }: HomeProviderProps) => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // Update document title and meta description when language changed
+  useEffect(() => {
+    document.title = t('meta.title');
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', t('meta.description'));
+    }
+  }, [i18n.language, t]);
 
   const refreshData = async () => {
     await fetchData();

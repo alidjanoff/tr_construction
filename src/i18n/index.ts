@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 
 import az from './locales/az.json';
 import en from './locales/en.json';
+import tr from './locales/tr.json';
 
 // Get saved language from localStorage or default to 'az'
 const savedLanguage = localStorage.getItem('language') || 'az';
@@ -13,6 +14,9 @@ const resources = {
   },
   en: {
     translation: en,
+  },
+  tr: {
+    translation: tr,
   },
 };
 

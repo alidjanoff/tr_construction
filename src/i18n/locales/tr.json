@@ -1,0 +1,173 @@
+{
+    "nav": {
+        "home": "Ana Sayfa",
+        "about": "Hakkımızda",
+        "services": "Hizmetler",
+        "projects": "Projeler",
+        "workflow": "İş Süreci",
+        "contact": "İletişim",
+        "lang": "Dil Seçimi"
+    },
+    "common": {
+        "back": "Geri",
+        "notFound": "Bulunamadı",
+        "scroll": "Kaydır",
+        "brandName": "TR Construction"
+    },
+    "hero": {
+        "title": "Geleceği İnşa Ediyoruz",
+        "subtitle": "Profesyonel inşaat ve iç tasarım hizmetleri ile hayallerinizi gerçeğe dönüştürüyoruz",
+        "cta": "Hakkımızda",
+        "ctaSecondary": "Projelerimiz"
+    },
+    "about": {
+        "sectionTitle": "Hakkımızda",
+        "sectionSubtitle": "Kalite ve güvenin adresi",
+        "title": "TR Construction - İnşaat Sanatının Ustaları",
+        "description": "10 yılı aşkın süredir inşaat ve iç tasarım alanında faaliyet göstermekteyiz. Profesyonel ekibimizle müşterilerimize en yüksek kalitede hizmet sunuyoruz.",
+        "mission": {
+            "title": "Misyonumuz",
+            "text": "Modern teknolojiler ve yenilikçi çözümlerle müşterilerimizin hayallerini gerçeğe dönüştürmek."
+        },
+        "vision": {
+            "title": "Vizyonumuz",
+            "text": "İnşaat sektöründe lider olmak ve her projemizde mükemmelliğe ulaşmak."
+        },
+        "detailedText": "TR Construction olarak, {{type}} konusunu çok ciddiye alıyoruz. Bu, verdiğimiz her kararda ve gerçekleştirdiğimiz her projede bize rehberlik etmektedir."
+    },
+    "services": {
+        "sectionTitle": "Hizmetlerimiz",
+        "sectionSubtitle": "İhtiyaçlarınıza uygun çözümler",
+        "items": {
+            "interior": {
+                "title": "İç Tasarım",
+                "description": "Modern ve fonksiyonel iç mekan çözümleri ile yaşam alanlarınızı dönüştürüyoruz."
+            },
+            "exterior": {
+                "title": "Dış Tasarım",
+                "description": "Binaların dış görünüşünü estetik ve dayanıklı bir şekilde yeniliyoruz."
+            },
+            "construction": {
+                "title": "İnşaat İşleri",
+                "description": "Yeni yapı projeleri için kapsamlı inşaat hizmetleri sunuyoruz."
+            },
+            "renovation": {
+                "title": "Tadilat ve Yenileme",
+                "description": "Mevcut mekanların modern standartlara uygun tadilatı ve yenilenmesi."
+            }
+        }
+    },
+    "stats": {
+        "projects": "Başarılı Proje",
+        "experience": "Yıllık Tecrübe",
+        "clients": "Mutlu Müşteri",
+        "team": "Profesyonel Ekip"
+    },
+    "projects": {
+        "sectionTitle": "Projelerimiz",
+        "sectionSubtitle": "Tamamlanmış işlerimizden örnekler",
+        "viewAll": "Hepsini Gör",
+        "viewProject": "Projeyi İncele",
+        "backToProjects": "Projelere Dön",
+        "overview": "Proje Hakkında",
+        "features": "Temel Özellikler",
+        "gallery": "Proje Galerisi",
+        "feature1": "Yüksek kaliteli malzemeler.",
+        "feature2": "Sürdürülebilir inşaat uygulamaları.",
+        "feature3": "Zamanında ve bütçeye uygun teslimat.",
+        "feature4": "Güvenlik standartlarına tam uyum.",
+        "detailDescription": "{{location}} adresindeki bu prestijli proje, kalite ve yeniliğe olan bağlılığımızı yansıtmaktadır. Hassas planlama ve profesyonel ustalıkla yürütülen bu iş, modern mühendisliğin bir kanıtıdır."
+    },
+    "workflow": {
+        "sectionTitle": "İş Sürecimiz",
+        "sectionSubtitle": "Projenizin hayata geçirilme aşamaları",
+        "steps": {
+            "planning": {
+                "title": "Planlama",
+                "description": "İhtiyaçlarınızı analiz edip en uygun çözüm yollarını hazırlıyoruz."
+            },
+            "design": {
+                "title": "Tasarım",
+                "description": "3D modelleme ve görselleştirme ile projenizi canlandırıyoruz."
+            },
+            "construction": {
+                "title": "İnşaat",
+                "description": "Profesyonel ekibimizle projenizi hayata geçiriyoruz."
+            },
+            "delivery": {
+                "title": "Teslimat",
+                "description": "Kalite kontrol prosedürlerinden sonra projeyi size teslim ediyoruz."
+            }
+        }
+    },
+    "partners": {
+        "sectionTitle": "Ortaklarımız",
+        "sectionSubtitle": "Güvenilir iş ortaklarımızla iş birliği"
+    },
+    "testimonials": {
+        "sectionTitle": "Müşteri Yorumları",
+        "sectionSubtitle": "Müşterilerimiz hakkımızda ne düşünüyor"
+    },
+    "contact": {
+        "sectionTitle": "İletişim",
+        "sectionSubtitle": "Bizimle iletişime geçin",
+        "mapTitle": "Konum Haritası",
+        "form": {
+            "name": "Ad",
+            "surname": "Soyad",
+            "email": "E-posta",
+            "phone": "Telefon",
+            "subject": "Konu",
+            "message": "Mesajınız",
+            "submit": "Gönder",
+            "sending": "Gönderiliyor...",
+            "success": "Mesajınız başarıyla gönderildi!",
+            "error": "Bir hata oluştu. Lütfen tekrar deneyin.",
+            "errorName": "Lütfen adınızı girin",
+            "errorSurname": "Lütfen soyadınızı girin",
+            "errorEmail": "Lütfen e-posta adresinizi girin",
+            "errorEmailInvalid": "Lütfen geçerli bir e-posta adresi girin",
+            "errorMessage": "Lütfen mesajınızı girin",
+            "errorPhone": "Lütfen telefon numaranızı girin",
+            "errorPhoneInvalid": "Lütfen geçerli bir telefon numarası girin",
+            "placeholders": {
+                "name": "Adınız",
+                "surname": "Soyadınız",
+                "email": "E-posta adresiniz",
+                "phone": "Telefon numaranız",
+                "message": "Mesajınızı buraya girin..."
+            }
+        },
+        "info": {
+            "address": "Adres",
+            "addressValue": "Bakü, Azerbaycan",
+            "phone": "Telefon",
+            "phoneValue": "+994 XX XXX XX XX",
+            "email": "E-posta",
+            "emailValue": "info@trconstruction.az",
+            "workingHours": "Çalışma Saatleri",
+            "workingHoursValue": "Pazartesi - Cuma: 09:00 - 18:00"
+        }
+    },
+    "footer": {
+        "description": "Profesyonel inşaat ve iç tasarım hizmetleri ile hayallerinizi gerçeğe dönüştürüyoruz.",
+        "quickLinks": "Hızlı Bağlantılar",
+        "services": "Hizmetler",
+        "contactInfo": "İletişim Bilgileri",
+        "followUs": "Bizi Takip Edin",
+        "copyright": "© 2024 TR Construction. Tüm hakları saklıdır."
+    },
+    "notFound": {
+        "title": "404",
+        "subtitle": "Burada inşaat devam ediyor...",
+        "description": "Aradığınız sayfa bulunamadı. Belki de henüz inşa aşamasındadır!",
+        "backHome": "Ana Sayfaya Dön"
+    },
+    "intro": {
+        "tagline": "İnşaatta Mükemmellik"
+    },
+    "meta": {
+        "title": "TR Construction - İnşaatta Mükemmellik",
+        "description": "Profesyonel inşaat ve iç tasarım hizmetleri ile hayallerinizi gerçeğe dönüştürüyoruz."
+    }
+}

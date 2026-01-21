@@ -11,7 +11,8 @@
   "common": {
     "back": "Back",
     "notFound": "Not Found",
-    "scroll": "Scroll"
+    "scroll": "Scroll",
+    "brandName": "TR Construction"
   },
   "hero": {
     "title": "Building the Future",
@@ -68,14 +69,14 @@
     "viewAll": "View All",
     "viewProject": "View Project",
     "backToProjects": "Back to Projects",
-     "overview": "Project Overview",
-     "features": "Key Features",
-     "gallery": "Project Gallery",
-     "feature1": "High-grade materials ensuring longevity.",
-     "feature2": "Sustainable construction practices.",
-     "feature3": "Completed on time and within budget.",
-     "feature4": "Strict adherence to safety standards.",
-     "detailDescription": "This prestigious project in {{location}} represents our commitment to quality and innovation. Executed with precision planning and expert craftsmanship, it stands as a testament to modern engineering."
+    "overview": "Project Overview",
+    "features": "Key Features",
+    "gallery": "Project Gallery",
+    "feature1": "High-grade materials ensuring longevity.",
+    "feature2": "Sustainable construction practices.",
+    "feature3": "Completed on time and within budget.",
+    "feature4": "Strict adherence to safety standards.",
+    "detailDescription": "This prestigious project in {{location}} represents our commitment to quality and innovation. Executed with precision planning and expert craftsmanship, it stands as a testament to modern engineering."
   },
   "workflow": {
     "sectionTitle": "Our Workflow",
@@ -110,6 +111,7 @@
   "contact": {
     "sectionTitle": "Contact",
     "sectionSubtitle": "Get in touch with us",
+    "mapTitle": "Location Map",
     "form": {
       "name": "First Name",
       "surname": "Last Name",
@@ -127,7 +129,14 @@
       "errorEmailInvalid": "Please enter a valid email",
       "errorMessage": "Please enter your message",
       "errorPhone": "Please enter your phone number",
-      "errorPhoneInvalid": "Please enter a valid phone number"
+      "errorPhoneInvalid": "Please enter a valid phone number",
+      "placeholders": {
+        "name": "Your Name",
+        "surname": "Your Surname",
+        "email": "Your Email Address",
+        "phone": "Your Phone Number",
+        "message": "Enter your message here..."
+      }
     },
     "info": {
       "address": "Address",
@@ -156,5 +165,9 @@
   },
   "intro": {
     "tagline": "Excellence in Construction"
+  },
+  "meta": {
+    "title": "TR Construction - Excellence in Construction",
+    "description": "We turn your dreams into reality with professional construction and interior design services."
   }
 }

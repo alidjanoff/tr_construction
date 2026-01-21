@@ -52,8 +52,8 @@ const Header = () => {
     <header className={`header ${isScrolled ? 'header--scrolled' : ''} ${!isHomePage ? 'header--subpage' : ''}`}>
       <div className="header__container">
         <Link to="/" className="header__logo">
-          <img src={logo} alt="TR Construction" />
-          <span className="header__logo-text">TR Construction</span>
+          <img src={logo} alt={t('common.brandName')} />
+          <span className="header__logo-text">{t('common.brandName')}</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -79,29 +79,29 @@ const Header = () => {
           </Link>
         </div>
 
-      {/* Mobile Actions (Visible on small screens) */}
-      <div className="header__mobile-actions">
-        <button 
-          className={`header__burger ${isMobileMenuOpen ? 'active' : ''}`}
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-      </div>
+        {/* Mobile Actions (Visible on small screens) */}
+        <div className="header__mobile-actions">
+          <button
+            className={`header__burger ${isMobileMenuOpen ? 'active' : ''}`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
 
       </div>
 
       {/* Mobile Menu Overlay */}
       <div className={`header__mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
         <div className="header__mobile-menu-header">
-           <Link to="/" className="header__logo" onClick={() => setIsMobileMenuOpen(false)}>
-            <img src={logo} alt="TR Construction" />
-            <span className="header__logo-text">TR Construction</span>
+          <Link to="/" className="header__logo" onClick={() => setIsMobileMenuOpen(false)}>
+            <img src={logo} alt={t('common.brandName')} />
+            <span className="header__logo-text">{t('common.brandName')}</span>
           </Link>
-          
-          <button 
+
+          <button
             className="header__close-btn"
             onClick={() => setIsMobileMenuOpen(false)}
           >
@@ -116,7 +116,7 @@ const Header = () => {
 
         <nav className="header__mobile-nav">
           {navItems.map((item) => (
-             <Link
+            <Link
               key={item.key}
               to={item.href}
               className={`header__mobile-link ${isActive(item.href) ? 'active' : ''}`}
@@ -128,8 +128,8 @@ const Header = () => {
         </nav>
 
         <div className="header__mobile-footer">
-          <Link 
-            to="/contact" 
+          <Link
+            to="/contact"
             className="custom-button custom-button--primary custom-button--full-width"
             onClick={() => setIsMobileMenuOpen(false)}
           >

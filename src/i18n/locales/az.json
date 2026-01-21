@@ -11,7 +11,8 @@
   "common": {
     "back": "Geri",
     "notFound": "Tapılmadı",
-    "scroll": "Keçid"
+    "scroll": "Keçid",
+    "brandName": "TR Construction"
   },
   "hero": {
     "title": "Gələcəyi İnşa Edirik",
@@ -110,6 +111,7 @@
   "contact": {
     "sectionTitle": "Əlaqə",
     "sectionSubtitle": "Bizimlə əlaqə saxlayın",
+    "mapTitle": "Məkanın Xəritəsi",
     "form": {
       "name": "Ad",
       "surname": "Soyad",
@@ -127,7 +129,14 @@
       "errorEmailInvalid": "Düzgün e-poçt daxil edin",
       "errorMessage": "Mesaj daxil edin",
       "errorPhone": "Telefon nömrəsi daxil edin",
-      "errorPhoneInvalid": "Düzgün telefon nömrəsi daxil edin"
+      "errorPhoneInvalid": "Düzgün telefon nömrəsi daxil edin",
+      "placeholders": {
+        "name": "Adınız",
+        "surname": "Soyadınız",
+        "email": "E-poçt ünvanınız",
+        "phone": "Telefon nömrəniz",
+        "message": "Mesajınızı bura daxil edin..."
+      }
     },
     "info": {
       "address": "Ünvan",
@@ -156,5 +165,9 @@
   },
   "intro": {
     "tagline": "Tikintidə Mükəmməllik"
+  },
+  "meta": {
+    "title": "TR Construction - Tikintidə Mükəmməllik",
+    "description": "Peşəkar tikinti və interyer dizayn xidmətləri ilə xəyallarınızı reallığa çeviririk."
   }
 }

@@ -51,8 +51,8 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="footer__brand">
             <Link to="/" className="footer__logo">
-              <img src={logo} alt="TR Construction" />
-              <span>TR Construction</span>
+              <img src={logo} alt={t('common.brandName')} />
+              <span>{t('common.brandName')}</span>
             </Link>
             <p className="footer__description">{t('footer.description')}</p>
             <div className="footer__social">

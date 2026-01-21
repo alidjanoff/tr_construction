@@ -58,7 +58,7 @@ const AboutSection = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="about__image-wrapper">
-              <img src={aboutImage} alt="About TR Construction" />
+              <img src={aboutImage} alt={t('common.brandName')} />
             </div>
           </motion.div>
         </div>

@@ -113,10 +113,10 @@ const ContactSection = () => {
   // Generate Google Maps embed URL from lat/long
   const getMapEmbedUrl = () => {
     if (mapUrl?.lat && mapUrl?.long) {
-      return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d${mapUrl.long}!3d${mapUrl.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zLocation!5e0!3m2!1sen!2saz!4v1709292020202!5m2!1sen!2saz`;
+      return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d${encodeURIComponent(mapUrl.long)}!3d${encodeURIComponent(mapUrl.lat)}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z${encodeURIComponent(t('common.brandName'))}!5e0!3m2!1s${currentLang}!2saz!4v1709292020202!5m2!1s${currentLang}!2saz`;
     }
     // Fallback to default Baku map
-    return 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d194472.76853036437!2d49.83353457193374!3d40.39473700779781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d6bd6211cf9%3A0x343f6b5e7ae56c6b!2sBaku!5e0!3m2!1sen!2saz!4v1709292020202!5m2!1sen!2saz';
+    return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d194472.76853036437!2d49.83353457193374!3d40.39473700779781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d6bd6211cf9%3A0x343f6b5e7ae56c6b!2sBaku!5e0!3m2!1s${currentLang}!2saz!4v1709292020202!5m2!1s${currentLang}!2saz`;
   };
 
   return (
@@ -137,6 +137,7 @@ const ContactSection = () => {
                 <CustomInput
                   label={t('contact.form.name')}
                   name="name"
+                  placeholder={t('contact.form.placeholders.name')}
                   value={formData.name}
                   onChange={handleChange}
                   error={errors.name}
@@ -144,6 +145,7 @@ const ContactSection = () => {
                 <CustomInput
                   label={t('contact.form.surname')}
                   name="surname"
+                  placeholder={t('contact.form.placeholders.surname')}
                   value={formData.surname}
                   onChange={handleChange}
                   error={errors.surname}
@@ -154,6 +156,7 @@ const ContactSection = () => {
                   label={t('contact.form.email')}
                   type="email"
                   name="email"
+                  placeholder={t('contact.form.placeholders.email')}
                   value={formData.email}
                   onChange={handleChange}
                   error={errors.email}
@@ -162,6 +165,7 @@ const ContactSection = () => {
                   label={t('contact.form.phone')}
                   type="tel"
                   name="phone"
+                  placeholder={t('contact.form.placeholders.phone')}
                   value={formData.phone}
                   onChange={handleChange}
                   error={errors.phone}
@@ -170,6 +174,7 @@ const ContactSection = () => {
               <CustomInput
                 label={t('contact.form.message')}
                 name="message"
+                placeholder={t('contact.form.placeholders.message')}
                 value={formData.message}
                 onChange={handleChange}
                 error={errors.message}
@@ -273,7 +278,7 @@ const ContactSection = () => {
                 allowFullScreen={true}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Location Map"
+                title={t('contact.mapTitle')}
               />
             </div>
           </motion.div>
