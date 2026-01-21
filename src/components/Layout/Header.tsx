@@ -52,7 +52,7 @@ const Header = () => {
     <header className={`header ${isScrolled ? 'header--scrolled' : ''} ${!isHomePage ? 'header--subpage' : ''}`}>
       <div className="header__container">
         <Link to="/" className="header__logo">
-          <img src={logo} alt={t('common.brandName')} />fsdklfjlskd
+          <img src={logo} alt={t('common.brandName')} />
           <span className="header__logo-text">{t('common.brandName')}</span>
         </Link>
 
