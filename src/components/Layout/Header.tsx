@@ -98,7 +98,7 @@ const Header = () => {
         <div className="header__mobile-menu-header">
           <Link to="/" className="header__logo" onClick={() => setIsMobileMenuOpen(false)}>
             <img src={logo} alt={t('common.brandName')} />
-            <span className="header__logo-text">{t('common.brandName')}</span>
+            <span className="header__logo-text">{t('common.brandName')}dsdsds</span>
           </Link>
 
           <button
