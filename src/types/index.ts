@@ -33,6 +33,7 @@ export interface Service {
     id: string;
     title: TranslatedString;
     info: TranslatedString;
+    image?: string;
 }
 
 // Stat Types

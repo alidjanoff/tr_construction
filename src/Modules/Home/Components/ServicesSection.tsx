@@ -40,8 +40,8 @@ const ServicesSection = () => {
           viewport={{ once: true, amount: 0, margin: '100px 0px' }}
         >
           {services.map((service, index) => {
-            // Use fallback image if not enough service images
-            const serviceImage = fallbackServiceImages[index % fallbackServiceImages.length];
+            // Use API image if available, otherwise use fallback image
+            const serviceImage = service.image || fallbackServiceImages[index % fallbackServiceImages.length];
             const serviceTitle = getTranslation(service.title, currentLang);
             const serviceInfo = getTranslation(service.info, currentLang);
 

@@ -60,6 +60,15 @@ const ServiceDetailPage = () => {
           className="content"
           style={{ backgroundColor: '#fff', padding: '2rem', borderRadius: '0.5rem', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
         >
+          {service?.image && (
+            <div style={{ marginBottom: '2rem', borderRadius: '0.5rem', overflow: 'hidden' }}>
+              <img
+                src={service.image}
+                alt={title}
+                style={{ width: '100%', maxHeight: '450px', objectFit: 'cover' }}
+              />
+            </div>
+          )}
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem' }}>{title}</h2>
           <p style={{ fontSize: '1.125rem', color: '#374151', lineHeight: '1.625', marginBottom: '1.5rem' }}>
             {description}
