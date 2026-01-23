@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel, Pagination, Autoplay, Navigation } from 'swiper/modules';
+import { Mousewheel, Pagination, Autoplay } from 'swiper/modules';
 import CustomButton from '../../../components/UI/CustomButton';
 import { useHome } from '../Provider/HomeContext';
 import { getTranslation } from '../../../utils/translations';
@@ -10,7 +10,6 @@ import { getTranslation } from '../../../utils/translations';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
-import 'swiper/css/navigation';
 
 import './HeroSection.scss';
 
@@ -25,7 +24,7 @@ const HeroSection = () => {
   return (
     <section className="hero" id="hero">
       <Swiper
-        modules={[Mousewheel, Pagination, Autoplay, Navigation]}
+        modules={[Mousewheel, Pagination, Autoplay]}
         speed={1200}
         mousewheel={{
           releaseOnEdges: true,
@@ -39,7 +38,6 @@ const HeroSection = () => {
           delay: 5000,
           disableOnInteraction: false,
         }}
-        navigation={true}
         className="hero__swiper"
       >
         {slides.map((slide) => (
