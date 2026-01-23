@@ -9,8 +9,28 @@ export const getTranslation = (
     lang: string
 ): string => {
     if (!translation) return '';
-    if (typeof translation === 'string') return translation;
-    return translation[lang] || translation['az'] || Object.values(translation)[0] || '';
+    if (typeof translation === 'string') return translation.trim();
+
+    // 1. Try requested language
+    if (translation[lang] && typeof translation[lang] === 'string' && translation[lang].trim()) {
+        return translation[lang].trim();
+    }
+
+    // 2. Try Azerbaijan as default fallback
+    if (translation['az'] && typeof translation['az'] === 'string' && translation['az'].trim()) {
+        return translation['az'].trim();
+    }
+
+    // 3. Try any available non-empty translation
+    const nonEmptyValues = Object.values(translation).filter(
+        (val) => typeof val === 'string' && val.trim() !== ''
+    );
+
+    if (nonEmptyValues.length > 0) {
+        return nonEmptyValues[0].trim();
+    }
+
+    return '';
 };
 
 /**
