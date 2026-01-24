@@ -11,15 +11,19 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import './TestimonialsSection.scss';
 
-const TestimonialsSection = () => {
+const TestimonialsSection = ({ backgroundColor }: { backgroundColor?: string }) => {
   const { t } = useTranslation();
   const { homeData, currentLang } = useHome();
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
 
   const testimonials = homeData?.testimonials || [];
 
+  if (!testimonials || testimonials.length === 0) {
+    return null;
+  }
+
   return (
-    <section className="testimonials section">
+    <section className="testimonials section" style={{ backgroundColor }}>
       <div className="testimonials__container container">
         <SectionTitle
           title={t('testimonials.sectionTitle')}

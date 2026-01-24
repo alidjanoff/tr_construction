@@ -46,12 +46,16 @@ const Counter = ({ end, suffix = '', duration = 2 }: CounterProps) => {
   );
 };
 
-const StatsSection = () => {
+const StatsSection = ({ backgroundColor }: { backgroundColor?: string }) => {
   const { homeData, currentLang } = useHome();
   const stats = homeData?.stats || [];
 
+  if (!stats || stats.length === 0) {
+    return null;
+  }
+
   return (
-    <section className="stats">
+    <section className="stats" style={{ backgroundColor }}>
       <div className="stats__container container">
         <div className="stats__grid">
           {stats.map((stat, index) => {

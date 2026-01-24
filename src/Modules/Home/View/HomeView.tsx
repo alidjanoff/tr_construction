@@ -20,14 +20,14 @@ const HomeView = () => {
   return (
     <main>
       <HeroSection />
-      <ProjectsSection />
+      <ProjectsSection backgroundColor="#f5f5f5" />
       <AboutSection />
       <ServicesSection />
       <StatsSection />
       <WorkflowSection />
       <PartnersSection />
-      <TestimonialsSection />
-      <ContactSection />
+      <TestimonialsSection backgroundColor="#f5f5f5" />
+      <ContactSection backgroundColor="#fff" />
     </main>
   );
 };

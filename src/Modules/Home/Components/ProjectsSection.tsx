@@ -11,15 +11,19 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import './ProjectsSection.scss';
 
-const ProjectsSection = () => {
+const ProjectsSection = ({ backgroundColor }: { backgroundColor?: string }) => {
   const { t } = useTranslation();
   const { homeData, currentLang } = useHome();
   const navigate = useNavigate();
 
   const projects = homeData?.projects || [];
 
+  if (!projects || projects.length === 0) {
+    return null;
+  }
+
   return (
-    <section className="projects section" id="projects">
+    <section className="projects section" id="projects" style={{ backgroundColor }}>
       <div className="projects__container container">
         <SectionTitle
           title={t('projects.sectionTitle')}

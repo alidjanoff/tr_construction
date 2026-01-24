@@ -20,7 +20,7 @@ const contactTypeIcons: Record<string, React.ComponentType> = {
   working_hours: BsClock,
 };
 
-const ContactSection = () => {
+const ContactSection = ({ backgroundColor }: { backgroundColor?: string }) => {
   const { t } = useTranslation();
   const { homeData, currentLang } = useHome();
   const [isMobile, setIsMobile] = useState(false);
@@ -120,7 +120,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="contact section" id="contact">
+    <section className="contact section" id="contact" style={{ backgroundColor }}>
       <div className="contact__container container">
         <SectionTitle
           title={t('contact.sectionTitle')}

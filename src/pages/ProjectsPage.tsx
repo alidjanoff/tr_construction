@@ -14,7 +14,7 @@ const ProjectsPage = () => {
   return (
     <main style={{ paddingTop: '100px' }}>
       <ProjectsSection />
-      <TestimonialsSection />
+      <TestimonialsSection   />
       <ContactSection />
     </main>
   );

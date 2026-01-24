@@ -14,8 +14,8 @@ const ServicesPage = () => {
   return (
     <main style={{ paddingTop: '100px', background: '#F5F5F5' }}>
       <ServicesSection />
-      <WorkflowSection />
-      <ContactSection />
+      <WorkflowSection backgroundColor='#fff' />
+      <ContactSection backgroundColor='#f5f5f5' />
     </main>
   );
 };

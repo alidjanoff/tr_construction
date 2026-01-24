@@ -16,8 +16,8 @@ const AboutPage = () => {
     <main style={{ paddingTop: '100px' }}>
       <AboutSection />
       <StatsSection />
-      <PartnersSection />
-      <ContactSection />
+      <PartnersSection backgroundColor="#f5f5f5" />
+      <ContactSection backgroundColor='#fff' />
     </main>
   );
 };

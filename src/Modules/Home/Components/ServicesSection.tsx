@@ -19,14 +19,18 @@ const fallbackServiceImages = [
   serviceRenovation,
 ];
 
-const ServicesSection = () => {
+const ServicesSection = ({ backgroundColor }: { backgroundColor?: string }) => {
   const { t } = useTranslation();
   const { homeData, currentLang } = useHome();
 
   const services = homeData?.services || [];
 
+  if (!services || services.length === 0) {
+    return null;
+  }
+
   return (
-    <section className="services section" id="services">
+    <section className="services section" id="services" style={{ backgroundColor }}>
       <div className="services__container container">
         <SectionTitle
           title={t('services.sectionTitle')}

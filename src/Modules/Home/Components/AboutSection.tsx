@@ -6,7 +6,7 @@ import { useHome } from '../Provider/HomeContext';
 import { getTranslation } from '../../../utils/translations';
 import './AboutSection.scss';
 
-const AboutSection = () => {
+const AboutSection = ({ backgroundColor }: { backgroundColor?: string }) => {
   const { t } = useTranslation();
   const { homeData, currentLang } = useHome();
 
@@ -21,7 +21,7 @@ const AboutSection = () => {
   const aboutImage = about?.image || 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=1000&auto=format&fit=crop';
 
   return (
-    <section className="about section" id="about">
+    <section className="about section" id="about" style={{ backgroundColor }}>
       <div className="about__container container">
         <div className="about__top">
           <div className="about__content-text">

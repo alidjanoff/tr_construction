@@ -8,14 +8,18 @@ import './WorkflowSection.scss';
 // Roman numerals for step numbers
 const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
 
-const WorkflowSection = () => {
+const WorkflowSection = ({ backgroundColor }: { backgroundColor?: string }) => {
   const { t } = useTranslation();
   const { homeData, currentLang } = useHome();
 
   const workflowSteps = homeData?.workflow || [];
 
+  if (!workflowSteps || workflowSteps.length === 0) {
+    return null;
+  }
+
   return (
-    <section className="workflow section" id="workflow">
+    <section className="workflow section" id="workflow" style={{ backgroundColor }}>
       <div className="workflow__container container">
         <SectionTitle
           title={t('workflow.sectionTitle')}

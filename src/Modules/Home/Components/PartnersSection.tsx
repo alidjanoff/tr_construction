@@ -10,10 +10,14 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import './PartnersSection.scss';
 
-const PartnersSection = () => {
+const PartnersSection = ({ backgroundColor }: { backgroundColor?: string }) => {
   const { t } = useTranslation();
   const { homeData, currentLang } = useHome();
   const partners = homeData?.partners || [];
+
+  if (!partners || partners.length === 0) {
+    return null;
+  }
 
   // Partner icons using react-icons/sl
   const partnerIcons = [SlBriefcase, SlGlobe, SlBadge, SlLayers, SlDiamond];
@@ -22,7 +26,7 @@ const PartnersSection = () => {
   const shouldAutoplay = partners.length > 5;
 
   return (
-    <section className="partners section">
+    <section className="partners section" style={{ backgroundColor:backgroundColor }}>
       <div className="partners__container container">
         <SectionTitle
           title={t('partners.sectionTitle')}
